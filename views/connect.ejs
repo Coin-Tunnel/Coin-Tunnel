@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Connect</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+<link rel="stylesheet" href="connect.css" media="screen">
+    <script class="u-script" type="text/javascript" src="https://scripthosting.joshuazou.repl.co/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="https://scripthosting.joshuazou.repl.co/nicepage.js" defer=""></script>
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "Site1",
+		"url": "index.html",
+		"logo": "images/unknown-removebg-preview.png"
+}</script>
+    <meta property="og:title" content="Connect">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
+  </head>
+  <body class="u-body"><header class="u-clearfix u-header u-header" id="sec-a555"><div class="u-clearfix u-sheet u-sheet-1">
+        <a href="/" class="u-image u-logo u-image-1">
+          <img src="https://i.imgur.com/MKPehlI.png" class="u-logo-image u-logo-image-1" data-image-width="109">
+        </a>
+        <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+          <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+            <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+              <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;"><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</symbol>
+</defs></svg>
+            </a>
+          </div>
+          <div class="u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/" style="padding: 10px 20px;">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/dashboard-b" style="padding: 10px 20px;">Buyer Dashboard</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#" style="padding: 10px 20px;">Connect</a>
+</li></ul>
+          </div>
+          <div class="u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/dashboard-b">Buyer Dashboard</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="#">Connect</a>
+</li></ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+      </div></header>
+    <section class="u-align-center u-clearfix u-palette-4-light-2 u-section-1" id="sec-fc3a">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h3 class="u-text u-text-1" id="error">  </h3>
+        <h1 class="u-text u-text-1">Connect Wallet</h1>
+        <p class="u-text u-text-2">Enter your private and public key below.<br>Why do we need your private key?<br>We need your private key so you are easily able to continue using your existing wallet to pay other merchants. If you are not comfortable with this, (that's ok, we would be too) go <a href="welcome" class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-2-base u-btn-1">here </a>to change your option to "Create a cloud wallet. <p>Another thing, we always encrypt all your sensitive info, so ONLY we are able to see it. Amazon, Google, or Microsoft can't at all."</p>
+        <p>The account email that this will be saved under is: <%-user.email%>, with the account type of: <%-user.type%></p>
+        </p>
+      </div>
+    </section>
+    <section class="u-align-center u-clearfix u-section-2" id="sec-87f9">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-expanded-width u-form u-form-1">
+          <form action="/connect" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="form">
+            <div class="u-form-group u-form-name u-form-group-1">
+              <label for="name-6797" class="u-label">Public key</label>
+              <input type="text" placeholder="(Same as your deposit address)" id="name-6797" name="public" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-palette-4-light-3 u-input-1" required="">
+            </div>
+            <div class=" u-form-group u-form-group-2">
+              <label for="email-6797" class="u-form-control-hidden u-label"></label>
+              <input type="text" placeholder="Private Key" id="email-6797" name="private" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-palette-4-light-3 u-input-2" required="">
+            </div>
+            <div class="u-form-checkbox u-form-group u-form-group-3">
+              <input type="checkbox" id="checkbox-b747" name="checkbox">
+              <label for="checkbox-b747" class="u-label">I agree to Coin-Tunnel's <a href="/tos" class="u-active-none u-border-none u-btn u-button-style u-hover-none u-none u-text-palette-1-base u-btn-1">Terms of Service</a>
+              </label>
+            </div>
+            <div class="u-align-left u-form-group u-form-submit u-form-group-4">
+              <a href="#" class="u-btn u-btn-submit u-button-style" onclick="submitForm()">Submit</a>
+              <input type="button" value="submit" class="u-form-control-hidden" onclick="submitForm()">
+            </div>
+            <div class="u-form-send-message u-form-send-success">Validating...</div>
+            <div class="u-form-send-error u-form-send-message">Unable to validate these keys at this time. Try again later</div>
+          </form>
+        </div>
+      </div>
+    </section>
+    
+    
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-bfb9"><div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1">Copyright Coin Tunnel</p>
+      </div></footer>
+  </body>
+</html>
+<script>
+async function submitForm(){
+var publickey = document.getElementById("name-6797");
+var privatekey = document.getElementById("email-6797");
+var tos = document.getElementById("checkbox-b747");
+console.log(publickey.value)
+
+var xhr = new XMLHttpRequest();
+xhr.open('POST', '/connect');
+xhr.setRequestHeader('Content-Type', 'application/json');
+let json = {
+"public": publickey.value,
+"private": privatekey.value,
+"tos": tos.value
+}
+xhr.onload = () => {
+console.log(xhr.response)
+if (xhr.response === "bad boi"){
+alert ("ERROR! Check your private and public keys again! They don't seem to be valid")
+document.getElementById("error").innerHTML = "ERROR! Check your private and public keys again! They don't seem to be valid"
+}else if (xhr.response === "bad kinda"){
+alert("Somehow, you don't seem to be signed in!")
+document.getElementById("error").innerHTML = "ERROR! You don't seem to be signed in!"
+}else{
+alert("An email has been sent to the connected email address! (Check your spam folder!)")
+window.location.href = "/dashboard-b"
+}
+};
+let results = await xhr.send(JSON.stringify(json));
+
+}
+</script>

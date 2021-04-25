@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Merchant Dashboard</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+<link rel="stylesheet" href="dashboard-m.css" media="screen">
+    <script class="u-script" type="text/javascript" src="https://scripthosting.joshuazou.repl.co/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="https://scripthosting.joshuazou.repl.co/nicepage.js" defer=""></script>
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    
+    
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "Site1",
+		"url": "index.html"
+}</script>
+    <meta property="og:title" content="Merchant Dashboard">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
+  </head>
+  <body data-home-page="/" data-home-page-title="Home" class="u-body"><header class="u-clearfix u-header u-header" id="sec-a555"><div class="u-clearfix u-sheet u-sheet-1">
+        <a href="/" class="u-image u-logo u-image-1">
+          <img src="https://i.imgur.com/MKPehlI.png" class="u-logo-image u-logo-image-1" data-image-width="109">
+        </a>
+        <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+          <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+            <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+              <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;"><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</symbol>
+</defs></svg>
+            </a>
+          </div>
+          <div class="u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/" style="padding: 10px 20px;">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" onclick="signout()" href="#"style="padding: 10px 20px;">Signout</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/dashboard-m" style="padding: 10px 20px;">Merchant Dashboard</a>
+</li></ul>
+          </div>
+          <div class="u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" onclick = "signout()" href="#">Sign Out</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/dashboard-m">Merchant Dashboard</a>
+</li></ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+      </div></header>
+    <section class="u-align-center u-clearfix u-gradient u-section-1" id="carousel_7010">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-text u-text-palette-1-base u-text-1">Merchant Dashboard</h2>
+        <p class="u-text u-text-grey-50 u-text-2">See your current stats</p>
+        <div class="u-expanded-width u-list u-repeater u-list-1">
+          <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-1">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
+              <h5 class="u-text u-text-palette-1-base u-text-3">Merchant id</h5>
+              <p class="u-text u-text-grey-50 u-text-4"><%-db.tunnelId%></p>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-2">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-2">
+              <h5 class="u-text u-text-palette-1-base u-text-5">Connected wallet</h5>
+              <p class="u-text u-text-grey-50 u-text-6"><%-db.deposit%></p>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-3">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-3">
+              <h5 class="u-text u-text-palette-1-base u-text-7">Wallet contents</h5>
+              <p class="u-text u-text-grey-50 u-text-8"><%-wallet%></p>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-4">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-4">
+              <h5 class="u-text u-text-palette-1-base u-text-9">Open transactions</h5>
+              <p class="u-text u-text-grey-50 u-text-10"><%- transac.open %></p>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-5">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-5">
+              <h5 class="u-text u-text-palette-1-base u-text-11">Closed transactions</h5>
+              <p class="u-text u-text-grey-50 u-text-12"><%- transac.closed %></p>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-6">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-6">
+              <h5 class="u-text u-text-palette-1-base u-text-13">Total transactions</h5>
+              <p class="u-text u-text-grey-50 u-text-14"><%- transac.all %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="u-clearfix u-palette-1-base u-section-2" id="carousel_5d1e">
+      <div class="u-clearfix u-sheet u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
+        <h2 class="u-text u-text-default u-text-1">API keys</h2>
+        <h5 class="u-text u-text-default u-text-2">(Keep these secret)</h5>
+        <div class="u-expanded-width u-list u-repeater u-list-1">
+          <div class="u-align-center u-container-style u-list-item u-repeater-item u-white u-list-item-1">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
+              <h5 class="u-text u-text-3">Api key prefix</h5>
+              <p class="u-text u-text-4"><%-key.prefix%>&nbsp;</p>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-list-item u-repeater-item u-white u-list-item-2">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-2">
+              <h5 class="u-text u-text-5">Uses</h5>
+              <p class="u-text u-text-6"><%-key.uses%></p>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-list-item u-repeater-item u-white u-list-item-3">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-3">
+              <h5 class="u-text u-text-7">List of Ip's that used it</h5>
+              <% for (var x=0; x<key.ip.length; x++){ %>
+              <p class="u-text u-text-8"><%-key.ip[x]%></p>
+              <% } %>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-list-item u-repeater-item u-white u-list-item-4">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-4">
+              <h5 class="u-text u-text-9">Connected email</h5>
+              <p class="u-text u-text-10">
+                <a href="mailto:<%-db.email%>" class="u-active-none u-border-1 u-border-palette-2-base u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-2-base u-btn-1"><%-db.email%><br>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <a href="https://docs.coin-tunnel.ml" class="u-btn u-button-style u-btn-2">Docs</a>
+      </div>
+    </section>
+    <section class="u-align-center u-clearfix u-palette-2-light-1 u-section-3" id="sec-3403">
+      <div class="u-align-center u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h2 class="u-text u-text-1">Regenerate API key</h2>
+        <p class="u-text u-text-2" id="showhere">When you regenerate, you will have to update your code, otherwise it will stop working.<br>You should do this if you fear that someone has your api key.
+        </p>
+        <a class="u-btn u-button-style u-grey-90 u-btn-1" onclick="regenerate()">Regenerate</a>
+      </div>
+      <div class="u-align-center u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h2 class="u-text u-text-1">Change deposit address</h2>
+        <p class="u-text u-text-2">Change your deposit address <br>(Remember, this is how you get paid, so be careful)
+        </p>
+        <a href="/changeAddress" class="u-btn u-button-style u-grey-90 u-btn-1">Change</a>
+      </div>
+<h2 class="u-text u-text-1">Change your verification string
+        </h2>
+        <br>
+       <form action="#" method="POST" class="u-clearfix u-form-horizontal u-form-spacing-15 u-inner-form" style="padding: 15px" source="custom">
+            <div class="u-form-group u-form-name u-form-group-1">
+              <label for="name-558c" class="u-form-control-hidden u-label">Key</label>
+              <input type="text" placeholder="string" id="name-558c" name="name" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required="">
+            </div>
+            <div class="u-form-group u-form-submit u-form-group-2">
+              <a href="#" class="u-btn u-btn-submit u-button-style" onclick="verficationKey()">Change</a>
+            </div>
+            <input type="hidden" value="" name="recaptchaResponse">
+          </form>
+    </section>
+    
+    
+   <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-bfb9"><div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1">Copyright Coin Tunnel</p>
+      </div></footer>
+  </body>
+</html>
+<script>
+function signout() {
+  console.log('User signed out.');
+ window.location.href = "/destroySession"
+    }
+
+    function onLoad() {
+      gapi.load('auth2', function() {
+        gapi.auth2.init();
+      });
+    }
+
+function regenerate(){
+if (confirm("Are you sure you want to reset the key?")) {
+ 
+} else {
+  return;
+}
+ var xhr = new XMLHttpRequest();
+xhr.open('POST', '/regenerate');
+xhr.setRequestHeader('Content-Type', 'application/json');
+
+xhr.onload = () => {
+  console.log(xhr.response)
+  if (xhr.response.toString().includes("key")){
+  alert("A new key has been generated: "+xhr.response.toString().slice(8, xhr.response.toString().length-2));
+  document.getElementById("showhere").innerHTML = "A new has been generated! This will only appear once for security reasons (We don't actually know your key due to hashing) Write it down quick! The new key is: "+xhr.response.toString().slice(8, xhr.response.toString().length-2)
+}else{
+  alert(xhr.response)
+}
+}
+xhr.send(JSON.stringify({
+"hello":"hellow"
+}));
+}
+
+function verficationKey(){
+let value = document.getElementById("name-558c").value
+if (value.length < 10) return alert("Verification string must be longer than 10 characters!");
+
+var xhr = new XMLHttpRequest();
+xhr.open('POST', '/changeKey');
+xhr.setRequestHeader('Content-Type', 'application/json');
+
+xhr.onload = () => {
+  console.log(xhr.response)
+  if (xhr.response.toString().includes("key")){
+  alert("A new verification string has been set: "+xhr.response.toString().slice(8, xhr.response.toString().length-2));
+}else{
+  alert(xhr.response)
+}
+}
+xhr.send(JSON.stringify({
+"key":value
+}));
+
+
+}
+</script>
