@@ -1,3 +1,7 @@
+# Secret Keys and things
+secret.json
+config.json
+
 # Logs
 logs
 *.log

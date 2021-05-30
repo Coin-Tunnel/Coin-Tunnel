@@ -1,0 +1,18 @@
+{
+    "folding": {
+        "*": {
+            "begin": "{{{",
+            "end": "}}}"
+        },
+        "javascriptreact": [
+            {
+                "begin": "{/*",
+                "end": "*/}"
+            },
+            {
+                "begin": "<",
+                "end": "/>"
+            }
+        ]
+    }
+}

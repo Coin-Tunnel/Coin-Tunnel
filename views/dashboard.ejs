@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<link data-react-helmet="true" rel="icon" href="/images/smallLogo.png">
 <html style="font-size: 16px;">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,16 +8,17 @@
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
     <title>Buyer Dashboard</title>
-    <link rel="stylesheet" href="nicepage.css" media="screen">
-<link rel="stylesheet" href="dashboard.css" media="screen">
-    <script class="u-script" type="text/javascript" src="https://scripthosting.joshuazou.repl.co/jquery.js" defer=""></script>
-    <script class="u-script" type="text/javascript" src="https://scripthosting.joshuazou.repl.co/nicepage.js" defer=""></script>
+    <link rel="stylesheet" href="index.css" media="screen">
+    <script class="u-script" type="text/javascript" src="/javascript/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/javascript/main.js" defer=""></script>
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
     <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700|Archivo+Black:400">
     
     
     
-    
+    <link rel="stylesheet" href="/common.css">
+    <link rel="stylesheet" href="/style.css">
+    <script class="u-script" type="text/javascript" src="/javascript/websocket.js" defer=""></script>
     
     <script type="application/ld+json">{
 		"@context": "http://schema.org",
@@ -30,10 +32,11 @@
     <meta name="theme-color" content="#478ac9">
     <link rel="canonical" href="index.html">
     <meta property="og:url" content="index.html">
+    <%- include('partials/preload.ejs') %>
   </head>
   <body class="u-body"><header class="u-clearfix u-header u-header" id="sec-a555"><div class="u-clearfix u-sheet u-sheet-1">
         <a href="/" class="u-image u-logo u-image-1">
-          <img src="https://i.imgur.com/MKPehlI.png" class="u-logo-image u-logo-image-1" data-image-width="109">
+          <img src="/images/logo.png" class="u-logo-image u-logo-image-1" data-image-width="109">
         </a>
         <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
           <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
@@ -48,7 +51,13 @@
             <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/" style="padding: 10px 20px;">Home</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#" onclick="signout()" style="padding: 10px 20px;">Sign out</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/dashboard-b" style="padding: 10px 20px;">Buyer Dashboard</a>
-</li></ul>
+</li><li class="u-nav-item">
+  Dark theme
+</li>
+  <label class="switch">
+    <input type="checkbox" onclick="changeTheme()" id="bigTheme">
+    <span class="slider round"></span>
+  </label></ul>
           </div>
           <div class="u-custom-menu u-nav-container-collapse">
             <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
@@ -57,7 +66,13 @@
                 <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/" style="padding: 10px 20px;">Home</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="#" onclick="signout()" style="padding: 10px 20px;">Sign out</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/dashboard-b" style="padding: 10px 20px;">Buyer Dashboard</a>
-</li></ul>
+</li><li class="u-nav-item">
+  Dark theme
+</li>
+  <label class="switch">
+    <input type="checkbox" onclick="changeTheme()" id="smallTheme">
+    <span class="slider round"></span>
+  </label></ul>
               </div>
             </div>
             <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
@@ -65,18 +80,56 @@
         </nav>
       </div></header>
     <section class="u-clearfix u-section-1" id="sec-407f">
+      <div class="u-clearfix u-sheet u-sheet-10" style="padding-top:10px; padding-bottom: 10px;">
+        <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1" id="sec-22810d">
+          <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+            <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+              <svg style="color: #008080; margin-top: 20px;"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;"><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</symbol>
+</defs></svg><p style="position: relative; left: 27px; top: -36px; color: #008080">Crypto Wallets</p>
+            </a>
+          </div>
+          <div class="u-custom-menu u-nav-container" id="wallet-nav-bar">
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" onclick="changetobtc()" style="padding: 10px 20px;"><h7 class="u-align-center u-text u-text-3" id="bitcoinindicator1">Bitcoin Wallet</h7></a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" onclick="changetoltc()" style="padding: 10px 20px;"><h7 class="u-align-center u-text u-text-3" id="litecoinindicator1">Litecoin Wallet</h7></a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" onclick="changetoeth();" style="padding: 10px 20px;"><h7 class="u-align-center u-text u-text-3" id="ethereumindicator1">Ethereum Wallet</h7></a>
+</li></ul>
+          </div>
+          <div class="u-custom-menu u-nav-container-collapse" id="8ewo21">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" onclick="changetobtc()" style="padding: 10px 20px;"><h7 class="u-align-center u-text u-text-3" id="bitcoinindicator2">Bitcoin Wallet</h7></a>
+                </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" onclick="changetoltc()" style="padding: 10px 20px;"><h7 class="u-align-center u-text u-text-3" id="litecoinindicator2">Litecoin Wallet</h7></a>
+                </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" onclick="changetoeth()" style="padding: 10px 20px;"><h7 class="u-align-center u-text u-text-3" id="ethereumindicator2">Ethereum Wallet</h7></a>
+                </li></ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70" id="eidk30"></div>
+          </div>
+        </nav>
+      </div>
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <div class="u-clearfix u-expanded-width u-gutter-0 u-layout-wrap u-layout-wrap-1">
-          <div class="u-layout" style="">
-            <div class="u-layout-row" style="">
+          <div class="u-layout">
+            <div class="u-layout-row">
               <div class="u-align-center u-container-style u-layout-cell u-left-cell u-palette-1-base u-size-26 u-size-xs-60 u-layout-cell-1" src="">
-                <div class="u-container-layout u-container-layout-1">
-                  <h2 class="u-text u-text-1">Pay someone</h2>
+                <div class="u-container-layout u-container-layout-1" id="coinbanner">
+                  <h2 class="u-text u-text-1" style="color: white"><img id="coinimagepayment" src="" style="width: 100px"> Pay someone</h2>
                 </div>
               </div>
               <div class="u-align-left u-container-style u-layout-cell u-right-cell u-size-34 u-size-xs-60 u-white u-layout-cell-2">
                 <div class="u-container-layout u-container-layout-2">
-                  <h3 class="u-text u-text-default u-text-2">Use this special code:<br><%-db.tunnelId%>&nbsp;
+                  <h3 class="u-text u-text-default u-text-2">Use this special code:<br>
+                    <script src="https://kit.fontawesome.com/d97b87339f.js" crossorigin="anonymous"></script>
+                    <div class="clipboard">
+                    <input onclick="copy()" class="copy-input"id="copyClipboard" readonly  value= <%-db.tunnelId%>>
+                    <button class="copy-btn" id="copyButton" onclick="copy()"><i class="far fa-copy"></i></button>
+                    </div>
+                    <div id="copied-success" class="copied"> 
+                      <p style="font-size: 14px; margin-top: 0px;" class="copiedtext">Copied!</p>
+                    </div>
                   </h3>
                 </div>
               </div>
@@ -87,7 +140,7 @@
     </section>
     <section class="u-align-center u-clearfix u-palette-4-base u-section-2" id="carousel_b79a">
       <div class="u-clearfix u-sheet u-sheet-1">
-        <h2 class="u-text u-text-palette-1-base u-text-1">User Info</h2>
+        <h2 class="u-text u-text-palette-1-base u-text-1" style="padding-bottom: 15px">User Info</h2>
         <div class="u-expanded-width u-list u-repeater u-list-1">
           <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-1">
             <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
@@ -98,13 +151,13 @@
           <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-2">
             <div class="u-container-layout u-similar-container u-valign-top u-container-layout-2">
               <h5 class="u-text u-text-palette-1-base u-text-4">Current account type</h5>
-              <p class="u-text u-text-grey-50 u-text-5"><%-type%></p>
+              <p class="u-text u-text-grey-50 u-text-5" id="accounttype"><%-type%></p>
             </div>
           </div>
           <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-3">
             <div class="u-container-layout u-similar-container u-valign-top u-container-layout-3">
               <h5 class="u-text u-text-palette-1-base u-text-6">Deposit address</h5>
-              <p class="u-text u-text-grey-50 u-text-7"><%-publicx%></p>
+              <p class="u-text u-text-grey-50 u-text-7" id="depositaddress"><%-publicx%></p>
             </div>
           </div>
           <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-4">
@@ -121,8 +174,8 @@
           </div>
           <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-6">
             <div class="u-container-layout u-similar-container u-valign-top u-container-layout-6">
-              <h5 class="u-text u-text-palette-1-base u-text-12">Private address (encrypted)</h5>
-              <p class="u-text u-text-grey-50 u-text-13">IV: <%-privatex.iv%><br>content: <%-privatex.content%>
+              <h5 class="u-text u-text-palette-1-base u-text-12">Private key</h5>
+              <p class="u-text u-text-grey-50 u-text-13" id="privatekey"><a onclick='reveal()' style='background: #3d85c6; border-radius: 13px; width: 187px; height: 44px; color:  #ffffff; display: inline-block; font: normal bold 19px/44px "Open Sans", sans-serif; text-align: center;'>Click to reveal</a>
               </p>
             </div>
           </div>
@@ -132,13 +185,13 @@
     <section class="u-align-center u-clearfix u-section-3" id="carousel_a3ad">
       <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-shape u-shape-svg u-text-palette-4-base u-shape-1">
-          <svg class="u-svg-link" preserveAspectRatio="none" viewBox="0 0 160 80" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-0b7f"></use></svg>
+          <svg class="u-svg-link" preserveAspectRatio="none" viewBox="0 0 160 80"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-0b7f"></use></svg>
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 160 80" x="0px" y="0px" id="svg-0b7f" style="enable-background:new 0 0 160 80;"><path d="M160,0H0c0,44.2,35.8,80,80,80S160,44.2,160,0z"></path></svg>
         </div>
         <h1 class="u-custom-font u-text u-text-body-alt-color u-text-1">Wallet Info</h1>
         <p class="u-text u-text-body-alt-color u-text-2">Uses current price data from&nbsp;<a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-1" href="https://coingecko.com" target="_blank">Coin Gecko</a>&nbsp;.com
         </p>
-        <div class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-list u-repeater u-list-1">
+        <div class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-list u-repeater u-list-1" style="background-color: rgb(0,0,0,0);">
           <div class="u-align-left u-container-style u-gradient u-list-item u-repeater-item u-list-item-1">
             <div class="u-container-layout u-similar-container u-container-layout-1">
               <div class="u-align-center u-container-style u-gradient u-group u-palette-1-base u-radius-50 u-shape-round u-group-1">
@@ -146,8 +199,9 @@
                   <h2 class="u-custom-font u-font-oswald u-text u-text-body-alt-color u-text-3">BTC</h2>
                 </div>
               </div>
-              <h5 class="u-text u-text-4">Bitcoin in wallet</h5>
-              <p class="u-text wallet-list u-text-5"><%-wallet.amount%></p>
+              <h5 class="u-text u-text-4" id="inwallet">Bitcoin in wallet</h5>
+              <img class="loadingimage" src="/images/loading.gif" width="30px" id="loadinggif">
+              <p class="u-text wallet-list u-text-5" id="amountinwallet">Loading...</p>
             </div>
           </div>
           <div class="u-align-left u-container-style u-gradient u-list-item u-repeater-item u-list-item-2">
@@ -157,9 +211,10 @@
                   <h2 class="u-custom-font u-font-oswald u-text u-text-body-alt-color u-text-6">BTC</h2>
                 </div>
               </div>
-              <h5 class="u-text u-text-7">Bitcoin equivalant<br>
+              <h5 class="u-text u-text-7">USD equivalent<br>
               </h5>
-              <p class="u-text wallet-list u-text-8"><%-wallet.btc.usd%> USD equivalant&nbsp;</p>
+              <img class="loadingimage" src="/images/loading.gif" width="30px" id="loadinggif">
+              <p class="u-text wallet-list u-text-8" id="usdequivalent">Loading...&nbsp;</p>
             </div>
           </div>
           <div class="u-align-left u-container-style u-gradient u-list-item u-repeater-item u-list-item-3">
@@ -169,9 +224,9 @@
                   <h2 class="u-custom-font u-font-oswald u-text u-text-body-alt-color u-text-9">BTC</h2>
                 </div>
               </div>
-              <h5 class="u-text u-text-10">Bitcoin deposit address</h5>
+              <h5 class="u-text u-text-10" id="cryptoaddress">Bitcoin deposit address</h5>
               <p class="u-text wallet-list u-text-11"> Wallet address:&nbsp;<span style="font-size: 0.75rem;">
-                  <span style="font-size: 0.625rem;"> <%-publicx%></span>
+                  <span style="font-size: 0.625rem;" id="walletaddressspan"> <%-publicx%></span>
                 </span>
                 <br>
               </p>
@@ -184,8 +239,8 @@
                   <h2 class="u-custom-font u-font-oswald u-text u-text-body-alt-color u-text-12">BTC</h2>
                 </div>
               </div>
-              <h5 class="u-text u-text-13">Bitcoin price</h5>
-              <p class="u-text wallet-list u-text-14"><%-wallet.btc.price%> USD</p>
+              <h5 class="u-text u-text-13" id="cryptoprice">Bitcoin price</h5>
+              <p class="u-text wallet-list u-text-14" id="cryptopricedisplay">Loading.... USD</p>
             </div>
           </div>
         </div>
@@ -193,6 +248,7 @@
     </section>
     <section class="u-align-center u-clearfix u-palette-2-light-2 u-section-4" id="sec-9794">
       <div class="u-clearfix u-sheet u-sheet-1">
+       <div id="walletsection">
         <h1 class="u-text u-text-default u-text-palette-2-base u-text-1">DANGER ZONE</h1>
         <h4 class="u-text u-text-default u-text-palette-2-base u-text-2">Going from connected wallet to cloud wallet will keep the money in your connected account (You can transfer manually later)<br>Going from cloud wallet to connected wallet WILL NOT keep the money in your cloud wallet!
         </h4>
@@ -212,6 +268,8 @@
               <input type="submit" value="submit" class="u-form-control-hidden">
             </div>
         </div>
+       </div>
+
         <h3 class="u-text u-text-default u-text-palette-2-base u-text-3">DELETE ACCOUNT</h3>
         <div class="u-form u-form-2">
           <form action="#" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="form">
@@ -244,7 +302,7 @@
           </form>
         </div>
 
-        <div class="u-form u-form-3">
+        <div class="u-form u-form-3" id="withdrawlsection">
           <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" style="padding: 10px" source="custom" name="form-1">
             <input type="hidden" id="siteId" name="siteId" value="36048516">
             <input type="hidden" id="pageId" name="pageId" value="71715059">
@@ -267,17 +325,30 @@
     </section>
     
     
-    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-bfb9"><div class="u-clearfix u-sheet u-sheet-1">
-        <p class="u-small-text u-text u-text-variant u-text-1">Copyright Coin Tunnel</p>
-      </div></footer>
+    <%- include('partials/footer.ejs') %>
+    <div id="coinimage">
+      <a href="https://bitcoin.org/en/" target="_blank">
+        <img id="doge" src="/images/bitcoin.png" width="150px">
+      </a>
+    </div>
   </body>
 </html>
-<script>
-function signout() {
-  console.log('User signed out.');
- window.location.href = "/destroySession"
-    }
 
+<script>
+  showData();
+      //let localStorage = window.localStorage;
+async function reveal(){
+  var xhr = new XMLHttpRequest();
+  let currentcoin = localStorage.getItem('buyercoin');
+xhr.open('POST', `/operations/reveal-${currentcoin}`);
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.onload = function() {
+  document.getElementById("privatekey").innerHTML = xhr.response
+};
+//document.getElementById("custId").value = googleUser.getAuthResponse().id_token;
+//var wait=setTimeout("document.hidden.submit();",2000);
+xhr.send();
+  }
     function onLoad() {
       gapi.load('auth2', function() {
         gapi.auth2.init();
@@ -287,11 +358,12 @@ function signout() {
   window.location.href="/welcome"
   }
   function withdraw(){
+    let currentcoin = localStorage.getItem("buyercoin");
   let address = document.getElementById("text-25b8").value;
   let amount = document.getElementById("text-e0a1").value;
 
   var xhr = new XMLHttpRequest();
-xhr.open('POST', '/withdraw');
+xhr.open('POST', `/withdraw/${currentcoin}`);
 xhr.setRequestHeader('Content-Type', 'application/json');
 xhr.onload = function() {
 console.log(xhr.response)
@@ -306,11 +378,34 @@ console.log(xhr.response)
 //var wait=setTimeout("document.hidden.submit();",2000);
 xhr.send(JSON.stringify({
 address:address,
-amount: amount
+amount: amount,
 }));
   }
 
-
+  function change(){
+    let currentcoin = localStorage.getItem("buyercoin");
+    if (confirm(`Are you sure you want to submit a request to change your wallet to a ${currentcoin} cloud wallet?`)) {
+  // Save it!
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', `/operations/change-${currentcoin}`);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() {
+      console.log(xhr.response)
+      if (xhr.response.includes("good")){
+      alert("An email has been sent to the connected email address (check your spam folder)")
+      window.location.reload();
+  }else{
+      alert(xhr.response)
+  }
+};
+//document.getElementById("custId").value = googleUser.getAuthResponse().id_token;
+//var wait=setTimeout("document.hidden.submit();",2000);
+xhr.send(JSON.stringify({hello: "world"}));
+    } else {
+  // Do nothing!
+        return window.location.href="#"
+    }
+  }
 
   //////////////////
   function deleteUser(){
@@ -353,4 +448,297 @@ xhr.send(JSON.stringify({
 thing: "thing"
 }));
   }
+  
+  async function changetobtc(){
+    document.documentElement.style.overflow = "hidden"
+    document.getElementById("sec-22810d").classList.add("open")
+    document.getElementById("8ewo21").style.width = "100%"
+    document.getElementById("eidk30").style.display = "block"
+    let coin = localStorage.getItem('buyercoin');
+    localStorage.setItem('buyercoin', 'btc');
+    showData();
+  window.location.reload();
+  }  
+  function changetoltc(){
+    document.getElementById("sec-22810d").classList.remove("open")
+    document.documentElement.style.overflow = ""
+    document.getElementById("8ewo21").style.width = "0%"
+    document.getElementById("eidk30").style.display = "none"
+    let coin = localStorage.getItem('buyercoin');
+    localStorage.setItem('buyercoin', 'ltc');
+    showData();
+  //window.location.reload();
+  }
+  function changetoeth(){
+    document.getElementById("sec-22810d").classList.remove("open")
+    document.documentElement.style.overflow = ""
+    document.getElementById("8ewo21").style.width = "0%"
+    document.getElementById("eidk30").style.display = "none"
+    let coin = localStorage.getItem('buyercoin');
+    localStorage.setItem('buyercoin', 'eth');
+    showData();
+  //window.location.reload();
+  }
+
+  function showData(){
+    let coin = localStorage.getItem('buyercoin');
+let allData = '<%- everything %>';
+allData = JSON.parse(allData)
+console.log(allData)
+
+  if (coin === "eth"){
+    document.getElementById("privatekey").innerHTML = `<a onclick='reveal()' style='background: #3d85c6; border-radius: 13px; width: 187px; height: 44px; color:  #ffffff; display: inline-block; font: normal bold 19px/44px "Open Sans", sans-serif; text-align: center;'>Click to reveal</a>`
+    //alert ("This coin is still in BETA. Many of the payment features will NOT work. The wallet is operational, but nothing else is currently.")
+    document.getElementById("coinimagepayment").src = "https://ethereum.org/static/4d030a46f561e5c754cabfc1a97528ff/3bf79/impact_transparent.png";
+
+    if (allData.eth.address.toLowerCase().includes("cloud wallet setup!")){
+      document.getElementById("amountinwallet").innerText = allData.eth.amount;
+      document.getElementById("usdequivalent").innerText = "N/A"
+      // this is if the stupid buyer doesn't have a stupid wallet set up.
+    }else{
+      document.getElementById("amountinwallet").style="display: none;"
+      document.getElementById("usdequivalent").style="display: none;"
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "https://api.blockcypher.com/v1/eth/main/addrs/"+allData.eth.address+"/balance")
+      xhr.onload = async () => {
+        let response = JSON.parse(xhr.response);  
+        response.balance = (Math.round(1000000*Number(response.balance)/1000000000000000000)/1000000).toString();
+        response.unconfirmed_balance = (Math.round(1000000*Number(response.unconfirmed_balance)/1000000000000000000)/1000000).toString();
+        let text = `Amount in wallet: ${response.balance} ETH | On the way: ${response.unconfirmed_balance} ETH`
+        document.getElementById("amountinwallet").innerText = text;
+        document.getElementsByClassName("loadingimage")[0].style="display: none;";
+        document.getElementsByClassName("loadingimage")[1].style="display: none;";
+
+        document.getElementById("usdequivalent").innerHTML = (Number(allData.eth.price)*response.balance).toString()+" USD"
+        document.getElementById("amountinwallet").style="";
+        document.getElementById("usdequivalent").style="";
+        getMaxAmountEth();
+      }
+    xhr.send();
+    }
+    async function getMaxAmountEth(){
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "https://ethgasstation.info/json/ethgasAPI.json")
+      xhr.onload = async () => {
+        let response = JSON.parse(xhr.response); 
+        console.log(response) 
+        let low = response.safeLow / 10;
+        let maxGasSpent = 22000*low*1000000000; //in Wei
+        let maxEthSpent = maxGasSpent/1000000000000000000;
+        let ethInWallet = document.getElementById("amountinwallet").textContent;
+        ethInWallet = (ethInWallet.slice(18, ethInWallet.length-14));
+        ethInWallet = ethInWallet.replace(/^\D+|\D+$/g, "");
+        ethInWallet = Number(ethInWallet);
+        console.log(maxEthSpent)
+        if (ethInWallet-maxEthSpent < 0) document.getElementsByClassName("amounttowithdraweths")[0].innerText = "Amount | Max withdraw in ETH: 0"+" | Min withdraw in ETH: "+maxEthSpent
+        else document.getElementsByClassName("amounttowithdraweths")[0].innerText = "Amount | Max withdraw in ETH: "+(ethInWallet-maxEthSpent).toString()+" | Min withdraw in ETH: "+maxEthSpent
+      }
+    xhr.send();
+    }
+    document.getElementById("coinbanner").style.backgroundImage = "";
+    document.getElementById("accounttype").innerHTML = allData.eth.type;
+    document.getElementById("depositaddress").innerHTML = allData.eth.address;
+    document.getElementById("cryptopricedisplay").innerText = allData.eth.price + " USD";
+    document.getElementById("walletaddressspan").innerText = allData.eth.address;
+    let coinshow = document.getElementsByClassName("u-font-oswald");
+    for (var i = 0; i<coinshow.length; i++){
+      document.getElementsByClassName("u-font-oswald")[i].innerHTML = "ETH"
+    }
+    document.getElementById("sec-9794").innerHTML = `
+    <section class="u-align-center u-clearfix u-palette-2-light-2 u-section-4" id="sec-9794">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h1 class="u-text u-text-default u-text-palette-2-base u-text-1">DANGER ZONE</h1>
+        <h4 class="u-text u-text-default u-text-palette-2-base u-text-2">Currently we only support CLOUD wallets! If you already have a ETHEREUM cloud wallet, making another one will destroy your funds! If you don't have a ETHEREUM cloud wallet, create one!
+        </h4>
+        <div class="u-form u-form-1">
+            <div class="u-form-group u-form-select u-form-group-1">
+              <label for="select-a11b" class="u-form-control-hidden u-label">Select</label>
+            </div>
+            <div class="u-align-left u-form-group u-form-submit u-form-group-2">
+              <a href="#" class="u-btn u-btn-submit u-button-style" onclick="change()">Change (A confirmation email will be sent to you)</a>
+              <input type="submit" value="submit" class="u-form-control-hidden">
+            </div>
+        </div>
+        <div class="u-form u-form-3">
+          <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" style="padding: 10px" source="custom" name="form-1">
+            <input type="hidden" id="siteId" name="siteId" value="36048516">
+            <input type="hidden" id="pageId" name="pageId" value="71715059">
+            <div class="u-form-group u-form-partition-factor-2 u-form-group-5">
+              <label for="text-25b8" class="u-label">Withdrawal address - If you put an incorrect address, your funds will not come back!</label>
+              <input type="text" id="text-25b8" name="deposit"class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" placeholder="(ETH ONLY)">
+            </div>
+            <div class="u-form-group u-form-partition-factor-2 u-form-group-6">
+              <label for="text-e0a1" class="u-label amounttowithdraweths">Amount to withdraw</label>
+              <input type="text" id="text-e0a1" name="amount" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" placeholder="(IN ETH)">
+            </div>
+            <div class="u-align-left u-form-group u-form-submit">
+              <a href="#" onclick="withdraw()" class="u-btn u-btn-submit u-button-style">Withdraw - A confirmation email will be sent to you!</a>
+              <input type="submit" value="submit" class="u-form-control-hidden">
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    `
+    document.getElementById("coinimage").innerHTML = `
+    <a href="https://ethereum.org" target="_blank">
+        <img id="doge" src="/images/ethereum.png" width="125px" height="200px">
+    </a>`
+    document.getElementById("inwallet").innerText = "Ethereum in wallet"
+    document.getElementById("cryptoprice").innerText = "Ethereum price"
+    document.getElementById("cryptoaddress").innerText = "Ethereum deposit address"
+    document.getElementById("ethereumindicator1").style.color = "#478AC9"
+    document.getElementById("ethereumindicator2").style.color = "#478AC9"
+    
+    document.getElementById("litecoinindicator1").style.color = "#CCC9C9";
+    document.getElementById("litecoinindicator2").style.color = "#CCC9C9";
+
+    document.getElementById("bitcoinindicator1").style.color = "#CCC9C9";
+    document.getElementById("bitcoinindicator2").style.color = "#CCC9C9";
+
+  } else if (coin === "ltc"){
+    document.getElementById("privatekey").innerHTML = `<a onclick='reveal()' style='background: #3d85c6; border-radius: 13px; width: 187px; height: 44px; color:  #ffffff; display: inline-block; font: normal bold 19px/44px "Open Sans", sans-serif; text-align: center;'>Click to reveal</a>`
+    document.getElementById("coinimagepayment").src = "https://litecoin.org/img/litecoin.svg";
+    document.getElementById("coinimagepayment").style.width = "80px";
+
+    document.getElementById("accounttype").innerHTML = allData.ltc.type;
+    document.getElementById("depositaddress").innerHTML = allData.ltc.address;
+    //document.getElementById("amountinwallet").innerText = allData.ltc.amount;
+    document.getElementById("cryptopricedisplay").innerText = allData.ltc.price + " USD";
+    document.getElementById("walletaddressspan").innerText = allData.ltc.address;
+    //document.getElementById("usdequivalent").innerText = allData.ltc.usd + " USD"
+
+    document.getElementById("litecoinindicator1").style.color = "#478AC9";
+    document.getElementById("litecoinindicator2").style.color = "#478AC9";
+
+    document.getElementById("bitcoinindicator1").style.color = "#CCC9C9";
+    document.getElementById("bitcoinindicator2").style.color = "#CCC9C9";
+
+    document.getElementById("ethereumindicator1").style.color = "#CCC9C9";
+    document.getElementById("ethereumindicator2").style.color = "#CCC9C9";
+
+    let coinshow = document.getElementsByClassName("u-font-oswald");
+    for (var i = 0; i<coinshow.length; i++){
+      document.getElementsByClassName("u-font-oswald")[i].innerHTML = "LTC"
+    }
+    document.getElementById("coinimage").innerHTML = `
+    <a href="https://litecoin.org/" target="_blank">
+        <img id="doge" src="/images/litecoin.png" width="150px" height="150px">
+    </a>`
+    document.getElementById("inwallet").innerText = "Litecoin in wallet"
+    document.getElementById("cryptoprice").innerText = "Litecoin price"
+    document.getElementById("cryptoaddress").innerText = "Litecoin deposit address";
+    if (allData.ltc.address.toLowerCase().includes("cloud wallet setup!")){
+      document.getElementById("amountinwallet").innerText = allData.ltc.amount;
+      document.getElementById("usdequivalent").innerText = "N/A"
+      // this is if the stupid buyer doesn't have a stupid wallet set up.
+    }else{
+      document.getElementById("privatekey").innerHTML = `<a onclick='reveal()' style='background: #3d85c6; border-radius: 13px; width: 187px; height: 44px; color:  #ffffff; display: inline-block; font: normal bold 19px/44px "Open Sans", sans-serif; text-align: center;'>Click to reveal</a>`
+      document.getElementById("amountinwallet").style="display: none;"
+      document.getElementById("usdequivalent").style="display: none;"
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", `https://sochain.com/api/v2/get_address_balance/LTC/${allData.ltc.address}`)
+      xhr.onload = async () => {
+        let response = JSON.parse(xhr.response);  
+        //response.balance = (Math.round(1000*Number(response.balance)/1000000000000000000)/1000).toString();
+        //response.unconfirmed_balance = (Math.round(1000*Number(response.unconfirmed_balance)/1000000000000000000)/1000).toString();
+        let text = `Amount in wallet: ${response.data.confirmed_balance} LTC | On the way: ${response.data.unconfirmed_balance} LTC`
+        document.getElementById("amountinwallet").innerText = text;
+        document.getElementsByClassName("loadingimage")[0].style="display: none;";
+        document.getElementsByClassName("loadingimage")[1].style="display: none;";
+
+        document.getElementById("usdequivalent").innerHTML = (Number(allData.ltc.price)*response.data.confirmed_balance).toString()+" USD"
+        document.getElementById("amountinwallet").style="";
+        document.getElementById("usdequivalent").style="";
+      }
+    xhr.send();
+    }
+
+    document.getElementById("sec-9794").innerHTML = `
+    <section class="u-align-center u-clearfix u-palette-2-light-2 u-section-4" id="sec-9794">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h1 class="u-text u-text-default u-text-palette-2-base u-text-1">DANGER ZONE</h1>
+        <h4 class="u-text u-text-default u-text-palette-2-base u-text-2">Currently we only support CLOUD wallets! If you already have a LITECOIN cloud wallet, making another one will destroy your funds! If you don't have a LITECOIN cloud wallet, create one!
+        </h4>
+        <div class="u-form u-form-1">
+            <div class="u-form-group u-form-select u-form-group-1">
+              <label for="select-a11b" class="u-form-control-hidden u-label">Select</label>
+            </div>
+            <div class="u-align-left u-form-group u-form-submit u-form-group-2">
+              <a href="#" class="u-btn u-btn-submit u-button-style" onclick="change()">Change (A confirmation email will be sent to you)</a>
+              <input type="submit" value="submit" class="u-form-control-hidden">
+            </div>
+        </div>
+        <div class="u-form u-form-3">
+          <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" style="padding: 10px" source="custom" name="form-1">
+            <input type="hidden" id="siteId" name="siteId" value="36048516">
+            <input type="hidden" id="pageId" name="pageId" value="71715059">
+            <div class="u-form-group u-form-partition-factor-2 u-form-group-5">
+              <label for="text-25b8" class="u-label">Withdrawal address - If you put an incorrect address, your funds will not come back!</label>
+              <input type="text" id="text-25b8" name="deposit"class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" placeholder="(LTC ONLY)">
+            </div>
+            <div class="u-form-group u-form-partition-factor-2 u-form-group-6">
+              <label for="text-e0a1" class="u-label">Amount to withdraw</label>
+              <input type="text" id="text-e0a1" name="amount" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" placeholder="(IN LTC)">
+            </div>
+            <div class="u-align-left u-form-group u-form-submit">
+              <a href="#" onclick="withdraw()" class="u-btn u-btn-submit u-button-style">Withdraw - A confirmation email will be sent to you!</a>
+              <input type="submit" value="submit" class="u-form-control-hidden">
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    `
+  } else {
+    document.getElementById("coinimagepayment").src = "https://cdn.discordapp.com/attachments/794298724205199383/846440540370632724/images-removebg-preview.png"
+
+    document.getElementById("bitcoinindicator1").style.color = "#478AC9";
+    document.getElementById("bitcoinindicator2").style.color = "#478AC9";
+
+    document.getElementById("ethereumindicator1").style.color = "#CCC9C9";
+    document.getElementById("ethereumindicator2").style.color = "#CCC9C9";
+
+    document.getElementById("litecoinindicator1").style.color = "#CCC9C9";
+    document.getElementById("litecoinindicator2").style.color = "#CCC9C9";
+    
+    document.getElementById("cryptopricedisplay").innerHTML = allData.btc.price+ " USD"
+    if (allData.btc.address.toLowerCase().includes("cloud wallet setup!")){
+      document.getElementById("amountinwallet").innerText = allData.btc.amount;
+      document.getElementById("usdequivalent").innerText = "N/A"
+      // this is if the stupid buyer doesn't have a stupid wallet set up.
+    }else{
+      document.getElementById("amountinwallet").style="display: none;"
+      document.getElementById("usdequivalent").style="display: none;"
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", `https://sochain.com/api/v2/get_address_balance/BTC/${allData.btc.address}`)
+      xhr.onload = async () => {
+        let response = JSON.parse(xhr.response);  
+        //response.balance = (Math.round(1000*Number(response.balance)/1000000000000000000)/1000).toString();
+        //response.unconfirmed_balance = (Math.round(1000*Number(response.unconfirmed_balance)/1000000000000000000)/1000).toString();
+        let text = `Amount in wallet: ${response.data.confirmed_balance} BTC | On the way: ${response.data.unconfirmed_balance} BTC`
+        document.getElementById("amountinwallet").innerText = text;
+        document.getElementsByClassName("loadingimage")[0].style="display: none;";
+        document.getElementsByClassName("loadingimage")[1].style="display: none;";
+
+        document.getElementById("usdequivalent").innerHTML = (Number(allData.btc.price)*response.data.confirmed_balance).toString()+" USD"
+        document.getElementById("amountinwallet").style="";
+        document.getElementById("usdequivalent").style="";
+      }
+    xhr.send();
+    }
+
+  }
+
+
+  }
+  function copy() {
+  var copyText = document.getElementById("copyClipboard");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  
+  $('#copied-success').fadeIn(800);
+  $('#copied-success').fadeOut(800);
+}
 </script>

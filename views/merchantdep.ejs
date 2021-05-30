@@ -1,16 +1,19 @@
 <html style="font-size: 16px;">
+<link data-react-helmet="true" rel="icon" href="/images/smallLogo.png">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <meta name="keywords" content="Sign up with a platform of your choice">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <title>Home</title>
-    <link rel="stylesheet" href="nicepage.css" media="screen">
-    <script class="u-script" type="text/javascript" src="https://scripthosting.joshuazou.repl.co/jquery.js" defer=""></script>
-    <script class="u-script" type="text/javascript" src="https://scripthosting.joshuazou.repl.co/nicepage.js" defer=""></script>
+    <title>Change address</title>
+    <link rel="stylesheet" href="index.css" media="screen">
+    <script class="u-script" type="text/javascript" src="/javascript/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/javascript/main.js" defer=""></script>
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
-    
+    <link rel="stylesheet" href="/common.css">
+    <link rel="stylesheet" href="/style.css">
+    <script class="u-script" type="text/javascript" src="/javascript/websocket.js" defer=""></script>
     
     <script type="application/ld+json">{
 		"@context": "http://schema.org",
@@ -22,10 +25,11 @@
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#478ac9">
     <meta property="og:url" content="index.html">
+    <%- include('partials/preload.ejs') %>
   </head>
     <body data-home-page="/" data-home-page-title="Home" class="u-body"><header class="u-clearfix u-header u-header" id="sec-a555"><div class="u-clearfix u-sheet u-sheet-1">
         <a href="/" class="u-image u-logo u-image-1">
-          <img src="https://i.imgur.com/MKPehlI.png" class="u-logo-image u-logo-image-1" data-image-width="109">
+          <img src="/images/logo.png" class="u-logo-image u-logo-image-1" data-image-width="109">
         </a>
         <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
           <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
@@ -76,9 +80,8 @@
     </section>
     
     
-    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-bfb9"><div class="u-clearfix u-sheet u-sheet-1">
-        <p class="u-small-text u-text u-text-variant u-text-1">Copyright Coin Tunnel</p>
-      </div></footer>
+    <%- include('partials/footer.ejs') %>
+
   
 </body></html>
 <style>
@@ -130,10 +133,6 @@
 }
 </style>
 <script>
-function signout() {
-  console.log('User signed out.');
- window.location.href = "/destroySession"
-    }
 
     function onLoad() {
       gapi.load('auth2', function() {

@@ -1,0 +1,235 @@
+<html>
+  <div class="modal-background" style="display: block;"><div class="w-container"><div class="modal-window"><div data-w-id="4b1a90c8-05cd-6c87-b81e-c8ff061cdfd2" class="close-modal" onclick="iemodalclose()"><div class="text-block-17">X</div></div><h2 class="modal-headline _1">Attention Internet Explorer Users:<br></h2><h2 class="modal-body-copy">To enjoy the full experience, more speed and security, please use or download one of these free, up-to-date browsers below: IE is NOT safe to use and could get your funds stolen from the Coin Tunnel platform</h2><div class="browsers"><div class="browser-text"><a href="https://www.microsoft.com/en-us/windows/microsoft-edge" target="_blank" class="browser-link link-14">Microsoft Edge</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="https://www.mozilla.org/en-US/firefox/" target="_blank" class="browser-link link-15">Mozilla Firefox</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="https://www.google.com/chrome/" target="_blank" class="browser-link link-16">Google Chrome</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="https://www.opera.com/" target="_blank" class="browser-link link-17">Opera Software</a></div></div></div></div></div>
+</html>
+<script>
+    let localStorage = window.localStorage;
+        var path = window.location.pathname;
+        if (window.location.pathname === "/merchantdashboard") path = "/dashboard-m"
+        if (window.location.pathname === "/signup-m") path = "/signup-b";
+        if (window.location.pathname === "/signin-m") path = "/signup-b";
+        if (window.location.pathname === "/signin-b") path = "/signup-b";
+        if (window.location.pathname === "/testdashboard" || window.location.pathname === "/dashboard-b") path = "/dashboard";
+        if (window.location.pathname === "/welcome") path = "/newuser";
+        if (window.location.pathname === "/dashboard-b/ltc") path = "/dashboard";
+        if (localStorage.getItem("theme") !== "dark"){
+          var link = document.createElement( "link" );
+          link.href = path+".css"
+          link.type = "text/css";
+          link.rel = "stylesheet";
+          link.media = "screen,print";
+          console.log(link.href)
+          document.getElementsByTagName( "head" )[0].appendChild( link );       
+        }else{
+          var file = location.pathname.split( "/" ).pop();
+          var link = document.createElement( "link" );
+          link.href = "/darkcss"+path+".css"
+          link.type = "text/css";
+          link.rel = "stylesheet";
+          link.media = "screen,print";
+  
+          document.getElementsByTagName( "head" )[0].appendChild( link );
+        }
+
+  function iemodalclose(){
+    console.log("closemodal")
+    document.getElementsByClassName("modal-background")[0].style.display = "none"
+  }
+    
+  
+	 
+
+var version = detectIE();
+
+if(version==11){
+	$(document).ready(function(){
+  		$('.wwd-left-content').css({'display': 'table-cell'});
+  		$('.btn-div').css({'min-width':'140%','margin-bottom':'25px'})
+      $('.wwd-left-content').siblings().css({'display':'table-cell'})
+  });
+
+}
+document.getElementsByClassName('modal-background')[0].style.display = "none";
+if (version<12 && version !==false){
+	document.getElementsByClassName('modal-background')[0].style.display = "block";
+}
+
+function detectIE() {
+  var ua = window.navigator.userAgent;
+
+  var msie = ua.indexOf('MSIE ');
+  if (msie > 0) {
+    return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+  }
+
+  var trident = ua.indexOf('Trident/');
+  if (trident > 0) {
+    var rv = ua.indexOf('rv:');
+    return 11;//parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+  }
+
+  var edge = ua.indexOf('Edge/');
+  if (edge > 0) {
+    return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+  }
+  return false;
+}
+
+</script>
+<style>
+  .modal-background {
+    font-family: sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    position: fixed;
+    left: 0%;
+    top: 0%;
+    right: 0%;
+    bottom: 0%;
+    z-index: 99999;
+    display: none;
+    padding: 80px 20px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: transparent;
+}
+.w-container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 940px;
+}
+.modal-window {
+    position: relative;
+    left: 0%;
+    top: 0%;
+    right: 0%;
+    bottom: 0%;
+    width: 60%;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 12px 0px;
+    border: 2px solid #00e0fc;
+    border-radius: 11px;
+    background-color: #000;
+}
+.close-modal {
+    position: absolute;
+    left: auto;
+    top: 10px;
+    right: 10px;
+    bottom: auto;
+    z-index: 99999;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 35px;
+    height: 35px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border: 2px solid #00e0fc;
+    border-radius: 7px;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+.modal-headline._1 {
+    margin-top: 0px;
+    color: #00e0fc;
+}
+.modal-headline {
+    margin-bottom: 15px;
+    color: #fff;
+    font-size: 23px;
+    line-height: 1.6em;
+    text-align: center;
+}
+.modal-body-copy {
+    margin-top: -6px;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+}
+.browsers {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    max-width: 600px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 0px;
+    padding-bottom: 10px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+}
+.browser-text {
+    margin-top: 2px;
+    color: #00e0fc;
+    font-size: 15px !important;
+    line-height: 1.5em !important;
+    letter-spacing: normal;
+}
+.link-14 {
+    font-weight: 400;
+    cursor: pointer;
+}
+.browser-link {
+    color: #fff;
+}
+.browser-text a {
+    -webkit-transition: opacity 200ms ease;
+    transition: opacity 200ms ease;
+    color: #007b8a;
+    font-weight: 700;
+    text-decoration: none;
+}
+.modal-background body {
+    font-family: 'Open Sans', sans-serif;
+    color: #1a1b1f;
+    font-size: 17px;
+    line-height: 1.8em;
+    font-weight: 400;
+    margin: 0;
+    min-height: 100%;
+    background-color: #fff;
+    font-family: Arial,sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333;
+}
+</style>

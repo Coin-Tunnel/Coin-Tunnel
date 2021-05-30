@@ -1,238 +1,1099 @@
 <!DOCTYPE html>
+<link data-react-helmet="true" rel="icon" href="/images/smallLogo.png">
 <html style="font-size: 16px;">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <title>Merchant Dashboard</title>
-    <link rel="stylesheet" href="nicepage.css" media="screen">
-<link rel="stylesheet" href="dashboard-m.css" media="screen">
-    <script class="u-script" type="text/javascript" src="https://scripthosting.joshuazou.repl.co/jquery.js" defer=""></script>
-    <script class="u-script" type="text/javascript" src="https://scripthosting.joshuazou.repl.co/nicepage.js" defer=""></script>
-    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
-    
-    
-    
-    
-    <script type="application/ld+json">{
+
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="page_type" content="np-template-header-footer-from-plugin">
+  <title>Merchant Dashboard</title>
+  <link rel="stylesheet" href="index.css" media="screen">
+  <script class="u-script" type="text/javascript" src="/javascript/jquery.js" defer=""></script>
+  <script class="u-script" type="text/javascript" src="/javascript/main.js" defer=""></script>
+  <link id="u-theme-google-font" rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+
+  <link rel="stylesheet" href="/common.css">
+  <link rel="stylesheet" href="/style.css">
+  <script class="u-script" type="text/javascript" src="/javascript/websocket.js" defer=""></script>
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+  <script type="application/ld+json">{
 		"@context": "http://schema.org",
 		"@type": "Organization",
 		"name": "Site1",
 		"url": "index.html"
 }</script>
-    <meta property="og:title" content="Merchant Dashboard">
-    <meta property="og:type" content="website">
-    <meta name="theme-color" content="#478ac9">
-    <link rel="canonical" href="index.html">
-    <meta property="og:url" content="index.html">
-  </head>
-  <body data-home-page="/" data-home-page-title="Home" class="u-body"><header class="u-clearfix u-header u-header" id="sec-a555"><div class="u-clearfix u-sheet u-sheet-1">
-        <a href="/" class="u-image u-logo u-image-1">
-          <img src="https://i.imgur.com/MKPehlI.png" class="u-logo-image u-logo-image-1" data-image-width="109">
-        </a>
-        <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
-          <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
-            <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
-              <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
-              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;"><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
-</symbol>
-</defs></svg>
-            </a>
-          </div>
-          <div class="u-nav-container">
-            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/" style="padding: 10px 20px;">Home</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" onclick="signout()" href="#"style="padding: 10px 20px;">Signout</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/dashboard-m" style="padding: 10px 20px;">Merchant Dashboard</a>
-</li></ul>
-          </div>
-          <div class="u-nav-container-collapse">
-            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
-              <div class="u-sidenav-overflow">
-                <div class="u-menu-close"></div>
-                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/">Home</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" onclick = "signout()" href="#">Sign Out</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/dashboard-m">Merchant Dashboard</a>
-</li></ul>
-              </div>
+  <meta property="og:title" content="Merchant Dashboard">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#478ac9">
+  <link rel="canonical" href="index.html">
+  <meta property="og:url" content="index.html">
+  <%- include('partials/preload.ejs') %>
+</head>
+
+<body data-home-page="/" data-home-page-title="Merchant Dashboard" class="u-body">
+  <header class="u-clearfix u-header u-header" id="sec-a555">
+    <div class="u-clearfix u-sheet u-sheet-1">
+      <a href="/" class="u-image u-logo u-image-1">
+        <img src="/images/logo.png" class="u-logo-image u-logo-image-1" data-image-width="109">
+      </a>
+      <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+        <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+          <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+            href="#">
+            <svg>
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use>
+            </svg>
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <defs>
+                <symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;">
+                  <rect y="1" width="16" height="2"></rect>
+                  <rect y="7" width="16" height="2"></rect>
+                  <rect y="13" width="16" height="2"></rect>
+                </symbol>
+              </defs>
+            </svg>
+          </a>
+        </div>
+        <div class="u-nav-container">
+
+          <ul class="u-nav u-unstyled u-nav-1">
+            <li class="u-nav-item"><a
+                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/"
+                style="padding: 10px 20px;">Home</a>
+            </li>
+            <li class="u-nav-item"><a
+                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                onclick="signout()" href="#" style="padding: 10px 20px;">Signout</a>
+            </li>
+            <li class="u-nav-item"><a
+                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                href="/dashboard-m" style="padding: 10px 20px;">Merchant Dashboard</a>
+            </li>
+            <li class="u-nav-item">
+              Dark Theme
+            </li>
+            <label class="switch">
+              <input type="checkbox" onclick="changeTheme()" id="bigTheme">
+              <span class="slider round"></span>
+            </label>
+
+          </ul>
+        </div>
+        <div class="u-nav-container-collapse">
+          <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+            <div class="u-sidenav-overflow">
+              <div class="u-menu-close"></div>
+              <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/">Home</a>
+                </li>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" onclick="signout()" href="#">Sign Out</a>
+                </li>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/dashboard-m">Merchant Dashboard</a>
+                </li>
+                <li class="u-nav-item" style="padding-bottom: 10px;">
+                  Dark Theme
+                </li>
+                <label class="switch">
+                  <input type="checkbox" onclick="changeTheme()" id="smallTheme">
+                  <span class="slider round"></span>
+                </label>
+              </ul>
             </div>
-            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
           </div>
-        </nav>
-      </div></header>
-    <section class="u-align-center u-clearfix u-gradient u-section-1" id="carousel_7010">
-      <div class="u-clearfix u-sheet u-sheet-1">
-        <h2 class="u-text u-text-palette-1-base u-text-1">Merchant Dashboard</h2>
-        <p class="u-text u-text-grey-50 u-text-2">See your current stats</p>
-        <div class="u-expanded-width u-list u-repeater u-list-1">
-          <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-1">
-            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
-              <h5 class="u-text u-text-palette-1-base u-text-3">Merchant id</h5>
-              <p class="u-text u-text-grey-50 u-text-4"><%-db.tunnelId%></p>
-            </div>
+          <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+
+        </div>
+
+      </nav>
+    </div>
+  </header>
+  <section class="u-align-center u-clearfix u-gradient u-section-1" id="carousel_7010">
+    <div class="u-clearfix u-sheet u-sheet-1">
+      <h2 class="u-text u-text-palette-1-base u-text-1">Merchant Dashboard</h2>
+      <p class="u-text u-text-grey-50 u-text-2">See your current stats</p>
+      <div class="u-expanded-width u-list u-repeater u-list-1">
+        <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-1">
+          <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
+            <h5 class="u-text u-text-palette-1-base u-text-3">Merchant id</h5>
+            <p class="u-text u-text-grey-50 u-text-4" id="merchantid"></p>
           </div>
-          <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-2">
-            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-2">
-              <h5 class="u-text u-text-palette-1-base u-text-5">Connected wallet</h5>
-              <p class="u-text u-text-grey-50 u-text-6"><%-db.deposit%></p>
-            </div>
+        </div>
+        <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-2">
+          <div class="u-container-layout u-similar-container u-valign-top u-container-layout-2">
+            <h5 class="u-text u-text-palette-1-base u-text-5">Connected <div class="dropdown">
+                <button class="dropbtn" id="merchantcoin">BTC <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </button>
+                <div class="dropdown-content" style="color: black">
+                  <a onclick="changeToBtc()">BTC</a>
+                  <a onclick="changeToLtc()">LTC</a>
+                  <a onclick="changeToEth()">ETH</a>
+                </div>
+              </div> wallet</h5>
+            <p class="u-text u-text-grey-50 u-text-6" id="merchantaddress"></p>
           </div>
-          <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-3">
-            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-3">
-              <h5 class="u-text u-text-palette-1-base u-text-7">Wallet contents</h5>
-              <p class="u-text u-text-grey-50 u-text-8"><%-wallet%></p>
-            </div>
+        </div>
+        <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-3">
+          <div class="u-container-layout u-similar-container u-valign-top u-container-layout-3" style="align-items: center;">
+            <h5 class="u-text u-text-palette-1-base u-text-7">Wallet contents</h5>
+            <img style="margin-top: 10px;" src="/images/loading.gif" width="50px" id="loadinggif">
+            <p class="u-text u-text-grey-50 u-text-8" id="walletcontent"><%-wallet%></p>
           </div>
-          <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-4">
-            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-4">
-              <h5 class="u-text u-text-palette-1-base u-text-9">Open transactions</h5>
-              <p class="u-text u-text-grey-50 u-text-10"><%- transac.open %></p>
-            </div>
+        </div>
+        <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-4">
+          <div class="u-container-layout u-similar-container u-valign-top u-container-layout-4">
+            <h5 class="u-text u-text-palette-1-base u-text-9">Open transactions</h5>
+            <p class="u-text u-text-grey-50 u-text-10"><%- transac.open %></p>
+            <button type="button" class="u-btn u-button-style u-btn-2" data-open="modal1" onclick="showmodal()">
+              View all transactions
+            </button>
           </div>
-          <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-5">
-            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-5">
-              <h5 class="u-text u-text-palette-1-base u-text-11">Closed transactions</h5>
-              <p class="u-text u-text-grey-50 u-text-12"><%- transac.closed %></p>
-            </div>
+        </div>
+
+        <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-5">
+          <div class="u-container-layout u-similar-container u-valign-top u-container-layout-5">
+            <h5 class="u-text u-text-palette-1-base u-text-11">Closed transactions</h5>
+            <p class="u-text u-text-grey-50 u-text-12"><%- transac.closed %></p>
           </div>
-          <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-6">
-            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-6">
-              <h5 class="u-text u-text-palette-1-base u-text-13">Total transactions</h5>
-              <p class="u-text u-text-grey-50 u-text-14"><%- transac.all %></p>
-            </div>
+        </div>
+        <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-6">
+          <div class="u-container-layout u-similar-container u-valign-top u-container-layout-6">
+            <h5 class="u-text u-text-palette-1-base u-text-13">Errored transactions</h5>
+            <p class="u-text u-text-grey-50 u-text-14"><%- transac.all %></p>
           </div>
         </div>
       </div>
-    </section>
-    <section class="u-clearfix u-palette-1-base u-section-2" id="carousel_5d1e">
+    </div>
+  </section>
+  <section class="u-clearfix u-palette-1-base u-section-2" id="carousel_5d1e">
+    <div class="modal1" id="modal1" data-animation="slideInOutRight"
+      style="float: none; right: 0px; position: fixed; display: inline-block;">
+      <div class="modal-dialog display-none">
+        <header class="modal-header">
+          <button class="close-modal" aria-label="close modal1" data-close>
+            ✕
+          </button>
+        </header>
+        <section class="modal-content-1" style="height: 89vh; color: black; max-height: 90vh;">
+          <div class="container">
+            <table class="responsive-table" style="max-width: fit-content; color: black;">
+              <p><strong>List of all transactions that occured in the past month</strong></p>
+              <thead>
+                <tr>
+                  <th scope="col">Type</th>
+                  <th scope="col">USD equivalent</th>
+                  <th scope="col">Crypto spent</th>
+                  <th scope="col">Creation (local time)</th>
+                  <th scope="col">txid</th>
+                  <th scope="col">Note</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                </tr>
+              </tfoot>
+              <% for (var x = 0; x<transactionList.length; x++){%>
+              <%
+                  let text = "";
+                  var creation
+                  var d = new Date(transactionList[x].expiry);
+                  let expiry = d.toString().slice(0, d.toString.length-23);
+                  if (transactionList[x].status === "failed") creation = "No data";
+                  else{
+                    d = new Date(transactionList[x].creation);
+                    if (!transactionList[x].creation) d = new Date(transactionList[x].data.creation)
+                    creation = d.toString().slice(0, d.toString.length-23)
+                    creation = creation.slice(4);
+                    creation = creation.slice(0, creation.length-9)
+                  }
+                  
+                  if (!transactionList[x].directLogs && transactionList[x].status !== "Expired" && !transactionList[x].status){
+                    // this garbage is open transactions
+                    if (transactionList[x].version === "v2"){
+                      console.log("a;lkdfj;asldjkf;asdlkjf")
+                      text = "Awaiting payment, Expiry: "+expiry+", Creation: "+creation+", "+transactionList[x].price_in_usd+"USD = "+ transactionList[x].price_in_crypto+transactionList[x].coin
+                      %>
+              <tr style="color: black;">
+                <th scope="row" style="color: black;">Awaiting payment</th>
+                <td data-title="USD equivalent"><%- transactionList[x].price_in_usd %></td>
+                <td data-title="Amount of crypto">
+                  <%- transactionList[x].price_in_crypto.toString().slice(0, 10)+transactionList[x].coin %></td>
+                <td data-title="Creation (local time)" data-type="currency"><%- creation %></td>
+                <td data-title="txid" data-type="currency"><a style="color: lightskyblue" target="_blank"
+                    href=<%- "/api/v1/txinfo/useSession/"+transactionList[x].txid %>><%- transactionList[x].txid %></a>
+                </td>
+                <td data-title="Note" data-type="currency"><%- JSON.stringify(transactionList[x].note) %></td>
+              </tr>
+              <%
+                    } 
+                    else{
+                      text = "Awaiting payment, Expiry: "+expiry+", Creation: "+creation+", "+transactionList[x].price_in_usd+" USD = "+ transactionList[x].price_in_btc+" BTC";
+                      %>
+              <tr style="color: black;">
+                <th scope="row" style="color: black;">Awaiting payment</th>
+                <td data-title="USD equivalent"><%- transactionList[x].price_in_usd %></td>
+                <td data-title="Amount of crypto"><%- transactionList[x].price_in_btc.toString().slice(0, 10) %> BTC
+                </td>
+                <td data-title="Creation (local time)" style="margin-left: 100px" data-type="currency"><%- creation%>
+                </td>
+                <td data-title="txid" data-type="currency"><a style="color: lightskyblue" target="_blank"
+                    href=<%- "/api/v1/txinfo/useSession/"+transactionList[x].txid %>><%- transactionList[x].txid %></a>
+                </td>
+                <td data-title="Note" data-type="currency"><%- JSON.stringify(transactionList[x].note) %></td>
+              </tr>
+              <%
+                    }
+                  }else if (transactionList[x].status === "Expired" || transactionList.status === "failed"){
+                    // this is failed transactions
+                    if (transactionList[x].status === "Expired"){
+                      if (!transactionList[x].data.price_in_crypto) transactionList[x].data.price_in_crypto = transactionList[x].data.price_in_btc;
+                      if (!transactionList[x].coin) transactionList[x].coin = "BTC"
+                      %>
+              <tr style="color: black;">
+                <th scope="row" style="color: #A03036;">Expired</th>
+                <td data-title="USD equivalent"><%- transactionList[x].data.price_in_usd %></td>
+                <td data-title="Amount of crypto">
+                  <%- transactionList[x].data.price_in_crypto.toString().slice(0, 10)+" "+transactionList[x].coin %>
+                </td>
+                <td data-title="Creation (local time)" data-type="currency"><%-creation%></td>
+                <td data-title="txid" data-type="currency"><a style="color: lightskyblue" target="_blank"
+                    href=<%- "/api/v1/txinfo/useSession/"+transactionList[x].txid %>><%- transactionList[x].txid %></a>
+                </td>
+                <td data-title="Note" data-type="currency"><%- JSON.stringify(transactionList[x].data.note) %></td>
+              </tr>
+              <%
+                    }else{
+                      if (!transactionList[x].data.price_in_crypto) transactionList[x].data.price_in_crypto = transactionList[x].data.price_in_btc;
+                      if (!transactionList[x].coin) transactionList[x].coin = "BTC"
+                      %>
+              <tr style="color: black;">
+                <th scope="row" style="color: #A03036;">failed</th>
+                <td data-title="USD equivalent"><%- transactionList[x].data.price_in_usd %></td>
+                <td data-title="Amount of crypto">
+                  <%- transactionList[x].data.price_in_crypto.toString().slice(0, 10)+" "+transactionList[x].coin %>
+                </td>
+                <td data-title="Creation (local time)" data-type="currency"><%-creation%></td>
+                <td data-title="txid" data-type="currency"><a style="color: lightskyblue" target="_blank"
+                    href=<%- "/api/v1/txinfo/useSession/"+transactionList[x].txid %>><%- transactionList[x].txid %></a>
+                </td>
+                <td data-title="Note" data-type="currency"><%- JSON.stringify(transactionList[x].data.note) %></td>
+              </tr>
+              <%
+                    }
+                  }else {
+                    if (creation === "No data"){
+                      // then it's erroroed Out
+                      %>
+              <tr style="color: #d42f38;">
+                <th scope="row" style="color: #d42f38;">Failed</th>
+                <td data-title="USD equivalent">No data</td>
+                <td data-title="Amount of crypto">No data</td>
+                <td data-title="Creation (local time)" data-type="currency">No data</td>
+                <td data-title="txid" data-type="currency"><a style="color: lightskyblue" target="_blank"
+                    href=<%- "/api/v1/txinfo/useSession/"+transactionList[x].txid %>><%- transactionList[x].txid %></a>
+                </td>
+                <td data-title="Note" data-type="currency"><%- "Reason: "+transactionList[x].reason %></td>
+              </tr>
+              <%
+                    }else{
+                      if (transactionList[x].price_in_btc) transactionList[x].price_in_crypto = transactionList[x].price_in_btc;
+                      if (transactionList[x].price_in_btc) transactionList[x].coin = "BTC"
+                      %>
+              <tr style="color: black;">
+                <th scope="row" style="color: black">Paid</th>
+                <td data-title="USD equivalent"><%- transactionList[x].price_in_usd %></td>
+                <td data-title="Amount of crypto">
+                  <%- transactionList[x].price_in_crypto.toString().slice(0, 10)+" "+transactionList[x].coin %></td>
+                <td data-title="Creation (local time)" data-type="currency"><%-creation%></td>
+                <td data-title="txid" data-type="currency"><a style="color: lightskyblue" target="_blank"
+                    href=<%- "/api/v1/txinfo/useSession/"+transactionList[x].txid %>><%- transactionList[x].txid %></a>
+                </td>
+                <td data-title="Note" data-type="currency"><%- JSON.stringify(transactionList[x].note) %></td>
+              </tr>
+              <%
+                    }
+
+                    
+                  } 
+                  %>
+              <%}%>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
       <div class="u-clearfix u-sheet u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
         <h2 class="u-text u-text-default u-text-1">API keys</h2>
-        <h5 class="u-text u-text-default u-text-2">(Keep these secret)</h5>
+        <h5 class="u-text u-text-default u-text-13 u-text-center">(Keep these secret)</h5>
         <div class="u-expanded-width u-list u-repeater u-list-1">
           <div class="u-align-center u-container-style u-list-item u-repeater-item u-white u-list-item-1">
             <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
               <h5 class="u-text u-text-3">Api key prefix</h5>
               <p class="u-text u-text-4"><%-key.prefix%>&nbsp;</p>
-            </div>
           </div>
-          <div class="u-align-center u-container-style u-list-item u-repeater-item u-white u-list-item-2">
-            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-2">
-              <h5 class="u-text u-text-5">Uses</h5>
-              <p class="u-text u-text-6"><%-key.uses%></p>
-            </div>
-          </div>
-          <div class="u-align-center u-container-style u-list-item u-repeater-item u-white u-list-item-3">
-            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-3">
-              <h5 class="u-text u-text-7">List of Ip's that used it</h5>
-              <% for (var x=0; x<key.ip.length; x++){ %>
-              <p class="u-text u-text-8"><%-key.ip[x]%></p>
-              <% } %>
-            </div>
-          </div>
-          <div class="u-align-center u-container-style u-list-item u-repeater-item u-white u-list-item-4">
-            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-4">
-              <h5 class="u-text u-text-9">Connected email</h5>
-              <p class="u-text u-text-10">
-                <a href="mailto:<%-db.email%>" class="u-active-none u-border-1 u-border-palette-2-base u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-2-base u-btn-1"><%-db.email%><br>
-                </a>
-              </p>
-            </div>
-          </div>
+      </div>
+      <div class="u-align-center u-container-style u-list-item u-repeater-item u-white u-list-item-2">
+        <div class="u-container-layout u-similar-container u-valign-top u-container-layout-2">
+          <h5 class="u-text u-text-5">Uses</h5>
+          <p class="u-text u-text-6"><%-key.uses%></p>
         </div>
-        <a href="https://docs.coin-tunnel.ml" class="u-btn u-button-style u-btn-2">Docs</a>
       </div>
-    </section>
-    <section class="u-align-center u-clearfix u-palette-2-light-1 u-section-3" id="sec-3403">
-      <div class="u-align-center u-clearfix u-sheet u-valign-middle u-sheet-1">
-        <h2 class="u-text u-text-1">Regenerate API key</h2>
-        <p class="u-text u-text-2" id="showhere">When you regenerate, you will have to update your code, otherwise it will stop working.<br>You should do this if you fear that someone has your api key.
-        </p>
-        <a class="u-btn u-button-style u-grey-90 u-btn-1" onclick="regenerate()">Regenerate</a>
+      <div class="u-align-center u-container-style u-list-item u-repeater-item u-white u-list-item-3">
+        <div class="u-container-layout u-similar-container u-valign-top u-container-layout-3">
+          <h5 class="u-text u-text-7">List of Ip's that used it</h5>
+          <% for (var x=0; x<key.ip.length; x++){ %>
+          <p class="u-text u-text-8"><%-key.ip[x]%></p>
+          <% } %>
+        </div>
       </div>
-      <div class="u-align-center u-clearfix u-sheet u-valign-middle u-sheet-1">
-        <h2 class="u-text u-text-1">Change deposit address</h2>
-        <p class="u-text u-text-2">Change your deposit address <br>(Remember, this is how you get paid, so be careful)
-        </p>
-        <a href="/changeAddress" class="u-btn u-button-style u-grey-90 u-btn-1">Change</a>
+      <div class="u-align-center u-container-style u-list-item u-repeater-item u-white u-list-item-4">
+        <div class="u-container-layout u-similar-container u-valign-top u-container-layout-4">
+          <h5 class="u-text u-text-9">Connected email</h5>
+          <p class="u-text u-text-10">
+            <% let parsedDB = JSON.parse(db) %>
+            <a href="mailto:<%-parsedDB.email%>"
+              class="u-active-none u-border-1 u-border-palette-2-base u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-2-base u-btn-1"><%-parsedDB.email%><br>
+            </a>
+          </p>
+        </div>
       </div>
-<h2 class="u-text u-text-1">Change your verification string
-        </h2>
-        <br>
-       <form action="#" method="POST" class="u-clearfix u-form-horizontal u-form-spacing-15 u-inner-form" style="padding: 15px" source="custom">
+    </div>
+    <a href="https://docs.coin-tunnel.ml" class="u-btn u-button-style u-btn-2">Docs</a>
+    </div>
+  </section>
+  <section class="u-align-center u-clearfix u-palette-2-light-1 u-section-3" id="sec-3403">
+    <div class="u-align-center u-clearfix u-sheet u-valign-middle u-sheet-1">
+      <h2 class="u-text u-text-1">Regenerate API key</h2>
+      <p class="u-text u-text-2" id="showhere">When you regenerate, you will have to update your code, otherwise it will
+        stop working.<br>You should do this if you fear that someone has your api key.
+      </p>
+      <a class="u-btn u-button-style u-grey-90 u-btn-1" onclick="regenerate()">Regenerate</a>
+    </div>
+    <div class="u-align-center u-clearfix u-sheet u-valign-middle u-sheet-1">
+      <h2 class="u-text u-text-1">Change deposit addresses</h2>
+      <p class="u-text u-text-2">Change your BTC deposit address <br>(Remember, this is how you get paid, so be careful)
+      </p>
+      <a href="/changeAddress" class="u-btn u-button-style u-grey-90 u-btn-1" style="margin-bottom: 0px;">Change BTC <i
+          class="fa fa-bitcoin" aria-hidden="true"></i></a>
+      <p class="u-text u-text-2 ">Change your LITECOIN deposit address <br>(Remember, this is how you get paid, so be
+        careful)
+      </p>
+      <input type="checkbox" id="modal" />
+      <label for="modal" class="u-btn u-button-style u-grey-90 u-btn-1" id="changecoinbutton">
+        Change LTC
+      </label>
+      <label for="modal" class="modal-bg"></label>
+      <div class="modal-content">
+        <label for="modal" class="close">
+        </label>
+        <header>
+          <h2 style="color: black" id="modalcoin">Enter your new LTC address below</h3>
+        </header>
+        <article class="content">
+          <form action="#" method="POST" class="u-clearfix u-form-horizontal u-form-spacing-15 u-inner-form"
+            style="padding: 15px" source="custom">
             <div class="u-form-group u-form-name u-form-group-1">
               <label for="name-558c" class="u-form-control-hidden u-label">Key</label>
-              <input type="text" placeholder="string" id="name-558c" name="name" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required="">
+              <input type="text" placeholder="address" id="ltc_address_field" name="name"
+                class="u-border-1 u-border-grey-30 u-input u-input-rectangle" style="color: black" required="true">
             </div>
             <div class="u-form-group u-form-submit u-form-group-2">
-              <a href="#" class="u-btn u-btn-submit u-button-style" onclick="verficationKey()">Change</a>
             </div>
-            <input type="hidden" value="" name="recaptchaResponse">
           </form>
-    </section>
-    
-    
-   <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-bfb9"><div class="u-clearfix u-sheet u-sheet-1">
-        <p class="u-small-text u-text u-text-variant u-text-1">Copyright Coin Tunnel</p>
-      </div></footer>
-  </body>
+        </article>
+        <footer>
+          <label onclick="changeLtc()" class="button success" for="modal">Change</label>
+          <label for="modal" class="button danger">Cancel</label>
+        </footer>
+      </div>
+
+
+      <input type="checkbox" id="error-ltc" />
+      <label for="error-ltc" class="modal-bg-ltc"></label>
+      <div class="modal-content-ltc">
+        <label for="error-ltc" class="close">
+        </label>
+        <header>
+          <h2 style="color: black" id="error-text">That wasn't a valid LTC address!</h3>
+        </header>
+        <footer>
+          <label for="error-ltc" class="button success">Ok</label>
+        </footer>
+      </div>
+
+
+    </div>
+    <h2 class="u-text u-text-1">Change your verification string
+    </h2>
+    <br>
+    <form action="#" method="POST" class="u-clearfix u-form-horizontal u-form-spacing-15 u-inner-form"
+      style="padding: 15px" source="custom">
+      <div class="u-form-group u-form-name u-form-group-1">
+        <label for="name-558c" class="u-form-control-hidden u-label">Key</label>
+        <input type="text" placeholder="string" id="name-558c" name="name"
+          class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required="">
+      </div>
+      <div class="u-form-group u-form-submit u-form-group-2">
+        <a href="#" class="u-btn u-btn-submit u-button-style" onclick="verficationKey()">Change</a>
+      </div>
+      <input type="hidden" value="" name="recaptchaResponse">
+    </form>
+  </section>
+
+
+  <%- include('partials/footer.ejs') %>
+
+</body>
+
 </html>
 <script>
-function signout() {
-  console.log('User signed out.');
- window.location.href = "/destroySession"
+  let allData = '<%- db %>';
+  allData = JSON.parse(allData);
+  console.log(allData);
+  document.getElementById("merchantid").innerText = allData.tunnelId;
+  if (localStorage.getItem("merchant-coin") === null) {
+    localStorage.setItem('merchant-coin', 'BTC');
+    window.location.reload();
+  } else if (localStorage.getItem("merchant-coin") === "BTC") {
+    // do rando stuff 
+    document.getElementById("merchantaddress").innerText = allData.deposit;
+    document.getElementById("merchantcoin").innerHTML = `BTC <i class="fa fa-angle-down" aria-hidden="true"></i>`;
+    document.getElementById("loadinggif").style="display:none"
+  } else if (localStorage.getItem("merchant-coin") === "LTC") {
+    // do more stupid stuff'
+    if (allData.ltc_deposit !== undefined && allData.ltc_deposit !== "none"){
+      document.getElementById("walletcontent").style = "display: none"
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", `https://chain.so/api/v2/get_address_balance/LTC/${allData.ltc_deposit}`);
+    xhr.onload = async () => {
+      console.log(xhr.response);
+      let response = JSON.parse(xhr.response);
+      console.log(response)
+      let text = "In wallet: "+response.data.confirmed_balance+" LTC | On the way: "+response.data.unconfirmed_balance+" LTC";
+      document.getElementById("walletcontent").innerText = text;
+      document.getElementById("walletcontent").style = ""
+      document.getElementById("loadinggif").style="display:none"
+      document.getElementById("merchantaddress").innerText = allData.ltc_deposit
+    }
+    xhr.send();
+    } else {
+      document.getElementById("walletcontent").innerText = "No wallet connected!";
+      document.getElementById("walletcontent").style = ""
+      document.getElementById("loadinggif").style="display:none"
+      document.getElementById("merchantaddress").innerText = "No wallet connected"
+    }
+    document.getElementById("modalcoin").innerText = "Enter your new LTC address below"
+    document.getElementById("changecoinbutton").innerText = "Change LTC"
+    document.getElementById("merchantcoin").innerHTML = `LTC <i class="fa fa-angle-down" aria-hidden="true"></i>`;
+  } else if (localStorage.getItem("merchant-coin") === "ETH") {
+    document.getElementById("modalcoin").innerText = "Enter your new ETH address below"
+    document.getElementById("changecoinbutton").innerText = "Change ETH";
+
+    var ethwallet = "No wallet connected yet!";
+
+    if (!allData.eth_deposit || allData.eth_deposit === "none"){
+      allData.eth_deposit = "No ETH wallet connected";
+      document.getElementById("loadinggif").style="display:none"
     }
 
-    function onLoad() {
-      gapi.load('auth2', function() {
-        gapi.auth2.init();
-      });
+    else {
+      document.getElementById("walletcontent").style = "display: none"
+      //getWalletData();
+      let xhr1 = new XMLHttpRequest();
+      xhr1.open('GET', `https://api.blockcypher.com/v1/eth/main/addrs/${allData.eth_deposit}/balance`);
+      xhr1.setRequestHeader('Content-Type', 'application/json');
+
+      xhr1.onload = async () => {
+        //await sleep(10000)
+        let parsed = JSON.parse(xhr1.response);
+        console.log(parsed);
+        parsed.balance = (Math.round(1000*Number(parsed.balance)/1000000000000000000)/1000).toString();
+        parsed.unconfirmed_balance = (Math.round(1000*Number(parsed.unconfirmed_balance)/1000000000000000000)/1000).toString();
+        ethwallet = "In wallet: "+parsed.balance+" ETH On the way: "+parsed.unconfirmed_balance+" ETH";
+        document.getElementById("walletcontent").innerText = ethwallet;
+        document.getElementById("walletcontent").style = ""
+        document.getElementById("loadinggif").style="display:none"
+        console.log(ethwallet)
+      }
+      xhr1.send();
+      // get random info about the wallet
+      
     }
 
-function regenerate(){
-if (confirm("Are you sure you want to reset the key?")) {
- 
-} else {
-  return;
-}
- var xhr = new XMLHttpRequest();
-xhr.open('POST', '/regenerate');
-xhr.setRequestHeader('Content-Type', 'application/json');
+    document.getElementById("merchantaddress").innerText = allData.eth_deposit;
 
-xhr.onload = () => {
-  console.log(xhr.response)
-  if (xhr.response.toString().includes("key")){
-  alert("A new key has been generated: "+xhr.response.toString().slice(8, xhr.response.toString().length-2));
-  document.getElementById("showhere").innerHTML = "A new has been generated! This will only appear once for security reasons (We don't actually know your key due to hashing) Write it down quick! The new key is: "+xhr.response.toString().slice(8, xhr.response.toString().length-2)
-}else{
-  alert(xhr.response)
-}
-}
-xhr.send(JSON.stringify({
-"hello":"hellow"
-}));
-}
-
-function verficationKey(){
-let value = document.getElementById("name-558c").value
-if (value.length < 10) return alert("Verification string must be longer than 10 characters!");
-
-var xhr = new XMLHttpRequest();
-xhr.open('POST', '/changeKey');
-xhr.setRequestHeader('Content-Type', 'application/json');
-
-xhr.onload = () => {
-  console.log(xhr.response)
-  if (xhr.response.toString().includes("key")){
-  alert("A new verification string has been set: "+xhr.response.toString().slice(8, xhr.response.toString().length-2));
-}else{
-  alert(xhr.response)
-}
-}
-xhr.send(JSON.stringify({
-"key":value
-}));
+    document.getElementById("walletcontent").innerText = ethwallet;
+    document.getElementById("merchantcoin").innerHTML = `ETH <i class="fa fa-angle-down" aria-hidden="true"></i>`;
+  }
 
 
-}
+  function changeToBtc() {
+    localStorage.setItem('merchant-coin', 'BTC');
+    window.location.reload();
+  }
+
+  function changeToLtc() {
+    localStorage.setItem('merchant-coin', 'LTC');
+    window.location.reload();
+  }
+  function changeToEth() {
+    localStorage.setItem('merchant-coin', 'ETH');
+    window.location.reload();
+  }
+  function onLoad() {
+    gapi.load('auth2', function () {
+      gapi.auth2.init();
+    });
+  }
+
+  function regenerate() {
+    if (confirm("Are you sure you want to reset the key?")) {
+
+    } else {
+      return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/regenerate');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onload = () => {
+      console.log(xhr.response)
+      if (xhr.response.toString().includes("key")) {
+        alert("A new key has been generated: " + xhr.response.toString().slice(8, xhr.response.toString().length - 2));
+        document.getElementById("showhere").innerHTML = "A new has been generated! This will only appear once for security reasons (We don't actually know your key due to hashing) Write it down quick! The new key is: " + xhr.response.toString().slice(8, xhr.response.toString().length - 2)
+      } else {
+        alert(xhr.response)
+      }
+    }
+    xhr.send(JSON.stringify({
+      "hello": "hellow"
+    }));
+  }
+
+  function verficationKey() {
+    let value = document.getElementById("name-558c").value
+    if (value.length < 10) return alert("Verification string must be longer than 10 characters!");
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/changeKey');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onload = () => {
+      console.log(xhr.response)
+      if (xhr.response.toString().includes("key")) {
+        alert("A new verification string has been set: " + xhr.response.toString().slice(8, xhr.response.toString().length - 2));
+      } else {
+        alert(xhr.response)
+      }
+    }
+    xhr.send(JSON.stringify({
+      "key": value
+    }));
+
+
+  }
+  async function changeLtc() {
+    let currentcoin = localStorage.getItem("merchant-coin");
+    var cointable = {
+      BTC: "Bitcoin",
+      LTC: "Litecoin",
+      ETH: "Ethereum"
+    };
+    let lowercase = {
+      BTC: "btc",
+      LTC: "ltc",
+      ETH: "eth"
+    }
+    let address = document.getElementById("ltc_address_field").value;
+    if (address === "") {
+      await sleep(1000)
+      document.getElementById("error-text").innerHTML = `That was an invalid ${cointable[currentcoin]} address`
+      document.getElementById("error-ltc").checked = true;
+    } else {
+      //do dumb stuff
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', `/operations/change-${lowercase[currentcoin]}-m`);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+
+      xhr.onload = () => {
+        console.log(xhr.response)
+        if (xhr.response.toString().includes("good")) {
+          document.getElementById("error-text").innerHTML = `A new ${currentcoin} payout address has been set!`;
+          document.getElementById("error-ltc").checked = true;
+        } else {
+          document.getElementById("error-text").innerHTML = xhr.response.toString();
+          document.getElementById("error-ltc").checked = true;
+        }
+      }
+      xhr.send(JSON.stringify({
+        address: address
+      }));
+    }
+  }
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async function getWalletData(address){
+    let xhr1 = new XMLHttpRequest();
+      xhr1.open('GET', `https://blockchair.com/ethereum/address/${address}`);
+      xhr1.setRequestHeader('Content-Type', 'application/json');
+
+      xhr1.onload = () => {
+        console.log(xhr1.response);
+        let x = xhr1.response;
+        let y = x.search("<span>Balance</span>");
+        x = x.slice(y);
+        y = x.search("<span>ERC-20 Token balance</span>");
+        x = x.slice(0, y)
+        x = x.slice(0, 60)
+        let num = x.replace(/^\D+|\D.*$/g, "")
+        console.log(num)
+        y = x.search(num);
+        x = x.slice(y+10);
+        console.log(x)
+        let num2 = x.replace(/^\D+|\D.*$/g, "");
+        console.log(num2)
+        let entirenum = Number(num+"."+num2);
+        console.log(entirenum)
+
+        ethwallet = "In wallet: "+entirenum.toString()+" On the way: "+xhr1.response.unconfirmed_balance;
+        document.getElementById("walletcontent").innerText = ethwallet;
+        console.log(ethwallet)
+      }
+      xhr1.send();
+
+    //x = await x.text();
+    
+  }
+</script>
+<style>
+  a {
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 1px solid lightskyblue;
+  }
+
+  /* RESET RULES 
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+  :root {
+    --lightgray: #efefef;
+    --blue: steelblue;
+    --white: #fff;
+    --black: rgba(0, 0, 0, 0.8);
+    --bounceEasing: cubic-bezier(0.51, 0.92, 0.24, 1.15);
+  }
+
+
+  .btn-group {
+    text-align: center;
+  }
+
+  .open-modal {
+    font-weight: bold;
+    background: var(--blue);
+    color: var(--white);
+    padding: 0.75rem 1.75rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+  }
+
+
+  /* MODAL
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+  .modal1 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: var(--black);
+    cursor: pointer;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.35s ease-in;
+    z-index: 99;
+    float: right;
+  }
+
+  .modal1.is-visible {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .modal-dialog {
+    position: relative;
+    max-width: 1500px;
+    border-radius: 5px;
+    background: var(--white);
+    overflow: auto;
+    cursor: default;
+    float: right;
+  }
+
+  .display-none {
+    display: none;
+  }
+
+  .modal-dialog>* {
+    padding: 1rem;
+    float: right;
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .close-modal {
+    font-size: 1.5rem;
+  }
+
+  .modal1 p+p {
+    margin-top: 1rem;
+    float: right;
+  }
+
+  .modal-content-1 {
+    float: right !important;
+  }
+
+  /* ANIMATIONS
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+  [data-animation] .modal-dialog {
+    opacity: 0;
+    transition: all 0.5s var(--bounceEasing);
+  }
+
+  [data-animation].is-visible .modal-dialog {
+    opacity: 1;
+    transition-delay: 0.2s;
+  }
+
+  [data-animation="slideInOutDown"] .modal-dialog {
+    transform: translateY(100%);
+  }
+
+  [data-animation="slideInOutTop"] .modal-dialog {
+    transform: translateY(-100%);
+  }
+
+  [data-animation="slideInOutLeft"] .modal-dialog {
+    transform: translateX(-100%);
+  }
+
+  [data-animation="slideInOutRight"] .modal-dialog {
+    transform: translateX(100%);
+  }
+
+
+  [data-animation="mixInAnimations"].is-visible .modal-dialog {
+    animation: mixInAnimations 2s 0.2s linear forwards;
+  }
+
+  [data-animation="slideInOutDown"].is-visible .modal-dialog,
+  [data-animation="slideInOutTop"].is-visible .modal-dialog,
+  [data-animation="slideInOutLeft"].is-visible .modal-dialog,
+  [data-animation="slideInOutRight"].is-visible .modal-dialog,
+  [data-animation="zoomInOut"].is-visible .modal-dialog,
+  [data-animation="rotateInOutDown"].is-visible .modal-dialog {
+    transform: none;
+  }
+
+  @import "bourbon@5.*";
+
+  html {
+    box-sizing: border-box;
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+
+  body {
+    color: rgba(0, 0, 0, .87);
+  }
+
+  a {
+    color: rgba(38, 137, 13, 1);
+  }
+
+  a:hover,
+  a:focus {
+    color: rgba(4, 106, 56, 1);
+  }
+
+  .container {
+    margin: 5% 3%;
+    max-width: fit-content !important;
+  }
+
+  @media (min-width: 48em) {
+    .container {
+      margin: 2%;
+    }
+  }
+
+  @media (min-width: 75em) {
+    .container {
+      margin: 2em auto;
+      max-width: 75em;
+    }
+  }
+
+  .responsive-table {
+    margin-left: 0px;
+    width: 100%;
+    margin-bottom: 1.5em;
+    border-spacing: 0;
+  }
+
+  @media (min-width: 48em) {
+    .responsive-table {
+      font-size: 0.9em;
+    }
+  }
+
+  @media (min-width: 62em) {
+    .responsive-table {
+      font-size: 1em;
+    }
+  }
+
+  .responsive-table thead {
+    position: absolute;
+    clip: rect(1px 1px 1px 1px);
+    /* IE6, IE7 */
+    padding: 0;
+    border: 0;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+  }
+
+  @media (min-width: 48em) {
+    .responsive-table thead {
+      position: relative;
+      clip: auto;
+      height: auto;
+      width: auto;
+      overflow: auto;
+    }
+  }
+
+  .responsive-table thead th {
+    background-color: rgba(38, 137, 13, 1);
+    border: 1px solid rgba(134, 188, 37, 1);
+    font-weight: normal;
+    text-align: center;
+    color: white;
+  }
+
+  .responsive-table thead th:first-of-type {
+    text-align: left;
+  }
+
+  .responsive-table tbody,
+  .responsive-table tr,
+  .responsive-table th,
+  .responsive-table td {
+    display: block;
+    padding: 0;
+    text-align: left;
+    white-space: normal;
+  }
+
+  @media (min-width: 48em) {
+    .responsive-table tr {
+      display: table-row;
+    }
+  }
+
+  .responsive-table th,
+  .responsive-table td {
+    padding: 0.5em;
+    vertical-align: middle;
+  }
+
+  @media (min-width: 30em) {
+
+    .responsive-table th,
+    .responsive-table td {
+      padding: 0.75em 0.5em;
+    }
+  }
+
+  @media (min-width: 48em) {
+
+    .responsive-table th,
+    .responsive-table td {
+      display: table-cell;
+      padding: 0.5em;
+    }
+  }
+
+  @media (min-width: 62em) {
+
+    .responsive-table th,
+    .responsive-table td {
+      padding: 0.75em 0.5em;
+    }
+  }
+
+  @media (min-width: 75em) {
+
+    .responsive-table th,
+    .responsive-table td {
+      padding: 0.75em;
+    }
+  }
+
+  @media (min-width: 48em) {
+    .responsive-table caption {
+      font-size: 1.5em;
+    }
+  }
+
+  @media (min-width: 62em) {
+    .responsive-table tfoot {
+      font-size: 0.9em;
+    }
+  }
+
+  @media (min-width: 48em) {
+    .responsive-table tbody {
+      display: table-row-group;
+    }
+  }
+
+  .responsive-table tbody tr {
+    margin-bottom: 1em;
+  }
+
+  @media (min-width: 48em) {
+    .responsive-table tbody tr {
+      display: table-row;
+      border-width: 1px;
+    }
+  }
+
+  .responsive-table tbody tr:last-of-type {
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 48em) {
+    .responsive-table tbody tr:nth-of-type(even) {
+      background-color: rgba(0, 0, 0, .12);
+    }
+  }
+
+  .responsive-table tbody th[scope="row"] {
+    background-color: rgba(38, 137, 13, 1);
+    color: white;
+  }
+
+  @media (min-width: 30em) {
+    .responsive-table tbody th[scope="row"] {
+      border-left: 1px solid rgba(134, 188, 37, 1);
+      border-bottom: 1px solid rgba(134, 188, 37, 1);
+    }
+  }
+
+  @media (min-width: 48em) {
+    .responsive-table tbody th[scope="row"] {
+      background-color: transparent;
+      color: rgba(0, 0, 1, );
+      text-align: left;
+    }
+  }
+
+  .responsive-table tbody td {
+    text-align: right;
+  }
+
+  @media (min-width: 48em) {
+    .responsive-table tbody td {
+      border-left: 1px solid rgba(134, 188, 37, 1);
+      border-bottom: 1px solid rgba(134, 188, 37, 1);
+      text-align: center;
+    }
+  }
+
+  @media (min-width: 48em) {
+    .responsive-table tbody td:last-of-type {
+      border-right: 1px solid rgba(134, 188, 37, 1);
+    }
+  }
+
+  .responsive-table tbody td[data-type=currency] {
+    text-align: right;
+  }
+
+  .responsive-table tbody td[data-title]:before {
+    content: attr(data-title);
+    float: left;
+    font-size: 0.8em;
+    color: rgba(0, 0, 0, .54);
+  }
+
+  @media (min-width: 30em) {
+    .responsive-table tbody td[data-title]:before {
+      font-size: 0.9em;
+    }
+  }
+
+  @media (min-width: 48em) {
+    .responsive-table tbody td[data-title]:before {
+      content: none;
+    }
+  }
+</style>
+<script>
+  const openEls = document.querySelectorAll("[data-open]");
+  const closeEls = document.querySelectorAll("[data-close]");
+  const isVisible = "is-visible";
+
+  for (const el of openEls) {
+    el.addEventListener("click", function () {
+      const modalId = this.dataset.open;
+      document.getElementById(modalId).classList.add(isVisible);
+    });
+  }
+
+  for (const el of closeEls) {
+    el.addEventListener("click", function () {
+      this.parentElement.parentElement.parentElement.classList.remove(isVisible);
+    });
+  }
+
+  document.addEventListener("click", e => {
+    if (e.target == document.querySelector(".modal1.is-visible")) {
+      document.querySelector(".modal1.is-visible").classList.remove(isVisible);
+    }
+  });
+
+  document.addEventListener("keyup", e => {
+    // if we press the ESC
+    if (e.key == "Escape" && document.querySelector(".modal1.is-visible")) {
+      document.querySelector(".modal1.is-visible").classList.remove(isVisible);
+    }
+  });
+  removedisplaynone();
+  async function removedisplaynone() {
+    await sleep(100)
+    document.getElementsByClassName('modal-dialog')[0].classList.remove('display-none');
+  }
 </script>

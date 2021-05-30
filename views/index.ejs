@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<link data-react-helmet="true" rel="icon" href="/images/smallLogo.png">
+<script class="u-script" type="text/javascript" src="/javascript/websocket.js" defer=""></script>
 <html style="font-size: 16px;">
   <head>
     <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
@@ -9,10 +11,10 @@
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
     <title>Home</title>
-    <link rel="stylesheet" href="nicepage.css" media="screen">
+    <link rel="stylesheet" href="index.css" media="screen">
 <link rel="stylesheet" href="Home.css" media="screen">
-    <script class="u-script" type="text/javascript" src="https://scripthosting.joshuazou.repl.co/jquery.js" defer=""></script>
-    <script class="u-script" type="text/javascript" src="https://scripthosting.joshuazou.repl.co/nicepage.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/javascript/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/javascript/main.js" defer=""></script>
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
     <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Archivo+Black:400">
     
@@ -30,10 +32,11 @@
     <meta name="theme-color" content="#478ac9">
     <link rel="canonical" href="index.html">
     <meta property="og:url" content="index.html">
+    <%- include('partials/preload.ejs') %>
   </head>
   <body data-home-page="Home.html" data-home-page-title="Home" class="u-body"><header class="u-clearfix u-header u-header" id="sec-a555"><div class="u-clearfix u-sheet u-sheet-1">
         <a href="/" class="u-image u-logo u-image-1">
-          <img src="https://i.imgur.com/MKPehlI.png" class="u-logo-image u-logo-image-1" data-image-width="109">
+          <img src="/images/logo.png" class="u-logo-image u-logo-image-1" data-image-width="109">
         </a>
         <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
           <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
@@ -72,8 +75,8 @@
       </div></header>
     <section class="u-clearfix u-valign-middle u-section-1" id="carousel_fd4a">
       <div class="u-clearfix u-expanded-width u-gutter-0 u-layout-wrap u-layout-wrap-1">
-        <div class="u-layout" style="">
-          <div class="u-layout-row" style="">
+        <div class="u-layout">
+          <div class="u-layout-row">
             <div class="u-align-center u-container-style u-layout-cell u-left-cell u-palette-3-light-1 u-size-30 u-size-xs-60 u-layout-cell-1" src="">
               <div class="u-container-layout u-container-layout-1">
                 <h2 class="u-text u-text-1">What is Coin Tunnel?</h2>
@@ -93,8 +96,13 @@
         </div>
       </div>
     </section>
-    <section class="u-clearfix u-valign-top u-section-2" id="sec-e9aa">
-      <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+    <section class="u-clearfix u-valign-top u-section-2" id="sec-e9aa" style="
+    max-height: fit-content;
+    width: 1000px;
+    height: 400px;
+    display: inline;
+">
+      <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1" style="margin-bottom: 0px;">
         <div class="u-layout">
           <div class="u-layout-row">
             <div class="u-align-center u-container-style u-layout-cell u-palette-1-dark-1 u-size-30 u-layout-cell-1">
@@ -115,18 +123,48 @@
         </div>
       </div>
     </section>
+    <section class="u-clearfix u-valign-top u-section-2" id="sec-e9aa1">
+      <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+        <div class="u-layout">
+          <div class="u-layout-row">
+            <div class="u-align-center u-container-style u-layout-cell u-palette-1-dark-1 u-size-30 u-layout-cell-1">
+              <div class="u-container-layout u-valign-top u-container-layout-1">
+                <h2 class="u-custom-font u-text u-text-1" style="padding-bottom: 20px;">How it works</h2>
+                <img src="/images/diagram.png">
+                <p class="u-custom-font">As you can see, the buyer has to confirm all payments and never gives access to anything before approval. The Buyer ID is something like this: czzs01bc5o74xujmh7c9z9p2q and changes every time a buyer makes a purchase. <br><br> Buyers get full access to their private keys, even on cloud wallets! (For better blockchain decentralization) </p>
+                <h4 class="u-custom-font">For more info on how this works, view our <a target="_blank" href="https://docs.coin-tunnel.ml">docs</a></h4>
+              </div>
+            </div>
+            <div class="u-align-center u-container-style u-layout-cell u-palette-1-dark-1 u-size-30 u-layout-cell-2">
+              <div class="u-container-layout u-valign-top u-container-layout-2">
+                <h3 class="u-custom-font u-text u-text-3" style="padding-bottom: 30px;">Resources</h3>
+                <dl id="footerRight" class="foot-box">
+                  <ul style="font-size: 30px;">
+                    <li><a target="_blank" href="https://github.com/Joshua-Zou/coin-tunnel">Github Repository (Source code)</a></li>
+                    <li><a target="_blank" href="https://docs.coin-tunnel.ml">Docs</a></li>
+                    <li><a href="/tos">Terms of Service</a></li>
+                    <li><a target="_blank" href="https://www.investopedia.com/terms/b/bitcoin.asp">What is Bitcoin?</a></li>
+                    <li><a target="_blank" href="https://www.producthunt.com/posts/coin-tunnel">Product Hunt</a></li>
+                    <a href="https://www.producthunt.com/posts/coin-tunnel?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-coin-tunnel" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=296546&theme=light" alt="Coin Tunnel - An open source, easy to use crypto payment system. | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+                  </ul>
+                </dl>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
     
     
-    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-bfb9"><div class="u-clearfix u-sheet u-sheet-1">
-        <p class="u-small-text u-text u-text-variant u-text-1">Copyright Coin Tunnel</p>
-      </div></footer>
+    <%- include('partials/footer.ejs') %>
+
+  <link rel="stylesheet" href="/common.css">
+  <link rel="stylesheet" href="/style.css">
   </body>
 </html>
 <script>
-function signout() {
-  console.log('User signed out.');
- window.location.href = "/destroySession"
-    }
 
     function onLoad() {
       gapi.load('auth2', function() {

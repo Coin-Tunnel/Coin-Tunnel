@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<link data-react-helmet="true" rel="icon" href="/images/smallLogo.png">
+<script class="u-script" type="text/javascript" src="/javascript/websocket.js" defer=""></script>
+<html style="font-size: 16px;">
+  <head>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+        <meta name="google-signin-client_id" content="624982618606-sikfqo89mp5jkb01fgp4tlreoqul5r4v.apps.googleusercontent.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="What is Coin Tunnel?, Why use Coin Tunnel?, Get started, Get started">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Home</title>
+    <link rel="stylesheet" href="/index.css" media="screen">
+<link rel="stylesheet" href="/Home.css" media="screen">
+    <script class="u-script" type="text/javascript" src="/javascript/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/javascript/main.js" defer=""></script>
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Archivo+Black:400">
+    
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "",
+		"url": "index.html",
+		"logo": "images/unknown-removebg-preview.png"
+}</script>
+    <meta property="og:title" content="Home">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
+    <%- include('partials/preload.ejs') %>
+  </head>
+  <body data-home-page="Home.html" data-home-page-title="Home" class="u-body"><header class="u-clearfix u-header u-header" id="sec-a555"><div class="u-clearfix u-sheet u-sheet-1">
+        <a href="/" class="u-image u-logo u-image-1">
+          <img src="/images/logo.png" class="u-logo-image u-logo-image-1" data-image-width="109">
+        </a>
+        <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+          <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+            <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+              <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;"><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</symbol>
+</defs></svg>
+            </a>
+          </div>
+          <div class="u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/" style="padding: 10px 20px;">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" onclick="signout()" href="#"style="padding: 10px 20px;">Signout</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/dashboard-b" style="padding: 10px 20px;">Buyer Sign In</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/signin-m" style="padding: 10px 20px;">Merchant Sign In</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/dashboard-b" style="padding: 10px 20px;">Buyer Dashboard</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/dashboard-m" style="padding: 10px 20px;">Merchant Dashboard</a>
+</li></ul>
+          </div>
+          <div class="u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" onclick = "signout()" href="#">Sign Out</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/dashboard-b">Buyer Sign in</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/signin-m">Merchant Sign in</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/dashboard-b">Buyer Dashboard</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/dashboard-m">Merchant Dashboard</a>
+</li></ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+      </div></header>
+    <section class="u-clearfix u-valign-middle u-section-1" id="carousel_fd4a">
+      <div class="u-clearfix u-expanded-width u-gutter-0 u-layout-wrap u-layout-wrap-1">
+        <div class="u-layout">
+          <div class="u-layout-row">
+            <div class="u-align-center u-container-style u-layout-cell u-left-cell u-palette-3-light-1 u-size-30 u-size-xs-60 u-layout-cell-1" src="">
+              <div class="u-container-layout u-container-layout-1">
+                <h2 class="u-text u-text-1">What is Coin Tunnel?</h2>
+                <p class="u-text u-text-2">Coin tunnel is an advanced cryptocurrency payment system that lets users and merchants get on the crypto trend without any coding experience!</p>
+              </div>
+            </div>
+            <div class="u-align-center u-container-style u-grey-5 u-layout-cell u-right-cell u-size-30 u-size-xs-60 u-layout-cell-2">
+              <div class="u-container-layout u-container-layout-2">
+                <h2 class="u-text u-text-3">Why use Coin Tunnel?</h2>
+                <p class="u-text u-text-4">Coin Tunnel lets users choose what to do with their crypto. There are two options for users to pay, one is giving us your private and public key, and the other is depositing crypto into our online wallet.<br>
+                  <br>Private/Public key method:<br>Extremely easy to use, but not as secure. (We don't recommend this method with wallets worth more than 1000 dollars)<br>
+                  <br>Online wallet method:<br>A bit more steps to use, but a lot more secure.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <input type="checkbox" id="error-ltc" />
+            <label for="error-ltc" class="modal-bg-ltc"></label>
+            <label for="modal" class="modal-bg"></label>
+            <div class="modal-content-ltc">
+              <label for="error-ltc" class="close">
+              </label>
+              <header>
+                <h2 style="color: black" id="error-text"><%-text%></h3>
+              </header>
+              <footer>
+                <label onclick="confirm()" class="button success">Confirm!</label>
+                <label onclick="cancel()" class="button success" style="background-color: grey">Cancel</label>
+                <label onclick="remove()" for="error-ltc" class="button danger">Disable Link</label>
+              </footer>
+            </div>
+<input type="checkbox" id="modal" />
+<div class="modal-content">
+                <label for="modal" class="close">
+                </label>
+                <header>
+                    <h2 style="color: black" id="error-text-error">Error</h3>
+                  </header>
+                <footer>
+                  <label onclick="cancel()" class="button success" for="modal">Ok</label>
+                </footer>
+              </div>
+    <section class="u-clearfix u-valign-top u-section-2" id="sec-e9aa">
+      <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+        <div class="u-layout">
+          <div class="u-layout-row">
+            <div class="u-align-center u-container-style u-layout-cell u-palette-1-dark-1 u-size-30 u-layout-cell-1">
+              <div class="u-container-layout u-valign-top u-container-layout-1">
+                <h2 class="u-custom-font u-text u-text-1">Get started</h2>
+                <p class="u-text u-text-2">As a buyer</p>
+                <a href="/signup-b" class="u-btn u-btn-round u-button-style u-hover-palette-3-light-3 u-palette-2-light-2 u-radius-50 u-text-palette-1-base u-btn-1">Get started!</a>
+              </div>
+            </div>
+            <div class="u-align-center u-container-style u-layout-cell u-palette-2-light-1 u-size-30 u-layout-cell-2">
+              <div class="u-container-layout u-valign-top u-container-layout-2">
+                <h2 class="u-custom-font u-text u-text-3">Get started</h2>
+                <p class="u-text u-text-4">As a merchant</p>
+                <a href="/signup-m" class="u-btn u-btn-round u-button-style u-hover-palette-3-light-3 u-palette-3-light-2 u-radius-50 u-text-palette-1-base u-btn-2">Get started!</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    
+    <%- include('partials/footer.ejs') %>
+
+  <link rel="stylesheet" href="/common.css">
+  <link rel="stylesheet" href="/style.css">
+  </body>
+</html>
+<script>
+
+    function onLoad() {
+      gapi.load('auth2', function() {
+        gapi.auth2.init();
+      });
+    }
+
+    document.getElementById("error-ltc").checked = true;
+    function cancel(){
+        window.location = "/"
+    }
+    async function confirm(){
+        document.getElementById("error-ltc").checked = false;
+        await sleep(1000);
+        var xhr = new XMLHttpRequest();
+        console.log(window.location.href.slice(window.location.origin.length+10));
+    xhr.open('GET', `/api/v2/transactions/validate/${window.location.href.slice(window.location.origin.length+10)}`);
+    //xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onload = () => {
+      console.log(xhr.response)
+      document.getElementById("error-text-error").innerHTML = xhr.response;
+      document.getElementById("modal").checked = true;
+    }
+    xhr.send();
+}
+function sleep(ms){
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function remove(){
+        document.getElementById("error-ltc").checked = false;
+        await sleep(1000);
+        var xhr = new XMLHttpRequest();
+        console.log(window.location.href.slice(window.location.origin.length+10));
+    xhr.open('DELETE', `/api/v2/transactions/delete/${window.location.href.slice(window.location.origin.length+10)}`);
+    //xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onload = () => {
+      console.log(xhr.response)
+      document.getElementById("error-text-error").innerHTML = xhr.response;
+      document.getElementById("modal").checked = true;
+    }
+    xhr.send();
+    }
+</script>

@@ -1,8 +1,0 @@
-{
-    "port": 3000,
-
-    "clientId": "832674762076455002",
-    "clientSecret": "UhWxDv9LTKTur_G_LWXSeSrO5q42QZAk",
-    "scopes": ["identify", "guilds", "email", "connections", "guilds.join", "gdm.join", "rpc", "rpc.notifications.read"],
-    "redirectUri": "https://coin-tunnel.joshuazou.repl.co/discord-buyer-callback"
-}

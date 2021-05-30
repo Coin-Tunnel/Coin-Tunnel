@@ -42,7 +42,9 @@
   font-style: italic;
   margin: 25px 0 0;
 }
-
+.u-container-style {
+  border-radius: 20px !important;
+}
 .u-section-1 .u-list-item-2 {
   background-image: none;
 }

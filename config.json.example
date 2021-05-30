@@ -1,0 +1,6 @@
+{
+    "port": 3000,
+    "clientId": "discord client id",
+    "clientSecret": "discord client secret",
+    "scopes": ["identify", "guilds", "email", "connections", "guilds.join", "gdm.join", "rpc", "rpc.notifications.read"]
+}
