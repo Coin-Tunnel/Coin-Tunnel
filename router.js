@@ -54,6 +54,8 @@ module.exports = (app) => {
     const {OAuth2Client} = require('google-auth-library');
     const googleClient = new OAuth2Client(secrets.googleClient);
     const litecore = require('litecore-lib')
+    console.log(secrets);
+    
     const encrypt = (text) => {
 
       const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
