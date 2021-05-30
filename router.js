@@ -29,8 +29,8 @@ module.exports = (app) => {
     const FormData = require('form-data');
     var bodyParser = require("body-parser");
     var clientId, clientSecret, scopes, redirectUri;
-    if (process.env.secrets){
-      let temp = JSON.parse(process.env.secrets);
+    if (process.env.config){
+      let temp = JSON.parse(process.env.config);
       clientId = temp.clientId;
       clientSecret = temp.clientSecret;
       scopes = temp.scopes;
