@@ -377,40 +377,44 @@
     </div>
     <div class="u-align-center u-clearfix u-sheet u-valign-middle u-sheet-1">
       <h2 class="u-text u-text-1">Change deposit addresses</h2>
-      <p class="u-text u-text-2">Change your BTC deposit address <br>(Remember, this is how you get paid, so be careful)
-      </p>
-      <a href="/changeAddress" class="u-btn u-button-style u-grey-90 u-btn-1" style="margin-bottom: 0px;">Change BTC <i
-          class="fa fa-bitcoin" aria-hidden="true"></i></a>
-      <p class="u-text u-text-2 ">Change your LITECOIN deposit address <br>(Remember, this is how you get paid, so be
-        careful)
-      </p>
-      <input type="checkbox" id="modal" />
-      <label for="modal" class="u-btn u-button-style u-grey-90 u-btn-1" id="changecoinbutton">
-        Change LTC
-      </label>
-      <label for="modal" class="modal-bg"></label>
-      <div class="modal-content">
-        <label for="modal" class="close">
+      <div id="btcchangecoin">
+        <p class="u-text u-text-2">Change your BTC deposit address <br>(Remember, this is how you get paid, so be careful)
+        </p>
+        <a href="/changeAddress" class="u-btn u-button-style u-grey-90 u-btn-1" style="margin-bottom: 0px;">Change BTC <i
+            class="fa fa-bitcoin" aria-hidden="true"></i></a>
+      </div>
+      <div id="changeVarCoin">
+        <p class="u-text u-text-2 ">Change your LITECOIN deposit address <br>(Remember, this is how you get paid, so be
+          careful)
+        </p>
+        <input type="checkbox" id="modal" />
+        <label for="modal" class="u-btn u-button-style u-grey-90 u-btn-1" id="changecoinbutton">
+          Change LTC
         </label>
-        <header>
-          <h2 style="color: black" id="modalcoin">Enter your new LTC address below</h3>
-        </header>
-        <article class="content">
-          <form action="#" method="POST" class="u-clearfix u-form-horizontal u-form-spacing-15 u-inner-form"
-            style="padding: 15px" source="custom">
-            <div class="u-form-group u-form-name u-form-group-1">
-              <label for="name-558c" class="u-form-control-hidden u-label">Key</label>
-              <input type="text" placeholder="address" id="ltc_address_field" name="name"
-                class="u-border-1 u-border-grey-30 u-input u-input-rectangle" style="color: black" required="true">
-            </div>
-            <div class="u-form-group u-form-submit u-form-group-2">
-            </div>
-          </form>
-        </article>
-        <footer>
-          <label onclick="changeLtc()" class="button success" for="modal">Change</label>
-          <label for="modal" class="button danger">Cancel</label>
-        </footer>
+        <label for="modal" class="modal-bg"></label>
+        <div class="modal-content">
+          <label for="modal" class="close">
+          </label>
+          <header>
+            <h2 style="color: black" id="modalcoin">Enter your new LTC address below</h3>
+          </header>
+          <article class="content">
+            <form action="#" method="POST" class="u-clearfix u-form-horizontal u-form-spacing-15 u-inner-form"
+              style="padding: 15px" source="custom">
+              <div class="u-form-group u-form-name u-form-group-1">
+                <label for="name-558c" class="u-form-control-hidden u-label">Key</label>
+                <input type="text" placeholder="address" id="ltc_address_field" name="name"
+                  class="u-border-1 u-border-grey-30 u-input u-input-rectangle" style="color: black" required="true">
+              </div>
+              <div class="u-form-group u-form-submit u-form-group-2">
+              </div>
+            </form>
+          </article>
+          <footer>
+            <label onclick="changeLtc()" class="button success" for="modal">Change</label>
+            <label for="modal" class="button danger">Cancel</label>
+          </footer>
+        </div>
       </div>
 
 
@@ -462,11 +466,13 @@
     window.location.reload();
   } else if (localStorage.getItem("merchant-coin") === "BTC") {
     // do rando stuff 
+    document.getElementById("changeVarCoin").style = "display:none"
     document.getElementById("merchantaddress").innerText = allData.deposit;
     document.getElementById("merchantcoin").innerHTML = `BTC <i class="fa fa-angle-down" aria-hidden="true"></i>`;
     document.getElementById("loadinggif").style="display:none"
   } else if (localStorage.getItem("merchant-coin") === "LTC") {
     // do more stupid stuff'
+    document.getElementById("btcchangecoin").style = "display:none"
     if (allData.ltc_deposit !== undefined && allData.ltc_deposit !== "none"){
       document.getElementById("walletcontent").style = "display: none"
     let xhr = new XMLHttpRequest();
@@ -492,6 +498,7 @@
     document.getElementById("changecoinbutton").innerText = "Change LTC"
     document.getElementById("merchantcoin").innerHTML = `LTC <i class="fa fa-angle-down" aria-hidden="true"></i>`;
   } else if (localStorage.getItem("merchant-coin") === "ETH") {
+    document.getElementById("btcchangecoin").style = "display:none"
     document.getElementById("modalcoin").innerText = "Enter your new ETH address below"
     document.getElementById("changecoinbutton").innerText = "Change ETH";
 
