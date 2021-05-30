@@ -6,6 +6,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="page_type" content="np-template-header-footer-from-plugin">
@@ -130,9 +131,9 @@
                 <button class="dropbtn" id="merchantcoin">BTC <i class="fa fa-angle-down" aria-hidden="true"></i>
                 </button>
                 <div class="dropdown-content" style="color: black">
-                  <a onclick="changeToBtc()">BTC</a>
-                  <a onclick="changeToLtc()">LTC</a>
-                  <a onclick="changeToEth()">ETH</a>
+                  <a onclick="changeToBtc(); return false;">BTC</a>
+                  <a onclick="changeToLtc(); return false;">LTC</a>
+                  <a onclick="changeToEth(); return false;">ETH</a>
                 </div>
               </div> wallet</h5>
             <p class="u-text u-text-grey-50 u-text-6" id="merchantaddress"></p>
@@ -149,7 +150,7 @@
           <div class="u-container-layout u-similar-container u-valign-top u-container-layout-4">
             <h5 class="u-text u-text-palette-1-base u-text-9">Open transactions</h5>
             <p class="u-text u-text-grey-50 u-text-10"><%- transac.open %></p>
-            <button type="button" class="u-btn u-button-style u-btn-2" data-open="modal1" onclick="showmodal()">
+            <button type="button" class="u-btn u-button-style u-btn-2" data-open="modal1" onclick="showmodal(); return false;">
               View all transactions
             </button>
           </div>
