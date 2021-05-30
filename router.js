@@ -797,11 +797,11 @@ async function watchWallets(){
          }else{
            let merchant = await mongoclient.db("cointunnel").collection("merchantData").findOne({name: element.merchant});
            let tx = await mongoclient.db("cointunnel").collection("open-transactions").findOne({txid: element.txid});
-           let secretKey = await decrypt(element.secret)
+           let secretKey1 = await decrypt(element.secret)
            console.log(total_balance)
            let amountoffee = await getTxFee(merchant.deposit, total_balance);
            console.log(amountoffee)
-           let sent = await sendBitcoinIncludeFee(merchant.deposit, total_balance, secretKey, element.wallet).catch(err => {
+           let sent = await sendBitcoinIncludeFee(merchant.deposit, total_balance, secretKey1, element.wallet).catch(err => {
              return "error: "+err.toString()
            })
            if (sent.toString().includes("error: ")){

@@ -76,7 +76,6 @@ const Advancedchecklist = {
     all: true
   }
 }
-// when deploy to real BTC net, change n48weF1x3twiXNJ8Xj5D8XyrfVnSM82sKV address which is BTCTEST to a real BTC address
 
 const bitcore = require("bitcore-lib");
 const bitcoin = require("bitcoinjs-lib");

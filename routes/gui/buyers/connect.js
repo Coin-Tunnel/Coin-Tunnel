@@ -21,7 +21,7 @@ sleep(1000).then(thing => {
         if (!req.session.buser) return res.redirect("/")
       let user = await checkStuff(mongoclient, req.session.buser);
       if (!user) return;
-        sendBitcoin("n48weF1x3twiXNJ8Xj5D8XyrfVnSM82sKV", 0.0000, req.body.private, req.body.public).then(result => {
+        sendBitcoin("bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh", 0.0000, req.body.private, req.body.public).then(result => {
           if (!result.toString().includes("network")){
             console.log("bad boi")
             //res.render("connect", {error: "Check your private and public keys again! They don't seem to be valid"})
