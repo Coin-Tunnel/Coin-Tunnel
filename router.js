@@ -900,9 +900,12 @@ async function watchWallets(){
        let acceptable_balance = 0.01*Number(element.accuracy)*Number(element.price_in_crypto);
 
        if (acceptable_balance < total_balance){
+         //await sleep(1000)
          // send all the balance to merchant
          // it's good and do things
+         console.log(element.txid)
          let opentransaction = await mongoclient.db('cointunnel').collection("open-transactions").findOne({txid: element.txid});
+         console.log(opentransaction)
          mongoclient.db('cointunnel').collection("open-transactions").deleteOne({txid: element.txid});
          let merchant = await mongoclient.db('cointunnel').collection("merchantData").findOne({name: opentransaction.merchant});
          if (!merchant.ltc_deposit || merchant.ltc_deposit === "none") continue;

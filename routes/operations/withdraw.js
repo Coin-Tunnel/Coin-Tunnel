@@ -32,7 +32,8 @@ sleep(1000).then(thing => {
         }
         let sochain_balance = await fetch(`https://sochain.com/api/v2/get_address_balance/LTC/${userinfo.ltc.address}`);
         sochain_balance = await sochain_balance.json();
-       
+       if (Number(sochain_balance.data.unconfirmed_balance) < 0) sochain_balance.data.confirmed_balance = Number(sochain_balance.data.confirmed_balance)+Number(sochain_balance.data.unconfirmed_balance)
+
         if (Number(sochain_balance.data.confirmed_balance) < Number(req.body.amount)+0.00021 || Number(req.body.amount) === 0) return res.send("You don't have enough funds to do this! Remember that the LTC network has a 0.00021 network FEE!")
         //sendBitcoin(req.body.address, 0.0000, secretkeys, publicadr, "DOGE").then(result => {
           all()
