@@ -29,8 +29,8 @@ module.exports = (app) => {
     const FormData = require('form-data');
     var bodyParser = require("body-parser");
     var clientId, clientSecret, scopes, redirectUri;
-    if (process.env.secrets){
-      let temp = JSON.parse(process.env.secrets);
+    if (process.env.config){
+      let temp = JSON.parse(process.env.config);
       clientId = temp.clientId;
       clientSecret = temp.clientSecret;
       scopes = temp.scopes;
@@ -54,6 +54,8 @@ module.exports = (app) => {
     const {OAuth2Client} = require('google-auth-library');
     const googleClient = new OAuth2Client(secrets.googleClient);
     const litecore = require('litecore-lib')
+    console.log(secrets);
+    
     const encrypt = (text) => {
 
       const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
@@ -675,6 +677,33 @@ function getUTXOsBETA(address) {
     var checkStuff = functions.checkStuff;
     var sleep = functions.sleep;
 
+    let dbCollections = await mongoclient.db("cointunnel").listCollections();
+    dbCollections = await dbCollections.toArray();
+    if (dbCollections.length !== 8){
+      var updateCollections = []
+      let emailCollection = await (dbCollections.find(e => e.name === 'emails'));
+      if (emailCollection === undefined) updateCollections.push("emails");
+      let errtransactions = await dbCollections.find(e => e.name === 'err-transactions');
+      if (errtransactions === undefined) updateCollections.push("err-transactions");
+      let finishedCollection = await dbCollections.find(e => e.name === "finished-transactions");
+      if (finishedCollection === undefined) updateCollections.push("finished-transactions");
+      let keyCollection = await dbCollections.find(e => e.name === "keys");
+      if (keyCollection === undefined) updateCollections.push("keys");
+      let merchantCollection = await dbCollections.find(e => e.name === "merchantData");
+      if (merchantCollection === undefined) updateCollections.push("merchantData");
+      let openCollection = await dbCollections.find(e => e.name === "open-transactions");
+      if (openCollection === undefined) updateCollections.push("open-transactions");
+      let userCollection = await dbCollections.find(e => e.name === "userData");
+      if (userCollection === undefined) updateCollections.push("userData");
+      let watchedCollection = await dbCollections.find(e => e.name === "watched-wallets");
+      if (watchedCollection === undefined) updateCollections.push("watched-wallets");
+      console.log("DB collection count is not corret, adding collections", updateCollections)
+      for (var x = 0; x<updateCollections.length; x++){
+        await mongoclient.db("cointunnel").createCollection(updateCollections[x])
+      }
+      console.log("Done!")
+      // check each collection and create accordingly
+    }
       app.use('/api/v1/create', require('./routes/api/v1/create')(functions));
       app.use('/api/v1/createNoUser', require('./routes/api/v1/createNoUser')(functions));
       app.use('/api/v1/txinfo', require('./routes/api/v1/txinfo')(functions));
@@ -871,9 +900,12 @@ async function watchWallets(){
        let acceptable_balance = 0.01*Number(element.accuracy)*Number(element.price_in_crypto);
 
        if (acceptable_balance < total_balance){
+         //await sleep(1000)
          // send all the balance to merchant
          // it's good and do things
+         console.log(element.txid)
          let opentransaction = await mongoclient.db('cointunnel').collection("open-transactions").findOne({txid: element.txid});
+         console.log(opentransaction)
          mongoclient.db('cointunnel').collection("open-transactions").deleteOne({txid: element.txid});
          let merchant = await mongoclient.db('cointunnel').collection("merchantData").findOne({name: opentransaction.merchant});
          if (!merchant.ltc_deposit || merchant.ltc_deposit === "none") continue;

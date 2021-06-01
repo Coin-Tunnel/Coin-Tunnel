@@ -63,7 +63,7 @@ sleep(1000).then(thing => {
       prices = await prices.json()
       let ltcPrice = Number(prices.litecoin.usd)
       amountOfLtc = usd/ltcPrice;
-      
+      if (amountOfLtc < 0.003) return res.status(400).send({status: "failed", reason: "LTC equivalent too low! Minimum is 0.003"})
       // generate new address FIX THIS
       var liteInfo = coinInfo('LTC').versions;
       var ck = new CoinKey.createRandom(liteInfo);

@@ -375,23 +375,27 @@ sleep(1000).then(thing => {
           // update mongo
           return res.send("success!")
         }else if (list.type === "withdraw-ltc"){
+          //await mongoclient.db("cointunnel").collection("emails").deleteOne({name: req.params.id})
           let user = await checkStuff(mongoclient, list.user);
           if (!user) return res.render("error", {error: "The target user is not valid!"});
           if (!user.ltc) return res.render("error", {error: "You have no LTC wallet set up!"});
-          if (user.ltc.address === "none") res.render("error", {error: "You ave no LTC wallet set up!"});
+          if (user.ltc.address === "none") res.render("error", {error: "You have no LTC wallet set up!"});
           let secretkeys = await decrypt(user.ltc.privatex);
+          console.log(secretkeys)
           let publicadr = user.ltc.address;
           console.log("secretKeys"+secretkeys)
-          sendBitcoin(list.options.withdrawto, list.options.amount, secretkeys, publicadr, "LTC").then(result => {
+          let result = await sendLtc(list.options.withdrawto, list.options.amount, secretkeys, publicadr).then(result => {
             console.log("result: ")
             console.log(result)
+            return result;
              //return res.send(result); 
           }).catch(err => {
             console.log("err: ")
             console.log(err)
-            return res.render("error", {error: err});
+            return "Error: Funds too low to cover the transaction fees!"
           })
-          return res.send("Success!")
+          if (result.toString().includes("Error:")) return res.send(result)
+          return res.send("Success! Full logs: "+JSON.stringify(result))
         }else if (list.type === "pay-ltc"){
           mongoclient.db("cointunnel").collection("emails").deleteOne( { name: req.params.id } )
           let txid = list.options.transactionId;
@@ -864,13 +868,22 @@ sleep(1000).then(thing => {
         return res.send("Successully disabled that link!")
     })
     router.post('/sendcallback', async (req, res) => {
+      console.log("Got a request")
+      console.log(req.body);
       if (!req.body.verification) return;
       if (req.body.verification !== secrets.reqsession) return;
       // here is clean stuff
+      await mongoclient.db("cointunnel").collection("watched-wallets").deleteOne({txid: req.body.data.txid})
       if (req.body.type === "LTC nouser paid"){
          // send LTC 
+         console.log("SENDING LTC")
          let verifac = await decrypt(req.body.privateData.verifac);
-         let x = await sendLtc(req.body.data.sendTo, req.body.data.price_in_crypto, req.body.privateData.secret, req.body.privateData.address).catch(err => {return "error: "+err.toString()})
+         req.body.privateData.secret = await decrypt(req.body.privateData.secret);
+         //req.body.privateData.secret = Math.floor(req.body.privateData.secret)
+         let x = await sendLtc(req.body.data.sendTo, 0.003, req.body.privateData.secret, req.body.privateData.address, true).catch(err => {console.log(err); return "error: "+err.toString()})
+         console.log("Incoming X 2398")
+         console.log(x)
+         if (x.json) console.log(await x.json());
          if (x.toString().includes("error: ")){
           let todo = {
             status: "failed",
@@ -1023,12 +1036,17 @@ module.exports = function(var1){
     router.use(bodyParser.json({ extended: true }));
    return router;
 }
-async function sendLtc(recieverAddress, amountToSend, privateKey, sourceAddress){
-  var privateKey = privateKey;
+async function sendLtc(recieverAddress, amountToSend, privateKey, sourceAddress, sweepin){
+  console.log('as;ldfkja;sldkfj;lsk')
+  var sweep = false;
+  if (!sweepin) sweep = false;
+  else sweep = sweepin;
+console.log(sweep)
+  //var privateKey = privateKey;
   var address = sourceAddress;
   console.log("USING LTC transfer")
   let results = await getUTXOsBETA(address)
-    .then((utxos) => {
+    .then(async (utxos) => {
       console.log("utxos: ")
       //utxos[0].outputIndex = utxos[0].output_no;
       //utxos[0].script = utxos[0].script_hex;
@@ -1044,13 +1062,16 @@ async function sendLtc(recieverAddress, amountToSend, privateKey, sourceAddress)
     console.log(amountToSend*100000000 - fee)
     
     var tx = new litecore.Transaction() //use litecore-lib to create a transaction
-      .from(utxos)
-      .to(recieverAddress, amountToSend*100000000-fee)
-      .fee(fee)
-      .change(sourceAddress)
-      .sign(privateKey)
-      .serialize();
+      tx.from(utxos)
+      tx.to(recieverAddress, amountToSend*100000000-fee)
+      tx.fee(fee)
+      if (sweep === false) tx.change(sourceAddress);
+      else tx.change(recieverAddress);
+      console.log(privateKey)
+      tx.sign(privateKey)
+      tx = tx.serialize();
   console.log("tx here 364")
+  //tx = await tx.text();
   console.log(tx)
   return broadcastTX(tx) //broadcast the serialized tx
   })

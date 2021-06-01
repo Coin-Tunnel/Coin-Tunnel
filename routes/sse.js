@@ -21,8 +21,9 @@ sleep(1000).then(thing => {
         let data = "hello world you suck";
 
         for(var t = 0; t< 1000000; t++){
-            if (t===300) {
-                return ws.close()
+            if (t===10) {
+                console.log("ending session")
+                return res.end();
             }
             function date() {
                 var d = new Date();
