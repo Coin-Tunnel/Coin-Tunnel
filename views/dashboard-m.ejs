@@ -200,6 +200,7 @@
               </tfoot>
               <% for (var x = 0; x<transactionList.length; x++){%>
               <%
+              
                   let text = "";
                   var creation
                   var d = new Date(transactionList[x].expiry);
@@ -249,7 +250,7 @@
               </tr>
               <%
                     }
-                  }else if (transactionList[x].status === "Expired" || transactionList.status === "failed"){
+                  }else if (transactionList[x].status === "Expired"){
                     // this is failed transactions
                     if (transactionList[x].status === "Expired"){
                       if (!transactionList[x].data.price_in_crypto) transactionList[x].data.price_in_crypto = transactionList[x].data.price_in_btc;
@@ -269,8 +270,13 @@
               </tr>
               <%
                     }else{
-                      if (!transactionList[x].data.price_in_crypto) transactionList[x].data.price_in_crypto = transactionList[x].data.price_in_btc;
-                      if (!transactionList[x].coin) transactionList[x].coin = "BTC"
+                      try{
+                        if (!transactionList[x].data || !transactionList[x].data.price_in_crypto) transactionList[x].data.price_in_crypto = transactionList[x].data.price_in_btc;
+                        if (!transactionList[x].coin) transactionList[x].coin = "BTC"
+                      }catch(err){
+                        console.log(err);
+                        console.log(transactionList[x])
+                      }
                       %>
               <tr style="color: black;">
                 <th scope="row" style="color: #A03036;">failed</th>
@@ -286,6 +292,19 @@
               </tr>
               <%
                     }
+                  }else if (transactionList[x].previous_data) {
+                    %>
+                    <tr style="color: #d42f38;">
+                      <th scope="row" style="color: #d42f38;">Failed</th>
+                      <td data-title="USD equivalent"><%-transactionList[x].previous_data.price_in_usd %></td>
+                      <td data-title="Amount of crypto"><%-transactionList[x].previous_data.price_in_crypto + " "+transactionList[x].previous_data.coin%></td>
+                      <td data-title="Creation (local time)" data-type="currency"><%-transactionList[x].previous_data.creation%></td>
+                      <td data-title="txid" data-type="currency"><a style="color: lightskyblue" target="_blank"
+                          href=<%- "/api/v1/txinfo/useSession/"+transactionList[x].txid %>><%- transactionList[x].txid %></a>
+                      </td>
+                      <td data-title="Note" data-type="currency"><%- "Reason: "+transactionList[x].reason %></td>
+                    </tr>
+                    <%
                   }else {
                     if (creation === "No data"){
                       // then it's erroroed Out
