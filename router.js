@@ -896,6 +896,17 @@ async function watchWallets(){
          await mongoclient.db('cointunnel').collection("watched-wallets").deleteOne({txid: element.txid});
          continue;
        }
+       if (Number(wallet.data.confirmed_balance) > 0){
+         // increase expiry because stuff is on the way
+         await mongoclient.db("cointunnel").collection("open-transactions").updateOne({txid: element.txid}, {
+           $set: {
+             expiry: Date.now()+7200000
+           }
+         })
+         await mongoclient.db("cointunnel").collection("watched-wallets").updateOne({txid: element.txid}, {$set: {
+           expiry: Date.now()+7200000
+         }})
+       }
        let total_balance = Number(wallet.data.confirmed_balance)
        let acceptable_balance = 0.01*Number(element.accuracy)*Number(element.price_in_crypto);
 
