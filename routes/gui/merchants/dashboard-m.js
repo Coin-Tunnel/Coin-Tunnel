@@ -66,7 +66,10 @@ sleep(1000).then(thing => {
           let allOpen = await mongoclient.db("cointunnel").collection("open-transactions")
               .find({merchant: req.session.muser})
             let open = await allOpen.toArray();
-          
+      
+        for (var i = 0; i<failedx.length; i++){
+           if (failedx[i].previous_data) failedx[i].creation = Number(failedx[i].previous_data.creation)
+        }
        let txlist = successful.concat(failed, open, failedx);
        console.log(txlist)
        txlist = txlist.sort(function (a, b) {
