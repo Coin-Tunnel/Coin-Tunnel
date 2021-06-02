@@ -11,6 +11,8 @@ sleep(1000).then(thing => {
     const Web3 = require("web3");
     const ethNetwork = `https://mainnet.infura.io/v3/${secrets.infura}`;
     const web3 = new Web3(new Web3.providers.HttpProvider(ethNetwork));
+    const eventProvider = new Web3.providers.WebsocketProvider(`wss://mainnet.infura.io/ws/v3/${secrets.infura}`)
+    web3.setProvider(eventProvider)
 
     router.get('/auto/:hash', async (req, res) => {
         if (!req.params.hash) return res.status(400).send({status: "failed", reason: "No ethereum hash included in path!"});
