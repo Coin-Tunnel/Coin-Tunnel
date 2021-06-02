@@ -931,7 +931,7 @@ async function watchWallets(){
             price_in_crypto: opentransaction.price_in_crypto,
             coin: "LTC",
             version: "v2",
-            creation: opentransaction.merchant,
+            creation: opentransaction.creation,
             callback: opentransaction.callback,
             note: opentransaction.note,
             txid: opentransaction.txid,
@@ -957,6 +957,7 @@ async function watchWallets(){
     }else if (element.coin === "ETH"){
       let wallet = await fetch(`${secrets.domain}/api/v2/explorer/eth/auto/${element.wallet}`) // push to main deployment first
       wallet = await wallet.json();
+      console.log(wallet)
       let total_balance = Number(wallet.data.wei)*0.000000000000000001;
       let acceptable_balance = 0.01*Number(element.accuracy)*Number(element.price_in_crypto);
       if (acceptable_balance < total_balance){
@@ -977,7 +978,7 @@ async function watchWallets(){
            price_in_crypto: opentransaction.price_in_crypto,
            coin: "ETH",
            version: "v2",
-           creation: opentransaction.merchant,
+           creation: opentransaction.creation,
            callback: opentransaction.callback,
            note: opentransaction.note,
            txid: opentransaction.txid,

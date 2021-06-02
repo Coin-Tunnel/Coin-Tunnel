@@ -7,6 +7,7 @@ var CoinKey = require('coinkey')    //1.0.0
 var coinInfo = require('coininfo')  //0.1.0
 var subscribed = {};
 
+
 function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -934,13 +935,12 @@ sleep(1000).then(thing => {
       }else if (req.body.type === "ETH nouser paid"){
           // send ETH 
           let verifac = await decrypt(req.body.privateData.verifac);
-          let gasPrice = await getCurrentGasPrices();
-          let maxGas = gasPrice.low * 1000000000 * 22000;
+          //let maxGas = gasPrice.low * 1000000000 * 22000;
           // max amount of gas to spend in wei
-          maxGas = maxGas * 0.000000000000000001;
-          req.body.data.price_in_crypto = req.body.data.price_in_crypto - maxGas - 0.0000044;
-          let x = await sendEth(req.body.data.sendTo, req.body.privateData.secret, req.body.privateData.address, req.body.data.price_in_crypto).catch(err => {return "error: "+err.toString()})
+          //maxGas = maxGas * 0.000000000000000001;
+          let x = await sendEth(req.body.data.sendTo, req.body.privateData.secret, req.body.privateData.address, 1, true).catch(err => {return "error: "+err.toString()})
           if (x.toString().includes("error: ")){
+            console.log(x)
            let todo = {
              status: "failed",
              reason: "failed to transfer crypto from user",
@@ -1037,7 +1037,6 @@ module.exports = function(var1){
    return router;
 }
 async function sendLtc(recieverAddress, amountToSend, privateKey, sourceAddress, sweepin){
-  console.log('as;ldfkja;sldkfj;lsk')
   var sweep = false;
   if (!sweepin) sweep = false;
   else sweep = sweepin;
@@ -1130,14 +1129,20 @@ function broadcastTX(rawtx) {
     .then(json => resolve(json));
   })
 }
-async function sendEth(recieverAddress, sourcePrivateAddress, sourcePublicAddress, amountToSend){
+async function sendEth(recieverAddress, sourcePrivateAddress, sourcePublicAddress, amountToSend, sweepin){
   const Web3 = require("web3");
   const EthereumTx = require('ethereumjs-tx').Transaction;
-  const axios = require('axios');
+  
   const ethNetwork = `https://mainnet.infura.io/v3/${secrets.infura}`;
   const web3 = new Web3(new Web3.providers.HttpProvider(ethNetwork));
-  let nonce = await web3.eth.getTransactionCount(sourcePublicAddress);
   var Accounts = require('web3-eth-accounts');
+  var accounts = new Accounts();
+  var sweep = false;
+  if (!sweepin) sweep = false;
+  else sweep = sweepin;
+console.log(sweep)
+if (sweep === false){
+  let nonce = await web3.eth.getTransactionCount(sourcePublicAddress);
   console.log(nonce)
     //let amountToSend = 0.1;
   let weitoSend = amountToSend*1000000000000000000;
@@ -1150,6 +1155,8 @@ async function sendEth(recieverAddress, sourcePrivateAddress, sourcePublicAddres
   // if nonce, chainId, gas and gasPrice is given it returns synchronous
   gasPrice.medium = gasPrice.low*1000000000;
   console.log(gasPrice.medium)
+  gasPrice.medium = Math.trunc(gasPrice.medium)
+  weitoSend = Math.trunc(weitoSend)
   let results = await accounts.signTransaction({
       to: recieverAddress,
       value: weitoSend,
@@ -1165,6 +1172,32 @@ async function sendEth(recieverAddress, sourcePrivateAddress, sourcePublicAddres
   let txresults = await axios.get(`https://api.etherscan.io/api?module=proxy&action=eth_sendRawTransaction&hex=${results.rawTransaction}&apikey=${secrets.etherScan}`);
   console.log(txresults.data)
   return txresults.data;
+}else if (sweep === true){
+  var balance = await web3.eth.getBalance(sourcePublicAddress);
+  var gas = 21000;
+  let gasPrice = Number(await web3.eth.getGasPrice())
+  console.log(gasPrice);
+  var balanceMinusFee = balance - (gas * gasPrice);
+  if (balanceMinusFee < 0){
+    throw "Balance does not cover ethereum transaction fees!";
+  }else{
+    let nonce = await web3.eth.getTransactionCount(sourcePublicAddress);
+     console.log(`sending ethereum from ${sourcePublicAddress} that has ${balance} ETH to ${recieverAddress} with a transaction value of ${balanceMinusFee}. Address nonce: ${nonce}`);
+     let results = await accounts.signTransaction({
+      to: recieverAddress,
+      value: balanceMinusFee,
+      gas: 21000,
+      gasPrice: gasPrice,
+      nonce: nonce,
+      chainId: 1,
+  }, sourcePrivateAddress);
+  web3.eth.sendSignedTransaction(results.rawTransaction)
+  let txresults = await axios.get(`https://api.etherscan.io/api?module=proxy&action=eth_sendRawTransaction&hex=${results.rawTransaction}&apikey=${secrets.etherScan}`);
+  console.log(txresults.data)
+  return txresults.data;
+  }
+}
+  
 }
 async function getCurrentGasPrices() {
   let response = await axios.get('https://ethgasstation.info/json/ethgasAPI.json');
