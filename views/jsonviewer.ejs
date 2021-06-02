@@ -521,7 +521,7 @@ var jsonViewer = new JSONViewer();
 document.querySelector("#json").appendChild(jsonViewer.getContainer());
 
 var textarea = document.querySelector("textarea");
-let jsonRendered = '<%- jsonRendered %>';
+let jsonRendered = `<%- jsonRendered %>`;
 jsonRendered = JSON.parse(jsonRendered)
 console.log(jsonRendered)
 textarea.value = JSON.stringify(jsonRendered)
