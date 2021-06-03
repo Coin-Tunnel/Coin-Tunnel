@@ -505,7 +505,7 @@
                     "locked": 0,
                     "stateIa": "hidden",
                     "fixed": 0,
-                    "elementBlur": 0,
+                    "elementBlur": 0, 
                     "mixBlendMode": "normal",
                     "constraints": {
                         "auto": true,
