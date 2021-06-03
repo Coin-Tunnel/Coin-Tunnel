@@ -935,6 +935,7 @@ sleep(1000).then(thing => {
       }else if (req.body.type === "ETH nouser paid"){
           // send ETH 
           let verifac = await decrypt(req.body.privateData.verifac);
+          req.body.privateData.secret = await decrypt(req.body.privateData.secret);
           //let maxGas = gasPrice.low * 1000000000 * 22000;
           // max amount of gas to spend in wei
           //maxGas = maxGas * 0.000000000000000001;
