@@ -493,7 +493,7 @@
             },
             "085db588449a470dad8c959209fe969a": {
                 "props": {
-                    "name": "Coin Tunnel lets users have options. Buyers can create a cloud wallet and not worry about private keys, or can connect their existing wallet. Once connected/created buyers can do any operation they want. Coin Tunnel also supports people who don't want to sign up since we get you - you hate signing up and giving everyone your email. So... we create no-user transactions. These allow you to pay for your product even without an account! \n",
+                    "name": "Coin Tunnel lets users have options. Buyers can create a cloud wallet and not worry about private keys, or can connect their existing wallet. Once connected/created buyers can do any operation they want. Coin Tunnel also supports people who don't want to sign up since we get you - you hate signing up and giving everyone your email. So... we created no-user transactions. These allow you to pay for your product even without an account! \n",
                     "width": 351,
                     "height": 436,
                     "keepRatio": false,
