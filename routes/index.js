@@ -387,9 +387,15 @@ const apiLimiter = rateLimit({
       },
 });
 // homepage
-router.get('/', guiLimiter, (req, res) => {
-    res.render("index.ejs", {pageTitle: "Home"})
+router.get("/", (req, res) => {
+  return res.render("partials/checksize.ejs", {command: "checksize"});
+})
+router.get('/s', guiLimiter, (req, res) => {
+  res.render("index")
 });
+router.get('/n', (req, res) => {
+  res.render("home")
+})
 router.get("/testdashboard", guiLimiter, async (req, res) => {
   req.session.buser = 77520157
   if (!req.session.buser) return res.redirect("/signin-b")

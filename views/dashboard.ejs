@@ -529,7 +529,7 @@ console.log(allData)
         console.log(response) 
         let low = response.safeLow / 10;
         let maxGasSpent = 22000*low*1000000000; //in Wei
-        let maxEthSpent = maxGasSpent/1000000000000000000;
+        let maxEthSpent = "0.00037"
         let ethInWallet = document.getElementById("amountinwallet").textContent;
         ethInWallet = (ethInWallet.slice(18, ethInWallet.length-14));
         ethInWallet = ethInWallet.replace(/^\D+|\D+$/g, "");
