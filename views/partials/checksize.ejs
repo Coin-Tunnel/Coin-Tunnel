@@ -1,0 +1,9 @@
+<script>
+      let command = `<%- command %>`;
+  console.log(command)
+if (command === "checksize"){
+  if (Number(window.innerWidth) !== 1920){
+     window.location.href = "/s"
+  }else window.location.href = "/n"
+}
+</script>
