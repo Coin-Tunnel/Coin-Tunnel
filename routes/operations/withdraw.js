@@ -163,16 +163,21 @@ sleep(1000).then(thing => {
           let secretkeys = await decrypt(secret);
         console.log(secretkeys)
         console.log(publicadr)
+        if (req.body.address.length !== 42) return res.send("That wasn't a valid ETH deposit address!")
         let etherscan_response = await fetch(`https://api.etherscan.io/api?module=account&action=balance&address=${req.body.address}&tag=latest&apikey=${secrets.etherScan}`);
         etherscan_response = await etherscan_response.json();
+        console.log("etherescan_ response 168")
         console.log(etherscan_response)
         if (etherscan_response.status !== "1"){
           return res.send("That ETH address is not valid!")
         }
         let balance = await fetch(`https://api.etherscan.io/api?module=account&action=balance&address=${userinfo.eth.address}&tag=latest&apikey=${secrets.etherScan}`);
         balance = await balance.json();
-       
-        if (Number(balance.result) < Number(req.body.amount)+0.00021 || Number(req.body.amount) === 0) return res.send("You don't have enough funds to do this! Remember that the ETH network has network fees!")
+        let currentGas = await fetch("https://www.coin-tunnel.ml/api/v2/explorer/eth/gasPrice");
+        currentGas = await currentGas.json();
+        currentGas = Number(currentGas)*0.000000000000000001;
+        console.log(Number(req.body.amount)+(0.00022*currentGas));
+        if (Number(balance.result)*0.000000000000000001 < Number(req.body.amount)+(0.00022*currentGas) || Number(req.body.amount) === 0) return res.send("You don't have enough funds to do this! Remember that the ETH network has network fees!")
           all()
           async function all(){
                 // good

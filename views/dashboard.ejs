@@ -361,7 +361,11 @@ xhr.send();
     let currentcoin = localStorage.getItem("buyercoin");
   let address = document.getElementById("text-25b8").value;
   let amount = document.getElementById("text-e0a1").value;
-
+if (currentcoin === "eth"){
+  // do some extra validation
+  let maxAmount = document.getElementById("maxwithdraw").innerText;
+  if (maxAmount < amount) return alert("You don't have enough funds for this transaction!")
+}
   var xhr = new XMLHttpRequest();
 xhr.open('POST', `/withdraw/${currentcoin}`);
 xhr.setRequestHeader('Content-Type', 'application/json');
@@ -517,6 +521,7 @@ console.log(allData)
     xhr.send();
     }
     async function getMaxAmountEth(){
+      
       var xhr = new XMLHttpRequest();
       xhr.open("GET", "https://ethgasstation.info/json/ethgasAPI.json")
       xhr.onload = async () => {
@@ -530,8 +535,8 @@ console.log(allData)
         ethInWallet = ethInWallet.replace(/^\D+|\D+$/g, "");
         ethInWallet = Number(ethInWallet);
         console.log(maxEthSpent)
-        if (ethInWallet-maxEthSpent < 0) document.getElementsByClassName("amounttowithdraweths")[0].innerText = "Amount | Max withdraw in ETH: 0"+" | Min withdraw in ETH: "+maxEthSpent
-        else document.getElementsByClassName("amounttowithdraweths")[0].innerText = "Amount | Max withdraw in ETH: "+(ethInWallet-maxEthSpent).toString()+" | Min withdraw in ETH: "+maxEthSpent
+        if (ethInWallet-maxEthSpent < 0) document.getElementsByClassName("amounttowithdraweths")[0].innerHTML = "Amount | Max withdraw in ETH: "+`<a id="maxwithdraw" style="color: #478AC9" onclick="addvalue(false)">0</a>`+" | Min withdraw in ETH: "+`<a id="minwithdraw" style="color: #478AC9" onclick="addvalue(true)">${maxEthSpent}</a>`
+        else document.getElementsByClassName("amounttowithdraweths")[0].innerHTML = "Amount | Max withdraw in ETH: "+`<a id="maxwithdraw" style="color: #478AC9" onclick="addvalue(false)">${(ethInWallet-maxEthSpent)}</a>`+" | Min withdraw in ETH: "+`<a id="minwithdraw" style="color: #478AC9" onclick="addvalue(true)">${maxEthSpent}</a>`
       }
     xhr.send();
     }
@@ -740,5 +745,12 @@ console.log(allData)
   
   $('#copied-success').fadeIn(800);
   $('#copied-success').fadeOut(800);
+}
+function addvalue(type){
+  var x;
+  if (type === true)
+   x = document.getElementById("minwithdraw").innerText;
+  else if (type === false) x = document.getElementById("maxwithdraw").innerText
+   document.getElementById("text-e0a1").value = x
 }
 </script>

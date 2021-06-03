@@ -191,7 +191,7 @@ sleep(1000).then(thing => {
         accuracy: accuracy,
         publicAddress: tempAddress,
         privateAddress: encryptedadr,
-        expiry: Date.now()+1800000
+        expiry: Date.now()+86400000
       })
       await mongoclient.db("cointunnel").collection("watched-wallets").insertOne({
         wallet: tempAddress,
@@ -202,7 +202,7 @@ sleep(1000).then(thing => {
         version: "v2",
         txid: txid,
         accuracy: accuracy,
-        expiry: Date.now()+1800000
+        expiry: Date.now()+86400000
       })
       // send new address to callback
       return res.status(200).send({
@@ -214,6 +214,7 @@ sleep(1000).then(thing => {
         deposit_adr: tempAddress,
         accuracy: accuracy,
         type: "no buyer account",
+        expiry: Date.now()+86400000,
         txid: txid,
         callback: callback,
         timeStamp: Date.now()
