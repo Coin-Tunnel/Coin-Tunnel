@@ -1,104 +1,94 @@
 <html>
+  
   <div class="modal-background" style="display: block;"><div class="w-container"><div class="modal-window"><div data-w-id="4b1a90c8-05cd-6c87-b81e-c8ff061cdfd2" class="close-modal" onclick="iemodalclose()"><div class="text-block-17">X</div></div><h2 class="modal-headline _1">Attention Internet Explorer Users:<br></h2><h2 class="modal-body-copy">To enjoy the full experience, more speed and security, please use or download one of these free, up-to-date browsers below: IE is NOT safe to use and could get your funds stolen from the Coin Tunnel platform</h2><div class="browsers"><div class="browser-text"><a href="https://www.microsoft.com/en-us/windows/microsoft-edge" target="_blank" class="browser-link link-14">Microsoft Edge</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="https://www.mozilla.org/en-US/firefox/" target="_blank" class="browser-link link-15">Mozilla Firefox</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="https://www.google.com/chrome/" target="_blank" class="browser-link link-16">Google Chrome</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="https://www.opera.com/" target="_blank" class="browser-link link-17">Opera Software</a></div></div></div></div></div>
 </html>
 <style>
-  body { display:none; }
+
+.hiddenx{
+  display: none;
+}
+
   </style>
 <script>
-  main();
-  async function main(){
-    let localStorage = window.localStorage;
-        var path = window.location.pathname;
-        
-        if (path === "/s") path = "nocss";
-        if (path === "/changeAddress") path = "nocss";
-        if (path.includes("validate")) path = "nocss"
-        if (window.location.pathname === "/merchantdashboard") path = "/dashboard-m"
-        if (window.location.pathname === "/signup-m") path = "/signup-b";
-        if (window.location.pathname === "/signin-m") path = "/signup-b";
-        if (window.location.pathname === "/signin-b") path = "/signup-b";
-        if (window.location.pathname === "/testdashboard" || window.location.pathname === "/dashboard-b") path = "/dashboard";
-        if (window.location.pathname === "/welcome") path = "/newuser";
-        if (window.location.pathname === "/dashboard-b/ltc") path = "/dashboard";
+main();
+let elem = document.querySelector('body');
+  elem.style.display = "none"
 
-        if (path === "nocss") { return CSSDone();}
 
-        if (localStorage.getItem("theme") !== "dark"){
-          
-          var link = document.createElement( "link" );
-          link.href = path+".css"
-          link.type = "text/css";
-          link.rel = "stylesheet";
-          link.media = "screen,print";
-          console.log(link.href)
-          document.getElementsByTagName( "head" )[0].appendChild( link );      
-          link.onload = function () {
-            CSSDone('onload listener');
-          };   
- 
-        }else{
-          var file = location.pathname.split( "/" ).pop();
-          var link = document.createElement( "link" );
-          link.href = "/darkcss"+path+".css"
-          link.type = "text/css";
-          link.rel = "stylesheet";
-          link.media = "screen,print";
-          document.getElementsByTagName( "head" )[0].appendChild( link );
-          link.onload = function () {
-            CSSDone();
-          }; 
-        }
+var version = !!document.documentMode;
+if (version === true){
+  let elem = document.querySelector('body');
+  elem.style.display = "block"
+}
+
+function main() {
+  var localStorage = window.localStorage;
+  var path = window.location.pathname;
+  if (path === "/s") path = "nocss";
+  if (path === "/changeAddress") path = "nocss";
+  if (path.indexOf("validate") > -1) path = "nocss";
+  if (window.location.pathname === "/merchantdashboard") path = "/dashboard-m";
+  if (window.location.pathname === "/signup-m") path = "/signup-b";
+  if (window.location.pathname === "/signin-m") path = "/signup-b";
+  if (window.location.pathname === "/signin-b") path = "/signup-b";
+  if (window.location.pathname === "/testdashboard" || window.location.pathname === "/dashboard-b") path = "/dashboard";
+  if (window.location.pathname === "/welcome") path = "/newuser";
+  if (window.location.pathname === "/dashboard-b/ltc") path = "/dashboard";
+
+  if (path === "nocss") {
+    return CSSDone();
   }
-    function CSSDone(){
-      var elem = document.querySelector('body');
-      elem.style = "display: block";
-    }
-  function sleep(ms){
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
 
-  function iemodalclose(){
-    console.log("closemodal")
-    document.getElementsByClassName("modal-background")[0].style.display = "none"
+  if (localStorage.getItem("theme") !== "dark") {
+    var link = document.createElement("link");
+    link.href = path + ".css";
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.media = "screen,print";
+    console.log(link.href);
+    document.getElementsByTagName("head")[0].appendChild(link);
+
+    link.onload = function () {
+      CSSDone('onload listener');
+    };
+  } else {
+    var file = location.pathname.split("/").pop();
+    var link = document.createElement("link");
+    link.href = "/darkcss" + path + ".css";
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.media = "screen,print";
+    document.getElementsByTagName("head")[0].appendChild(link);
+
+    link.onload = function () {
+      CSSDone();
+    };
   }
-    
-  
-	 
+}
 
-var version = detectIE();
+function CSSDone() {
+  let elemx = document.querySelector('body');
+  elemx.style.display = "";
+}
 
-if(version==11){
-	$(document).ready(function(){
-  		$('.wwd-left-content').css({'display': 'table-cell'});
-  		$('.btn-div').css({'min-width':'140%','margin-bottom':'25px'})
-      $('.wwd-left-content').siblings().css({'display':'table-cell'})
+function sleep(ms) {
+  return new Promise(function (resolve) {
+    return setTimeout(resolve, ms);
   });
-
-}
-document.getElementsByClassName('modal-background')[0].style.display = "none";
-if (version<12 && version !==false){
-	document.getElementsByClassName('modal-background')[0].style.display = "block";
 }
 
-function detectIE() {
-  var ua = window.navigator.userAgent;
+function iemodalclose() {
+  console.log("closemodal");
+  document.getElementsByClassName("modal-background")[0].style.display = "none";
+}
 
-  var msie = ua.indexOf('MSIE ');
-  if (msie > 0) {
-    return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
-  }
 
-  var trident = ua.indexOf('Trident/');
-  if (trident > 0) {
-    var rv = ua.indexOf('rv:');
-    return 11;//parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
-  }
+if (version === false) {
+  document.getElementsByClassName('modal-background')[0].style.display = "none";
+}
 
-  var edge = ua.indexOf('Edge/');
-  if (edge > 0) {
-    return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
-  }
-  return false;
+if (version === true) {
+  document.getElementsByClassName('modal-background')[0].style.display = "block";
 }
 
 </script>

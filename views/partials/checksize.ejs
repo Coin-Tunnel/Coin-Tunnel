@@ -1,8 +1,10 @@
 <script>
-      let command = `<%- command %>`;
+      let command = '<%- command %>';
   console.log(command)
+  var version = !!document.documentMode;
+
 if (command === "checksize"){
-  if (Number(window.innerWidth) !== 1920){
+  if (Number(window.innerWidth) !== 1920 || version === true){
      window.location.href = "/s"
   }else window.location.href = "/n"
 }
