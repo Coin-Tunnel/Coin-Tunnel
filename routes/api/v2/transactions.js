@@ -6,7 +6,10 @@ const algorithm = 'aes-256-ctr';
 var CoinKey = require('coinkey')    //1.0.0
 var coinInfo = require('coininfo')  //0.1.0
 var subscribed = {};
-
+const RippleAPI = require('ripple-lib').RippleAPI;
+const api = new RippleAPI({
+  server: 'wss://s1.ripple.com'
+});
 
 function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -861,6 +864,33 @@ sleep(1000).then(thing => {
             timeStamp: Date.now()
           })
           return res.send("Success! You have succesfully paid! The seller has been alerted of your payment, and you should recieve your product shortly. The ETH TXID is "+transfer.result)
+        }else if (list.type === "xrp-change"){
+          const address = api.generateAddress();
+          let encrypted = await encrypt(address.secret);
+          let xrpaddress = address.address;
+          await mongoclient.db('cointunnel').collection("emails").deleteOne({name: req.params.id});
+          await mongoclient.db('cointunnel').collection("userData").updateOne({name: list.user}, {
+            $set:{
+              "xrp.address":xrpaddress,
+              "xrp.privatex":encrypted
+            }
+          })
+          // update mongo
+          return res.send("success!")
+          // generate new xrp wallet and encrypt it and add it to mongodb
+        }else if (list.type === "withdraw-xrp"){
+          let user = await mongoclient.db("cointunnel").collection("userData").findOne({name: list.user});
+          mongoclient.db("cointunnel").collection("emails").deleteOne({name: list.name})
+          if (!user.xrp || user.xrp.address === "none") return res.send("You don't seem to have an XRP wallet setup!");
+          var tag;
+          if (!list.options.tag) tag = "none";
+          else tag = list.options.tag;
+
+          let secret = await decrypt(user.xrp.privatex);
+          console.log(list.options.withdrawto, user.xrp.address, secret, list.options.amount, tag, false)
+          let result = await sendXRP(list.options.withdrawto, user.xrp.address, secret, list.options.amount, tag, false).catch(err => {console.log(err); return "Error: "+err.toString()});
+          if (result.toString().includes("Error: ")) return res.send("There was an error! Direct logs: "+result.toString());
+          return res.send("Success! TX HASH: "+ JSON.stringify(result.tx_json.hash));
         }
     })
     router.delete('/delete/:id', longLimiter, async (req, res) => {
@@ -1208,4 +1238,54 @@ async function getCurrentGasPrices() {
     high: response.data.fast / 10
   };
   return prices;
+}
+async function sendXRP(recieverAddress, sourcePublicAddress, sourcePrivateAddress, amountToSend, tagx, sweepin){
+  var tag;
+  if (tagx === "none") tag = undefined
+  else tag = Number(tagx);
+  console.log(tag)
+  var sweep = false;
+  if (!sweepin) sweep = false;
+  else sweep = sweepin;
+  // TESTNET ADDRESS 1
+const ADDRESS_1 = sourcePublicAddress
+const SECRET_1 = sourcePrivateAddress
+// TESTNET ADDRESS 2
+const ADDRESS_2 = recieverAddress
+const instructions = {maxLedgerVersionOffset: 5}
+const currency = 'XRP'
+const amount = amountToSend
+const payment = {
+  source: {
+    address: ADDRESS_1,
+    maxAmount: {
+      value: amount,
+      currency: currency
+    }
+  },
+  destination: {
+    tag: tag,
+    address: ADDRESS_2,
+    amount: {
+      value: amount,
+      currency: currency
+    }
+  }
+}
+
+let finalresult = await api.connect().then(async () => {
+  console.log('Connected...')
+  let secondaryresult = await api.preparePayment(ADDRESS_1, payment, instructions).then(async prepared => {
+    const {signedTransaction, id} = api.sign(prepared.txJSON, SECRET_1)
+    console.log(id)
+    let primaryresult = await api.submit(signedTransaction).then(async result => {
+      console.log(JSON.stringify(result, null, 2))
+      api.disconnect()
+      return JSON.stringify(result, null, 2)
+    })
+    return primaryresult;
+  })
+  return secondaryresult;
+}).catch(err => {throw err;});
+return finalresult;
 }

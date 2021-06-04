@@ -153,16 +153,14 @@ sleep(1000).then(thing => {
         var secret;
         var publicadr
         let userinfo = await checkStuff(mongoclient, req.session.buser);
-        if (!userinfo.ltc) return res.send("No wallet connected!")
-        if (userinfo.ltc.address === "none"){
+        if (!userinfo.eth) return res.send("No ETH wallet connected!")
+        if (userinfo.eth.address === "none"){
           return res.send("No wallet connected!");
         }
-          secret = userinfo.ltc.privatex;
-          publicadr = userinfo.ltc.address;
+          secret = userinfo.eth.privatex;
+          publicadr = userinfo.eth.address;
 
           let secretkeys = await decrypt(secret);
-        console.log(secretkeys)
-        console.log(publicadr)
         if (req.body.address.length !== 42) return res.send("That wasn't a valid ETH deposit address!")
         let etherscan_response = await fetch(`https://api.etherscan.io/api?module=account&action=balance&address=${req.body.address}&tag=latest&apikey=${secrets.etherScan}`);
         etherscan_response = await etherscan_response.json();
@@ -216,6 +214,65 @@ sleep(1000).then(thing => {
                 return res.send("good boi")
             
           }
+  })
+  router.post("/xrp", guiLimiter, async (req, res) => {
+    if (!req.session.buser) return res.send("You must be logged in!");
+    let user = await mongoclient.db("cointunnel").collection("userData").findOne({name: req.session.buser});
+    let userinfo = user;
+    if (!user.xrp || user.xrp.address === "none") return res.send("You don't have an XRP address setup!");
+    if (Number(req.body.amount).toString().toLowerCase() === "nan") return res.send("That wasn't a valid amount!")
+    console.log(req.body)
+    if (req.body.address === "") return res.send("That was an invalid XRP address!")
+    let address = await fetch(`https://www.coin-tunnel.ml/api/v2/explorer/xrp/address/${req.body.address}`);
+    address = await address.json();
+    if (address.status === "failed" && address.reason.toString().toLowerCase().includes("account not found")){
+      
+    }else if (address.status === "ok"){
+      
+    }else return res.send("That wasn't a valid XRP deposit address!");
+    // do stuff here
+    if (req.body.tag !== ""){
+      if (Number(req.body.tag).toString().toLowerCase() === "nan") return res.send("The deposit TAG must be a number!")
+    }
+    if (Number(req.body.amount).toString().toLowerCase() === "nan" || req.body.amount === "") return res.send("The amount must be a number")
+    let originalAdr = await fetch(`https://www.coin-tunnel.ml/api/v2/explorer/xrp/address/${user.xrp.address}`);
+    originalAdr = await originalAdr.json();
+    if (originalAdr.status === "failed" || Number(originalAdr.data.xrpBalance) < Number(req.body.amount)) return res.send("You do not have enough XRP to fund this transaction!");
+    // create mongodb document email thingy and send email;
+    let expiry = Date.now()+600000;
+                let randomid = await makeid(30);
+                let result = await mongoclient.db("cointunnel").collection("emails").insertOne({
+                  name: randomid,
+                  type: "withdraw-xrp",
+                  expiration: expiry,
+                  user: req.session.buser,
+                  options: {
+                    withdrawto: req.body.address,
+                    amount: req.body.amount,
+                    tag: req.body.tag
+                  }
+                });
+                console.log("created mongodb listing")
+                var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+                 user: 'cointunnel.0x@gmail.com',
+                 pass: secrets.gmail_password
+             }
+         });
+         const mailOptions = {
+           from: 'cointunnel.0x@gmail.com', // sender address
+           to: userinfo.email, // list of receivers
+           subject: 'Coin Tunnel Confirmation', // Subject line
+           html:`<h1 style="text-align: center;">Hello ${userinfo.email}!</h1><p style="text-align: center;">There was a recent attempt to withdraw ${req.body.amount} XRP from your account to deposit tag ${req.body.tag}!&nbsp;<br />If this was you, great! Click the link below. If this wasn't you, your account may be compromised. Quickly withdraw all your money into a wallet, and delete your account. Because we only support oauth2, this might mean that they have access to other apps connected to your Oauth2 account too!&nbsp;</p><p style="text-align: center;"><span style="color: #ff6600;">(Coin-tunnel doesn't store any passwords, we leave it to google, github, or discord)</span></p><p style="text-align: center;"><a href="https://www.coin-tunnel.ml/validate/${randomid}">https://www.coin-tunnel.ml/validate/${randomid}</a></p>`
+         };
+         transporter.sendMail(mailOptions, function (err, info) {
+            if(err)
+              console.log(err)
+            else
+              console.log(info);
+         });
+         return res.send("good boi")
   })
 })
 

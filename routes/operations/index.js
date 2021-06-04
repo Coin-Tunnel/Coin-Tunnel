@@ -79,7 +79,7 @@ sleep(1000).then(thing => {
           console.log(info);
      });
             return res.send("good boi")
-  })
+    })
     router.post('/reveal-ltc', longLimiter, async (req, res) => {
       if (!req.session.buser) return res.send("login again! Your session has expired");
       let user = await checkStuff(mongoclient, req.session.buser);
@@ -193,6 +193,49 @@ sleep(1000).then(thing => {
     })
 
       return res.send("Success! Check your email for a confirmation link.");
+    })
+    router.post('/reveal-xrp', longLimiter, async (req, res) => {
+      if (!req.session.buser) return res.send("login again! Your session has expired");
+      let user = await checkStuff(mongoclient, req.session.buser);
+      if (!user.xrp) return res.send("No XRP wallet setup!");
+      if (user.xrp.address === "none") return res.send("No XRP wallet setup!");
+      let privatekey = decrypt(user.xrp.privatex);
+      return res.send(privatekey)
+    })
+    router.post('/change-xrp', longLimiter, async (req, res) => {
+      if (!req.session.buser) return res.send("Your session has expired! Login to continue.");
+      // send email 
+      let userinfo = await checkStuff(mongoclient, req.session.buser);
+      if (!userinfo){ req.session.destroy(); req.session.save(); return res.send("That account doesn't exist!");}
+      let expiry = Date.now()+600000;
+            let randomid = await makeid(30);
+            let result = await mongoclient.db("cointunnel").collection("emails").insertOne({
+              name: randomid,
+              type: "xrp-change",
+              expiration: expiry,
+              user: req.session.buser
+            });
+            console.log("created mongodb listing")
+            var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+             user: 'cointunnel.0x@gmail.com',
+             pass: secrets.gmail_password
+         }
+     });
+     const mailOptions = {
+       from: 'cointunnel.0x@gmail.com', // sender address
+       to: userinfo.email, // list of receivers
+       subject: 'Coin Tunnel Confirmation', // Subject line
+       html:`<h1 style="text-align: center;">Hello ${userinfo.email}!</h1><p style="text-align: center;">There was a recent attempt to change your XRP cloud account! Please note that the XRP ledger requires 20 XRP deposited to activate the address! &nbsp;<br />If this was you, great! Click the link below. If this wasn't you, your account may be compromised. Quickly withdraw all your money into a wallet, and delete your account. Because we only support oauth2, this might mean that they have access to other apps connected to your Oauth2 account too!&nbsp;</p><p style="text-align: center;"><span style="color: #ff6600;">(Coin-tunnel doesn't store any passwords, we leave it to google, github, or discord)</span></p><p style="text-align: center;"><a href="https://www.coin-tunnel.ml/validate/${randomid}">https://www.coin-tunnel.ml/validate/${randomid}</a></p>`
+     };
+     transporter.sendMail(mailOptions, function (err, info) {
+        if(err)
+          console.log(err)
+        else
+          console.log(info);
+     });
+            return res.send("good boi")
     })
 })
 
