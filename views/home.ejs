@@ -204,7 +204,7 @@ var _ELEMENT = document.querySelector("#text");
 var _CURSOR = document.querySelector("#border");
 
 // Implements typing effect
-function Type() { 
+async function Type() { 
 	// Get substring with 1 characater added
 	var text =  _CONTENT[_PART].substring(0, _PART_INDEX + 1);
 	_ELEMENT.innerHTML = text;
@@ -213,12 +213,20 @@ function Type() {
 	// If full sentence has been displayed then start to delete the sentence after some time
 	if(text === _CONTENT[_PART]) {
 		// Hide the cursor
-		_CURSOR.style.display = 'none';
-
+    var x = 1000;
+    if (text === "Coin Tunnel") x = 4000;
+    let randomchance = Math.floor(Math.random() * 2);
+    console.log(randomchance)
+    if (randomchance === 1){
+      return
+    }
+    //console.log(text)
+    
 		clearInterval(_INTERVAL_VAL);
 		setTimeout(function() {
 			_INTERVAL_VAL = setInterval(Delete, 50);
-		}, 1000);
+      _CURSOR.style.display = 'none';
+		}, x);
 	}
 }
 
@@ -253,6 +261,7 @@ function Delete() {
 _INTERVAL_VAL = setInterval(Type, 100);
     }
 </script>
+
 <style>
 p {
     margin: 0px 0px 0px 0px !important
