@@ -60,7 +60,7 @@ sleep(1000).then(thing => {
       res.write(`id: ${req.params.apikey}\n`);
       let data = {
         status: "ok",
-        reason: "you are now subscribed! You will get alerted when a user pays and closes a transaction. This channel will close every 2 minutes, so make sure to reopen it."
+        reason: "you are now subscribed! You will get alerted when a user pays and closes a transaction."
       }
       data = JSON.stringify(data)
       res.write("data: " + data + '\n\n'); 
@@ -1019,6 +1019,7 @@ sleep(1000).then(thing => {
          await mongoclient.db('cointunnel').collection("finished-transactions").insertOne(todo);
       }
     })
+    sseHeartbeat();
 })
 
 
@@ -1288,4 +1289,18 @@ let finalresult = await api.connect().then(async () => {
   return secondaryresult;
 }).catch(err => {throw err;});
 return finalresult;
+}
+async function sseHeartbeat(){
+  while (true){
+    Object.keys(subscribed).forEach(function (key){
+      let sseRes = subscribed[key];
+      let data = {
+        timeStamp: Date.now(),
+        next_hearbeat: 1,
+      }
+      data = JSON.stringify(data)
+      sseRes.write("hearbeat: " + data + '\n\n');
+    })
+    await sleep(1000)  
+  }
 }
