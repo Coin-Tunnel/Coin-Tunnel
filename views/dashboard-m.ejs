@@ -165,7 +165,7 @@
         <div class="u-align-center u-container-style u-grey-5 u-list-item u-repeater-item u-list-item-6">
           <div class="u-container-layout u-similar-container u-valign-top u-container-layout-6">
             <h5 class="u-text u-text-palette-1-base u-text-13">Errored transactions</h5>
-            <p class="u-text u-text-grey-50 u-text-14"><%- transac.all %></p>
+            <p class="u-text u-text-grey-50 u-text-14" id="errored-transactions"><%- transac.all %></p>
           </div>
         </div>
       </div>
@@ -182,7 +182,7 @@
         </header>
         <section class="modal-content-1" style="height: 89vh; color: black; max-height: 90vh;">
           <div class="container">
-            <table class="responsive-table" style="max-width: fit-content; color: black;">
+            <table class="responsive-table" style="max-width: fit-content; color: black; cursor: text;">
               <p><strong>List of all transactions that occured in the past month</strong></p>
               <thead>
                 <tr>
@@ -221,7 +221,7 @@
                       text = "Awaiting payment, Expiry: "+expiry+", Creation: "+creation+", "+transactionList[x].price_in_usd+"USD = "+ transactionList[x].price_in_crypto+transactionList[x].coin
                       %>
               <tr style="color: black;">
-                <th scope="row" style="color: black;">Awaiting payment</th>
+                <th class="transac-status" scope="row" style="color: black;">Awaiting payment</th>
                 <td data-title="USD equivalent"><%- transactionList[x].price_in_usd %></td>
                 <td data-title="Amount of crypto">
                   <%- transactionList[x].price_in_crypto.toString().slice(0, 10)+transactionList[x].coin %></td>
@@ -229,7 +229,7 @@
                 <td data-title="txid" data-type="currency"><a style="color: lightskyblue" target="_blank"
                     href=<%- "/api/v1/txinfo/useSession/"+transactionList[x].txid %>><%- transactionList[x].txid %></a>
                 </td>
-                <td data-title="Note" data-type="currency"><%- JSON.stringify(transactionList[x].note) %></td>
+                <td class="note" data-title="Note" data-type="currency"><%- JSON.stringify(transactionList[x].note) %></td>
               </tr>
               <%
                     } 
@@ -237,7 +237,7 @@
                       text = "Awaiting payment, Expiry: "+expiry+", Creation: "+creation+", "+transactionList[x].price_in_usd+" USD = "+ transactionList[x].price_in_btc+" BTC";
                       %>
               <tr style="color: black;">
-                <th scope="row" style="color: black;">Awaiting payment</th>
+                <th class="transac-status" scope="row" style="color: black;">Awaiting payment</th>
                 <td data-title="USD equivalent"><%- transactionList[x].price_in_usd %></td>
                 <td data-title="Amount of crypto"><%- transactionList[x].price_in_btc.toString().slice(0, 10) %> BTC
                 </td>
@@ -246,7 +246,7 @@
                 <td data-title="txid" data-type="currency"><a style="color: lightskyblue" target="_blank"
                     href=<%- "/api/v1/txinfo/useSession/"+transactionList[x].txid %>><%- transactionList[x].txid %></a>
                 </td>
-                <td data-title="Note" data-type="currency"><%- JSON.stringify(transactionList[x].note) %></td>
+                <td class="note" data-title="Note" data-type="currency"><%- JSON.stringify(transactionList[x].note) %></td>
               </tr>
               <%
                     }
@@ -257,7 +257,7 @@
                       if (!transactionList[x].coin) transactionList[x].coin = "BTC"
                       %>
               <tr style="color: black;">
-                <th scope="row" style="color: #A03036;">Expired</th>
+                <th class="transac-status" scope="row" style="color: #A03036;">Expired</th>
                 <td data-title="USD equivalent"><%- transactionList[x].data.price_in_usd %></td>
                 <td data-title="Amount of crypto">
                   <%- transactionList[x].data.price_in_crypto.toString().slice(0, 10)+" "+transactionList[x].coin %>
@@ -266,7 +266,7 @@
                 <td data-title="txid" data-type="currency"><a style="color: lightskyblue" target="_blank"
                     href=<%- "/api/v1/txinfo/useSession/"+transactionList[x].txid %>><%- transactionList[x].txid %></a>
                 </td>
-                <td data-title="Note" data-type="currency"><%- JSON.stringify(transactionList[x].data.note) %></td>
+                <td class="note" data-title="Note" data-type="currency"><%- JSON.stringify(transactionList[x].data.note) %></td>
               </tr>
               <%
                     }else{
@@ -279,7 +279,7 @@
                       }
                       %>
               <tr style="color: black;">
-                <th scope="row" style="color: #A03036;">failed</th>
+                <th class="transac-status" scope="row" style="color: #A03036;">failed</th>
                 <td data-title="USD equivalent"><%- transactionList[x].data.price_in_usd %></td>
                 <td data-title="Amount of crypto">
                   <%- transactionList[x].data.price_in_crypto.toString().slice(0, 10)+" "+transactionList[x].coin %>
@@ -288,21 +288,21 @@
                 <td data-title="txid" data-type="currency"><a style="color: lightskyblue" target="_blank"
                     href=<%- "/api/v1/txinfo/useSession/"+transactionList[x].txid %>><%- transactionList[x].txid %></a>
                 </td>
-                <td data-title="Note" data-type="currency"><%- JSON.stringify(transactionList[x].data.note) %></td>
+                <td class="note" data-title="Note" data-type="currency"><%- JSON.stringify(transactionList[x].data.note) %></td>
               </tr>
               <%
                     }
                   }else if (transactionList[x].previous_data) {
                     %>
                     <tr style="color: #d42f38;">
-                      <th scope="row" style="color: #d42f38;">Failed</th>
+                      <th class="transac-status" scope="row" style="color: #d42f38;">Failed</th>
                       <td data-title="USD equivalent"><%-transactionList[x].previous_data.price_in_usd %></td>
                       <td data-title="Amount of crypto"><%-transactionList[x].previous_data.price_in_crypto + " "+transactionList[x].previous_data.coin%></td>
                       <td data-title="Creation (local time)" data-type="currency"><%-transactionList[x].previous_data.creation%></td>
                       <td data-title="txid" data-type="currency"><a style="color: lightskyblue" target="_blank"
                           href=<%- "/api/v1/txinfo/useSession/"+transactionList[x].txid %>><%- transactionList[x].txid %></a>
                       </td>
-                      <td data-title="Note" data-type="currency"><%- "Reason: "+transactionList[x].reason %></td>
+                      <td class="note" data-title="Note" data-type="currency"><%- "Reason: "+transactionList[x].reason %></td>
                     </tr>
                     <%
                   }else {
@@ -310,14 +310,14 @@
                       // then it's erroroed Out
                       %>
               <tr style="color: #d42f38;">
-                <th scope="row" style="color: #d42f38;">Failed</th>
+                <th class="transac-status" scope="row" style="color: #d42f38;">Failed</th>
                 <td data-title="USD equivalent">No data</td>
                 <td data-title="Amount of crypto">No data</td>
                 <td data-title="Creation (local time)" data-type="currency">No data</td>
                 <td data-title="txid" data-type="currency"><a style="color: lightskyblue" target="_blank"
                     href=<%- "/api/v1/txinfo/useSession/"+transactionList[x].txid %>><%- transactionList[x].txid %></a>
                 </td>
-                <td data-title="Note" data-type="currency"><%- "Reason: "+transactionList[x].reason %></td>
+                <td class="note" data-title="Note" data-type="currency"><%- "Reason: "+transactionList[x].reason %></td>
               </tr>
               <%
                     }else{
@@ -325,7 +325,7 @@
                       if (transactionList[x].price_in_btc) transactionList[x].coin = "BTC"
                       %>
               <tr style="color: black;">
-                <th scope="row" style="color: black">Paid</th>
+                <th class="transac-status" scope="row" style="color: black">Paid</th>
                 <td data-title="USD equivalent"><%- transactionList[x].price_in_usd %></td>
                 <td data-title="Amount of crypto">
                   <%- transactionList[x].price_in_crypto.toString().slice(0, 10)+" "+transactionList[x].coin %></td>
@@ -333,7 +333,7 @@
                 <td data-title="txid" data-type="currency"><a style="color: lightskyblue" target="_blank"
                     href=<%- "/api/v1/txinfo/useSession/"+transactionList[x].txid %>><%- transactionList[x].txid %></a>
                 </td>
-                <td data-title="Note" data-type="currency"><%- JSON.stringify(transactionList[x].note) %></td>
+                <td class="note" data-title="Note" data-type="currency"><%- JSON.stringify(transactionList[x].note) %></td>
               </tr>
               <%
                     }
@@ -477,7 +477,24 @@
 
 </html>
 <script>
+    let allNotes = document.getElementsByClassName("note");
+    let originalNotes = allNotes;
+    for (var t = 0; t<allNotes.length; t++){
+      let x = allNotes[t].innerText;
+      if (x.length > 20){
+        let functionText = originalNotes[t].innerText.replaceAll("'", "").replaceAll('"', "")
+        allNotes[t].innerHTML = `<span style="cursor: text;" title="${functionText}">${x.slice(0, 10)+"..."}</span>`
+      }
+    }
+    let allStatus = document.getElementsByClassName("transac-status");
+    var failedCount = 0;
+    for (var t = 0; t<allStatus.length; t++){
+      let x = allStatus[t].innerText;
+      if (x === "Expired" || x === "Failed") failedCount++
+    }
+    document.getElementById("errored-transactions").innerHTML = failedCount.toString()
   let allData = '<%- db %>';
+  
   allData = JSON.parse(allData);
   console.log(allData);
   document.getElementById("merchantid").innerText = allData.tunnelId;
@@ -489,7 +506,8 @@
     document.getElementById("changeVarCoin").style = "display:none"
     document.getElementById("merchantaddress").innerText = allData.deposit;
     document.getElementById("merchantcoin").innerHTML = `BTC <i class="fa fa-angle-down" aria-hidden="true"></i>`;
-    document.getElementById("loadinggif").style="display:none"
+    document.getElementById("loadinggif").style="display:none";
+    
   } else if (localStorage.getItem("merchant-coin") === "LTC") {
     // do more stupid stuff'
     document.getElementById("btcchangecoin").style = "display:none"
@@ -699,6 +717,13 @@
     //x = await x.text();
     
   }
+  function replaceAll(str, find, replace) {
+    var escapedFind=find.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+    return str.replace(new RegExp(escapedFind, 'g'), replace);
+}
+//function showtext(text){
+  
+//}
 </script>
 <style>
   a {
