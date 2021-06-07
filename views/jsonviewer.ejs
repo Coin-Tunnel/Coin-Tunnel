@@ -503,8 +503,14 @@ body {
 </style>
 
 <script>
-    all()
-async function all(){
+	var version = !!document.documentMode;
+	if (version === true) alert("JSON viewer does not support IE! If you would like to view this transaction, use our API service instead.");
+</script>
+
+<script>
+	
+	all();
+function all(){
     var setJSON = function () {
   try {
     var value = textarea.value;
@@ -521,7 +527,8 @@ var jsonViewer = new JSONViewer();
 document.querySelector("#json").appendChild(jsonViewer.getContainer());
 
 var textarea = document.querySelector("textarea");
-let jsonRendered = `<%- jsonRendered %>`;
+
+var jsonRendered = `<%- jsonRendered %>`;
 jsonRendered = JSON.parse(jsonRendered)
 console.log(jsonRendered)
 textarea.value = JSON.stringify(jsonRendered)
@@ -658,11 +665,8 @@ document.addEventListener("keyup", function(event) {
 });
 }
 
-function sleep(ms){
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
 
-async function search(){
+function search(){
 	let queryjson = getJsonFromUrl(window.location.search);
 	console.log(queryjson)
 
@@ -670,11 +674,11 @@ async function search(){
 	let original = query;
 	if (!query && queryjson.authorization){
 		if (queryjson.authorization)
-		return window.location = `/api/v2/txsearch/html?type=all&authorization=${queryjson.authorization}`;
+		return window.location = '/api/v2/txsearch/html?type=all&authorization='+queryjson.authorization;
 	}else if (!query){
-		return window.location = `/api/v2/txsearch/html?type=all`
+		return window.location = '/api/v2/txsearch/html?type=all'
 	}
-	query = query.replaceAll("'", '"')
+	query = replaceAll(query, "'", '"');
 	console.log(query)
 	try{
 		let json = JSON.parse(query);
@@ -685,8 +689,8 @@ async function search(){
 	let encoded = encodeURIComponent(query);
 	console.log(encoded)
     if (queryjson.authorization !== undefined)
-	window.location = `/api/v2/txsearch/html?type=all&filter=${encoded}&fillin=${original}&authorization=${queryjson.authorization}`;
-	else window.location = `/api/v2/txsearch/html?type=all&filter=${encoded}&fillin=${original}`
+	window.location = '/api/v2/txsearch/html?type=all&filter='+encoded+'&fillin='+original+'&authorization='+queryjson.authorization;
+	else window.location = '/api/v2/txsearch/html?type=all&filter='+encoded+'&fillin='+original
 }
 
 function getJsonFromUrl(url) {
@@ -698,5 +702,9 @@ function getJsonFromUrl(url) {
     result[item[0]] = decodeURIComponent(item[1]);
   });
   return result;
+}
+function replaceAll(str, find, replace) {
+  var escapedFind = find.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+  return str.replace(new RegExp(escapedFind, 'g'), replace);
 }
 </script>
