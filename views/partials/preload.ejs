@@ -90,6 +90,10 @@ function sleep(ms) {
   });
 }
 
+document.onkeypress = function (e) {
+    if (e.charCode === 27) iemodalclose();
+};
+
 function iemodalclose() {
   console.log("closemodal");
   document.getElementsByClassName("modal-background")[0].style.display = "none";
