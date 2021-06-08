@@ -121,12 +121,12 @@
 <script>
 var googleperm = false
 
-  async function onSignIn(googleUser) {
+  function onSignIn(googleUser) {
   console.log(googleperm)
   if (googleperm === false) return;
-  console.log("a;sldfkja;slkdfja;sldkfj")
-  await sleep(2000)
-  var profile = googleUser.getBasicProfile();
+  setTimeout(dorest, 2000)
+  function dorest(){
+    var profile = googleUser.getBasicProfile();
   let id = profile.getId();
   console.log('ID: ' + id); // Do not send to your backend! Use an ID token instead.
   console.log('Name: ' + profile.getName());
@@ -143,6 +143,7 @@ console.log(xhr.response)
   }else{
   document.getElementById("error").innerHTML = xhr.response
   }
+  }
 };
 //document.getElementById("custId").value = googleUser.getAuthResponse().id_token;
 //var wait=setTimeout("document.hidden.submit();",2000);
@@ -152,8 +153,5 @@ xhr.send(JSON.stringify({'idtoken': googleUser.getAuthResponse().id_token, "requ
 }
 function checkUser(){
 googleperm = true;
-}
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
 </script>
