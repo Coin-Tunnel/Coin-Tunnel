@@ -189,7 +189,7 @@
             },
             "f423158e35294b9aa98a112061fec58b": {
                 "props": {
-                    "name": "Welcome to the next crypto revolution \n",
+                    "name": " \n",
                     "width": 1224,
                     "height": 82,
                     "keepRatio": false,
@@ -223,7 +223,7 @@
                     "shouldPreventAdjustingPosition": false,
                     "content": {
                         "ops": [{
-                            "insert": "Welcome to the next crypto revolution \n"
+                            "insert": " \n"
                         }]
                     },
                     "autoWidth": true,
