@@ -891,6 +891,14 @@ sleep(1000).then(thing => {
           let result = await sendXRP(list.options.withdrawto, user.xrp.address, secret, list.options.amount, tag, false).catch(err => {console.log(err); return "Error: "+err.toString()});
           if (result.toString().includes("Error: ")) return res.send("There was an error! Direct logs: "+result.toString());
           return res.send("Success! TX HASH: "+ JSON.stringify(result.tx_json.hash));
+        }else if (list.type === "merchant-change-ripple"){
+          await mongoclient.db("cointunnel").collection("merchantData").updateOne({name: list.user}, {
+            $set: {
+               xrp_deposit: list.options.address
+            }
+          })
+          mongoclient.db("cointunnel").collection("emails").deleteOne({name: req.params.id});
+          return res.send("Success!");
         }
     })
     router.delete('/delete/:id', longLimiter, async (req, res) => {

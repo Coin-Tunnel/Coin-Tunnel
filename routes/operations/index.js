@@ -237,6 +237,49 @@ sleep(1000).then(thing => {
      });
             return res.send("good boi")
     })
+    router.post('/change-xrp-m', longLimiter, async (req, res) => {
+      if (!req.session.muser) return res.send("Your current session has expired! No changes have been made. Sign in again to continue.");
+      // validate stupid ltc address
+      if (!req.body.address) return res.send("You did not post a address! If you are trying to use this as an API service, or modified our client code, that is against our ToS");
+      let address = await fetch(`https://www.coin-tunnel.ml/api/v2/explorer/xrp/address/${req.body.address}`);
+      address = await address.json();
+      if (address.status === "failed") return res.send("That was an invalid XRP address! Nothing has been changed");
+      let user = await mongoclient.db("cointunnel").collection("merchantData").findOne({name: req.session.muser})
+      let expiry = Date.now()+600000;
+            let randomid = await makeid(30);
+            let result = await mongoclient.db("cointunnel").collection("emails").insertOne({
+              name: randomid,
+              type: "merchant-change-ripple",
+              expiration: expiry,
+              user: req.session.muser,
+              options: {
+                address: req.body.address
+              }
+            });
+    
+      var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+             user: 'cointunnel.0x@gmail.com',
+             pass: secrets.gmail_password
+         }
+     });
+     const mailOptions = {
+       from: 'cointunnel.0x@gmail.com', // sender address
+       to: user.email, // list of receivers
+       subject: 'Coin Tunnel Confirmation', // Subject line
+       html:`<h1 style="text-align: center;">Hello ${user.email}!</h1><p style="text-align: center;">There was a recent attempt to change your RIPPLE deposit address to the address: ${req.body.address} (This won't affect any balances) &nbsp;<br />If this was you, great! Click the link below. If this wasn't you, your account may be compromised, because we only support oauth2, this might mean that they have access to other apps connected to your Oauth2 account too!&nbsp;</p><p style="text-align: center;"><span style="color: #ff6600;">(Coin-tunnel doesn't store any passwords, we leave it to google, github, or discord)</span></p><p style="text-align: center;"><a href="https://www.coin-tunnel.ml/validate/${randomid}">https://www.coin-tunnel.ml/validate/${randomid}</a></p>`
+     };
+     transporter.sendMail(mailOptions, function (err, info) {
+        if(err)
+          console.log(err)
+        else
+          console.log(info);
+        
+    })
+
+      return res.send("Success! Check your email for a confirmation link.");
+    })
 })
 
 
