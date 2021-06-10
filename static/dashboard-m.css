@@ -1,5 +1,5 @@
 .u-section-1 {
-  background-image: linear-gradient(#f1c50e, #adf6f2);
+  background-color: white;
 }
 
 .u-section-1 .u-sheet-1 {
@@ -219,7 +219,9 @@
     padding-right: 20px;
   }
 }.u-section-2 {
+  color: black;
   background-image: none;
+  background-color: whitesmoke;
 }
 
 .u-section-2 .u-sheet-1 {
@@ -407,6 +409,10 @@
   }
 }.u-section-3 .u-sheet-1 {
   min-height: 294px;
+}
+.u-section-3 {
+  background-color: white;
+  color: black
 }
 
 .u-section-3 .u-text-1 {

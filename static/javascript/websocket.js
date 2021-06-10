@@ -14,6 +14,7 @@ if (version !== false){
 }else document.getElementById("serverTime").innerHTML = "cannot reach server at this time"
 
         let theme = localStorage.getItem('theme');
+        if (!theme){localStorage.setItem("theme", "dark"); window.location.reload();}
         if (theme === "dark"){
           let slider = document.getElementById("bigTheme");
           console.log(slider)
@@ -30,11 +31,10 @@ function changeTheme(){
   }else{
     localStorage.setItem('theme', 'dark');
   }
-
-  setTimeout(r, 2000);
+  setTimeout(r, 500);
   function r (){window.location.reload();}
-  //window.location.reload();
-
+  window.location.reload();
+  
 }
 
   function signout() {
