@@ -100,7 +100,7 @@
                     }, {
                         "action": "resize",
                         "action_value": {
-                            "h": 300,
+                            "h": 350,
                             "w": 600
                         },
                         "animation": {
@@ -237,7 +237,7 @@
                 "props": {
                     "name": "World_map_blue_dots_svg-6efe80490cd4177ffecc8c800593050d.png",
                     "width": 1273,
-                    "height": 663,
+                    "height": 720,
                     "keepRatio": false,
                     "x": 327,
                     "y": 184,
