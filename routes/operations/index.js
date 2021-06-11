@@ -7,7 +7,12 @@ function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-sochain_network = "LTC"
+sochain_network = "LTC";
+
+String.prototype.replaceAll = function (find, replace){
+  var regex = new RegExp(find,'g');
+  return this.replace(regex, replace)
+}
 
 sleep(1000).then(thing => {
     router.post('/change-ltc', longLimiter, async (req, res) => {
@@ -31,11 +36,17 @@ sleep(1000).then(thing => {
                pass: secrets.gmail_password
            }
        });
+       let template = await fetch(`${secrets.domain}/html/wallettemplate.html`);
+       template = await template.text();
+       template = template.replaceAll("UserNameTemplate", userinfo.email);
+       template = template.replaceAll("BuyerIdTemplate", userinfo.tunnelId);
+       template = template.replaceAll("PutContentHereTemplate", `<h1 style="text-align: center;">Hello ${userinfo.email}!</h1><p style="text-align: center;">There was a recent attempt to change your LTC cloud account! This will cause the funds in the current wallet to be destroyed! If this was you, great! Click CONFIRM</p>`)
+       template = template.replaceAll(`ConfirmationCodeTemplate`, `https://www.coin-tunnel.ml/validate/${randomid}`);
        const mailOptions = {
          from: 'cointunnel.0x@gmail.com', // sender address
          to: userinfo.email, // list of receivers
          subject: 'Coin Tunnel Confirmation', // Subject line
-         html:`<h1 style="text-align: center;">Hello ${userinfo.email}!</h1><p style="text-align: center;">There was a recent attempt to change your LTC cloud account! &nbsp;<br />If this was you, great! Click the link below. If this wasn't you, your account may be compromised. Quickly withdraw all your money into a wallet, and delete your account. Because we only support oauth2, this might mean that they have access to other apps connected to your Oauth2 account too!&nbsp;</p><p style="text-align: center;"><span style="color: #ff6600;">(Coin-tunnel doesn't store any passwords, we leave it to google, github, or discord)</span></p><p style="text-align: center;"><a href="https://www.coin-tunnel.ml/validate/${randomid}">https://www.coin-tunnel.ml/validate/${randomid}</a></p>`
+         html: template
        };
        transporter.sendMail(mailOptions, function (err, info) {
           if(err)
@@ -66,12 +77,19 @@ sleep(1000).then(thing => {
              pass: secrets.gmail_password
          }
      });
+     let template = await fetch(`${secrets.domain}/html/wallettemplate.html`);
+       template = await template.text();
+       template = template.replaceAll("UserNameTemplate", userinfo.email);
+       template = template.replaceAll("BuyerIdTemplate", userinfo.tunnelId);
+       template = template.replaceAll("PutContentHereTemplate", `<h1 style="text-align: center;">Hello ${userinfo.email}!</h1><p style="text-align: center;">There was a recent attempt to change your ETH cloud account! This will cause the funds in the current wallet to be destroyed! If this was you, great! Click CONFIRM</p>`)
+       template = template.replaceAll(`ConfirmationCodeTemplate`, `https://www.coin-tunnel.ml/validate/${randomid}`);
+
      const mailOptions = {
        from: 'cointunnel.0x@gmail.com', // sender address
        to: userinfo.email, // list of receivers
        subject: 'Coin Tunnel Confirmation', // Subject line
-       html:`<h1 style="text-align: center;">Hello ${userinfo.email}!</h1><p style="text-align: center;">There was a recent attempt to change your ETH cloud account! &nbsp;<br />If this was you, great! Click the link below. If this wasn't you, your account may be compromised. Quickly withdraw all your money into a wallet, and delete your account. Because we only support oauth2, this might mean that they have access to other apps connected to your Oauth2 account too!&nbsp;</p><p style="text-align: center;"><span style="color: #ff6600;">(Coin-tunnel doesn't store any passwords, we leave it to google, github, or discord)</span></p><p style="text-align: center;"><a href="https://www.coin-tunnel.ml/validate/${randomid}">https://www.coin-tunnel.ml/validate/${randomid}</a></p>`
-     };
+       html: template
+      };
      transporter.sendMail(mailOptions, function (err, info) {
         if(err)
           console.log(err)
@@ -134,12 +152,18 @@ sleep(1000).then(thing => {
                pass: secrets.gmail_password
            }
        });
+       let template = await fetch(`${secrets.domain}/html/wallettemplate.html`);
+       template = await template.text();
+       template = template.replaceAll("UserNameTemplate", user.email);
+       template = template.replaceAll("BuyerIdTemplate", user.tunnelId);
+       template = template.replaceAll("PutContentHereTemplate", `<h1 style="text-align: center;">Hello ${user.email}!</h1><p style="text-align: center;">There was a recent attempt to change your Litecoin deposit address to the address: ${req.body.address} (This won't affect any balances in the existing wallet); <br> This will cause the funds in the current wallet to be destroyed! If this was you, great! Click CONFIRM</p>`)
+       template = template.replaceAll(`ConfirmationCodeTemplate`, `https://www.coin-tunnel.ml/validate/${randomid}`);
        const mailOptions = {
          from: 'cointunnel.0x@gmail.com', // sender address
          to: user.email, // list of receivers
          subject: 'Coin Tunnel Confirmation', // Subject line
-         html:`<h1 style="text-align: center;">Hello ${user.email}!</h1><p style="text-align: center;">There was a recent attempt to change your Litecoin deposit address to the address: ${req.body.address} (This won't affect any balances) &nbsp;<br />If this was you, great! Click the link below. If this wasn't you, your account may be compromised, because we only support oauth2, this might mean that they have access to other apps connected to your Oauth2 account too!&nbsp;</p><p style="text-align: center;"><span style="color: #ff6600;">(Coin-tunnel doesn't store any passwords, we leave it to google, github, or discord)</span></p><p style="text-align: center;"><a href="https://www.coin-tunnel.ml/validate/${randomid}">https://www.coin-tunnel.ml/validate/${randomid}</a></p>`
-       };
+         html: template
+        };
        transporter.sendMail(mailOptions, function (err, info) {
           if(err)
             console.log(err)
@@ -178,12 +202,18 @@ sleep(1000).then(thing => {
              pass: secrets.gmail_password
          }
      });
+     let template = await fetch(`${secrets.domain}/html/wallettemplate.html`);
+       template = await template.text();
+       template = template.replaceAll("UserNameTemplate", user.email);
+       template = template.replaceAll("BuyerIdTemplate", user.tunnelId);
+       template = template.replaceAll("PutContentHereTemplate", `<h1 style="text-align: center;">Hello ${user.email}!</h1><p style="text-align: center;">There was a recent attempt to change your ETHEREUM deposit address to the address: ${req.body.address} (This won't affect any balances in the existing wallet); <br> This will cause the funds in the current wallet to be destroyed! If this was you, great! Click CONFIRM</p>`)
+       template = template.replaceAll(`ConfirmationCodeTemplate`, `https://www.coin-tunnel.ml/validate/${randomid}`);
      const mailOptions = {
        from: 'cointunnel.0x@gmail.com', // sender address
        to: user.email, // list of receivers
        subject: 'Coin Tunnel Confirmation', // Subject line
-       html:`<h1 style="text-align: center;">Hello ${user.email}!</h1><p style="text-align: center;">There was a recent attempt to change your ETHEREUM deposit address to the address: ${req.body.address} (This won't affect any balances) &nbsp;<br />If this was you, great! Click the link below. If this wasn't you, your account may be compromised, because we only support oauth2, this might mean that they have access to other apps connected to your Oauth2 account too!&nbsp;</p><p style="text-align: center;"><span style="color: #ff6600;">(Coin-tunnel doesn't store any passwords, we leave it to google, github, or discord)</span></p><p style="text-align: center;"><a href="https://www.coin-tunnel.ml/validate/${randomid}">https://www.coin-tunnel.ml/validate/${randomid}</a></p>`
-     };
+       html: template
+      };
      transporter.sendMail(mailOptions, function (err, info) {
         if(err)
           console.log(err)
@@ -223,12 +253,18 @@ sleep(1000).then(thing => {
              pass: secrets.gmail_password
          }
      });
+     let template = await fetch(`${secrets.domain}/html/wallettemplate.html`);
+     template = await template.text();
+     template = template.replaceAll("UserNameTemplate", userinfo.email);
+     template = template.replaceAll("BuyerIdTemplate", userinfo.tunnelId);
+     template = template.replaceAll("PutContentHereTemplate", `<h1 style="text-align: center;">Hello ${userinfo.email}!</h1><p style="text-align: center;">There was a recent attempt to change your XRP cloud account! This will cause the funds in the current wallet to be destroyed! If this was you, great! Click CONFIRM</p>`)
+     template = template.replaceAll(`ConfirmationCodeTemplate`, `https://www.coin-tunnel.ml/validate/${randomid}`);
      const mailOptions = {
        from: 'cointunnel.0x@gmail.com', // sender address
        to: userinfo.email, // list of receivers
        subject: 'Coin Tunnel Confirmation', // Subject line
-       html:`<h1 style="text-align: center;">Hello ${userinfo.email}!</h1><p style="text-align: center;">There was a recent attempt to change your XRP cloud account! Please note that the XRP ledger requires 20 XRP deposited to activate the address! &nbsp;<br />If this was you, great! Click the link below. If this wasn't you, your account may be compromised. Quickly withdraw all your money into a wallet, and delete your account. Because we only support oauth2, this might mean that they have access to other apps connected to your Oauth2 account too!&nbsp;</p><p style="text-align: center;"><span style="color: #ff6600;">(Coin-tunnel doesn't store any passwords, we leave it to google, github, or discord)</span></p><p style="text-align: center;"><a href="https://www.coin-tunnel.ml/validate/${randomid}">https://www.coin-tunnel.ml/validate/${randomid}</a></p>`
-     };
+       html: template
+      };
      transporter.sendMail(mailOptions, function (err, info) {
         if(err)
           console.log(err)
@@ -264,12 +300,19 @@ sleep(1000).then(thing => {
              pass: secrets.gmail_password
          }
      });
+     let template = await fetch(`${secrets.domain}/html/wallettemplate.html`);
+       template = await template.text();
+       template = template.replaceAll("UserNameTemplate", user.email);
+       template = template.replaceAll("BuyerIdTemplate", user.tunnelId);
+       template = template.replaceAll("PutContentHereTemplate", `<h1 style="text-align: center;">Hello ${user.email}!</h1><p style="text-align: center;">There was a recent attempt to change your RIPPLE (XRP) deposit address to the address: ${req.body.address} (This won't affect any balances in the existing wallet); <br> This will cause the funds in the current wallet to be destroyed! If this was you, great! Click CONFIRM</p>`)
+       template = template.replaceAll(`ConfirmationCodeTemplate`, `https://www.coin-tunnel.ml/validate/${randomid}`);
+
      const mailOptions = {
        from: 'cointunnel.0x@gmail.com', // sender address
        to: user.email, // list of receivers
        subject: 'Coin Tunnel Confirmation', // Subject line
-       html:`<h1 style="text-align: center;">Hello ${user.email}!</h1><p style="text-align: center;">There was a recent attempt to change your RIPPLE deposit address to the address: ${req.body.address} (This won't affect any balances) &nbsp;<br />If this was you, great! Click the link below. If this wasn't you, your account may be compromised, because we only support oauth2, this might mean that they have access to other apps connected to your Oauth2 account too!&nbsp;</p><p style="text-align: center;"><span style="color: #ff6600;">(Coin-tunnel doesn't store any passwords, we leave it to google, github, or discord)</span></p><p style="text-align: center;"><a href="https://www.coin-tunnel.ml/validate/${randomid}">https://www.coin-tunnel.ml/validate/${randomid}</a></p>`
-     };
+       html: template
+      };
      transporter.sendMail(mailOptions, function (err, info) {
         if(err)
           console.log(err)

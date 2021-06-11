@@ -6,7 +6,6 @@ const algorithm = 'aes-256-ctr';
 function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
 sleep(1000).then(thing => {
   router.post("/ltc", guiLimiter, async (req, res) => {
     if (!req.session.buser) return res.send("You must be logged in!");

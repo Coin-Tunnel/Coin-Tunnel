@@ -704,6 +704,8 @@ function getUTXOsBETA(address) {
       console.log("Done!")
       // check each collection and create accordingly
     }
+    global.functions = functions;
+    
       app.use('/api/v1/create', require('./routes/api/v1/create')(functions));
       app.use('/api/v1/createNoUser', require('./routes/api/v1/createNoUser')(functions));
       app.use('/api/v1/txinfo', require('./routes/api/v1/txinfo')(functions));
