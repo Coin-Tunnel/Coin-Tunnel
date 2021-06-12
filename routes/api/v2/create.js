@@ -427,18 +427,17 @@ sleep(1000).then(thing => {
       reason: "Invalid buyer ID!",
       timeStamp: Date.now()
     })
-    let merchantwallet = await fetch(`https://www.coin-tunnel.ml/api/v2/explorer/xrp/address${user.xrp_deposit}`);
-    merchantwallet = await merchantwallet.json();
-    if (merchantwallet.status === "failed") return res.status(400).send({
-      status: "failed",
-      reason: "Merchant address is not activated! Send 20XRP first! You cannot send any less."
-    })
     let prices = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ripple&vs_currencies=usd")
     prices = await prices.json()
     let xrpPrice = Number(prices.ripple.usd)
     amountOfXrp = usd/xrpPrice;
     if (amountOfXrp < 1) return res.status(400).send({status: "failed", reason: `calculated amount of ripple (${amountOfXrp}) is too low! Minimum amount is 1 XRP`})
-    
+    let merchantwallet = await fetch(`https://www.coin-tunnel.ml/api/v2/explorer/xrp/address${user.xrp_deposit}`);
+    merchantwallet = await merchantwallet.json();
+    if (merchantwallet.status === "failed" && amountOfXrp < 21) return res.status(400).send({
+      status: "failed",
+      reason: "Merchant address is not activated! Send 20XRP first! You cannot send any less. Or, create a transaction that is worth more than 20 XRP"
+    })
     //start of buyer wallet verifiactaion
     var buyerPublic;
     if (buyer.xrp.address === "none") return res.status(400).send({
