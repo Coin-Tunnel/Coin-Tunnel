@@ -293,7 +293,8 @@ sleep(1000).then(thing => {
     if (!req.body.address) return res.send("You did not post a address! If you are trying to use this as an API service, or modified our client code, that is against our ToS");
     let address = await fetch(`https://www.coin-tunnel.ml/api/v2/explorer/xrp/address/${req.body.address}`);
     address = await address.json();
-    if (address.status === "failed") return res.send("That was an invalid XRP address! Nothing has been changed");
+    if (address.status === "failed" && !address.reason.toString().includes("Account not found")) return res.send("That was an invalid XRP address! Nothing has been changed");
+    if (Number(req.body.tag).toString().toLowerCase() === "nan" && req.body.tag !== undefined) return res.send("XRP tags must be numbers!");
     let user = await mongoclient.db("cointunnel").collection("merchantData").findOne({ name: req.session.muser })
     let expiry = Date.now() + 600000;
     let randomid = await makeid(30);
@@ -303,7 +304,8 @@ sleep(1000).then(thing => {
       expiration: expiry,
       user: req.session.muser,
       options: {
-        address: req.body.address
+        address: req.body.address,
+        tag: req.body.tag
       }
     });
 

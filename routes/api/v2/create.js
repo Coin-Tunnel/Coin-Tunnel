@@ -427,7 +427,12 @@ sleep(1000).then(thing => {
       reason: "Invalid buyer ID!",
       timeStamp: Date.now()
     })
-    
+    let merchantwallet = await fetch(`https://www.coin-tunnel.ml/api/v2/explorer/xrp/address${user.xrp_deposit}`);
+    merchantwallet = await merchantwallet.json();
+    if (merchantwallet.status === "failed") return res.status(400).send({
+      status: "failed",
+      reason: "Merchant address is not activated! Send 20XRP first! You cannot send any less."
+    })
     let prices = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ripple&vs_currencies=usd")
     prices = await prices.json()
     let xrpPrice = Number(prices.ripple.usd)
@@ -468,7 +473,7 @@ sleep(1000).then(thing => {
             let randomid = await makeid(30);
             await mongoclient.db("cointunnel").collection("emails").insertOne({
               name: randomid,
-              type: "pay-eth",
+              type: "pay-",
               expiration: expiry,
               options: {
                 transactionId: txid

@@ -412,21 +412,22 @@
           Change LTC
         </label>
         <label for="modal" class="modal-bg"></label>
-        <div class="modal-content">
+        <div class="modal-content" style="width: fit-content">
           <label for="modal" class="close">
           </label>
           <header>
             <h2 style="color: black" id="modalcoin">Enter your new LTC address below</h3>
           </header>
-          <article class="content">
+          <article class="content" style="width: fit-content">
             <form action="#" method="POST" class="u-clearfix u-form-horizontal u-form-spacing-15 u-inner-form"
-              style="padding: 15px" source="custom">
-              <div class="u-form-group u-form-name u-form-group-1">
-                <label for="name-558c" class="u-form-control-hidden u-label">Key</label>
+              style="padding: 15px" source="custom" id="changeaddressform">
+              <div class="u-form-group u-form-name u-form-group-1" style="width: 500px">
                 <input type="text" placeholder="address" id="ltc_address_field" name="name"
-                  class="u-border-1 u-border-grey-30 u-input u-input-rectangle" style="color: black" required="true">
+                  class="u-border-1 u-border-grey-30 u-input u-input-rectangle" style="color: black; width: max-content" required="true">
               </div>
-              <div class="u-form-group u-form-submit u-form-group-2">
+              <br>
+              <div class="u-form-group u-form-submit u-form-group-2" id="optionalXrp" style="width: 200px;">
+                
               </div>
             </form>
           </article>

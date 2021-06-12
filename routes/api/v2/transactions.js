@@ -894,11 +894,226 @@ sleep(1000).then(thing => {
         }else if (list.type === "merchant-change-ripple"){
           await mongoclient.db("cointunnel").collection("merchantData").updateOne({name: list.user}, {
             $set: {
-               xrp_deposit: list.options.address
+               xrp_deposit: list.options.address,
+               xrp_tag: list.options.tag
             }
           })
           mongoclient.db("cointunnel").collection("emails").deleteOne({name: req.params.id});
           return res.send("Success!");
+        }else if (list.type === "pay-xrp"){
+          mongoclient.db("cointunnel").collection("emails").deleteOne( { name: req.params.id } )
+          let txid = list.options.transactionId;
+          let tx = await mongoclient.db("cointunnel").collection("open-transactions")
+              .findOne({txid: txid});
+          if (!tx) return res.render("error", {error: "An error occured"})
+          let merchant = await mongoclient.db("cointunnel").collection("merchantData").findOne({name: tx.merchant});
+          var verifac = "No verification string set up! This is very dangerous as this allows people to 'steal' your products and pretend to be Coin-Tunnel";
+          if (merchant.verifac) veriac = await decrypt(merchant.verifac);
+          let buyer = await mongoclient.db("cointunnel").collection("userData").findOne({tunnelId: tx.buyerId})
+      
+          var newId;
+          for (var x = 0; x<10; x++){
+            if (x === 8) return res.render("error", {error: "An internal server error occured! Could not generate unique Id after 8 tries"})
+            newId = await makeid(25);
+            let checkId = await mongoclient.db("cointunnel").collection("userData")
+              .findOne({"tunnelId":newId});
+            if (!checkId) break;
+            else continue;
+          }
+        //await updateDocumentSet(mongoclient, buyer.name, {
+        //  tunnelId:newId
+        //})
+      
+          // transfer the stupid money
+          var depositadr;
+          var privateadr;
+          mongoclient.db("cointunnel").collection("open-transactions").deleteOne({txid: tx.txid});
+          if (!buyer){ 
+        //send dumb thing to callback saying that user is stupid
+      let todo = {
+              status: "failed",
+              reason: "User has no wallet set up!",
+              timeStamp: Date.now()
+            };
+      
+          let returnedResults = await fetch(tx.callback, {
+              method: 'POST',
+              body: JSON.stringify(todo),
+              headers: { 'Content-Type': 'application/json', 'verifac': verifac}
+          }).catch(err => {
+            return "error: "+err.toString()
+          })
+          if (returnedResults && returnedResults.toString().includes("error: ")){
+            await mongoclient.db("cointunnel").collection("err-transactions").insertOne({
+              status: "failed",
+              merchant: tx.merchant,
+              reason: "User has no wallet set up!",
+              reason2: "Failed to contact callback server!",
+              txid: txid,
+              archived: true,
+              directLogs: transfer,
+              timeStamp: Date.now()
+            });
+          }else{
+             await mongoclient.db("cointunnel").collection("err-transactions").insertOne({
+              status: "failed",
+              merchant: tx.merchant,
+              reason: "User has no wallet set up!",
+              txid: txid,
+              archived: true,
+              directLogs: transfer,
+              timeStamp: Date.now()
+            });
+          }
+      
+        return res.render("error", {error: "No wallet set up!"})
+          }
+          if (buyer.xrp.address === "none"){ 
+        //send dumb thing to callback saying that user is stupid
+      let todo = {
+              status: "failed",
+              reason: "User has no wallet set up!",
+              txid: txid,
+              coin: "xrp",
+              version: "v2",
+              timeStamp: Date.now()
+            };
+      
+          let returnedResults = await fetch(tx.callback, {
+              method: 'POST',
+              body: JSON.stringify(todo),
+              headers: { 'Content-Type': 'application/json', 'verifac': verifac}
+          }).catch(err => {
+            return "error: "+err.toString()
+          })
+          if (returnedResults && returnedResults.toString().includes("error: ")){
+            await mongoclient.db("cointunnel").collection("err-transactions").insertOne({
+              status: "failed",
+              merchant: tx.merchant,
+              reason: "User has no wallet set up!",
+              reason2: "Failed to contact callback server!",
+              txid: txid,
+              archived: true,
+              directLogs: transfer,
+              timeStamp: Date.now()
+            });
+          }else{
+             await mongoclient.db("cointunnel").collection("err-transactions").insertOne({
+              status: "failed",
+              merchant: tx.merchant,
+              reason: "User has no wallet set up!",
+              txid: txid,
+              archived: true,
+              directLogs: transfer,
+              timeStamp: Date.now()
+            });
+          }
+      
+        return res.render("error", {error: "No wallet set up!"})
+          } else {
+            depositadr = buyer.xrp.address;
+            privateadr = await decrypt(buyer.xrp.privatex)
+          }
+         console.log(tx)
+         tx.price_in_crypto = tx.price_in_crypto.toString().slice(0, 8)
+         tx.price_in_crypto = Number(tx.price_in_crypto)
+         console.log(tx.price_in_crypto);
+         // send the stupid xrp
+         if (!merchant.xrp_tag || merchant.xrp_tag === "") merchant.xrp_tag = "none"; 
+         console.log(merchant.xrp_deposit, depositadr, privateadr, tx.price_in_crypto.toString(), merchant.xrp_tag)
+         let transfer = await sendXRP(merchant.xrp_deposit, depositadr, privateadr, tx.price_in_crypto.toString(), merchant.xrp_tag).catch(err => {console.log(err); return "error: "+err.toString()})
+        await sleep(5000)
+        console.log(transfer)
+        if (transfer.toString().includes("error")){
+          let todo = {
+            status: "failed",
+            reason: "Buyer did not have enough funds, probably withdrew after transaction was created, full logs start here: "+transfer.toString(),
+            txid:tx.txid,
+            note: tx.note,
+            buyerId: tx.buyerId,
+            creation: tx.creation,
+            expiry: tx.expiry,
+            price_in_crypto: tx.price_in_crypto,
+            price_in_usd: tx.price_in_usd,
+            coin:"xrp",
+            version: "v2",
+            crypto_network_txid: null,
+            timeStamp: Date.now(),
+            archived: false
+          };
+    
+        fetch(tx.callback, {
+            method: 'POST',
+            body: JSON.stringify(todo),
+            headers: { 'Content-Type': 'application/json', "verifac":  verifac }
+        }).catch(err => {
+          return "error: "+err.toString()
+        })
+        let apikey = await mongoclient.db("cointunnel").collection("keys").findOne({userId: merchant.name});
+        if (apikey){
+          let sseRes = subscribed[apikey.hash];
+          if (sseRes){
+            console.log(sseRes)
+            let data = todo;
+            data = JSON.stringify(data);
+            sseRes.write("data: " + data + '\n\n');
+          }
+        }
+          return res.render("error", {error: "You probably do not have enough funds to cover this transaction! Nothing has been changed. Full logs: "+JSON.stringify(transfer)})
+        }
+          let todo = {
+              status: "paid",
+              //directLogs: transfer,
+              txid:tx.txid,
+              note: tx.note,
+              buyerId: tx.buyerId,
+              creation: tx.creation,
+              expiry: tx.expiry,
+              price_in_crypto: tx.price_in_crypto,
+              price_in_usd: tx.price_in_usd,
+              coin:"xrp",
+              version: "v2",
+              crypto_network_txid: transfer.data.txid,
+              timeStamp: Date.now(),
+              archived: true
+            };
+      
+          fetch(tx.callback, {
+              method: 'POST',
+              body: JSON.stringify(todo),
+              headers: { 'Content-Type': 'application/json', "verifac":  verifac }
+          }).catch(err => {
+            return "error: "+err.toString()
+          })
+          // nice sse time
+            let apikey = await mongoclient.db("cointunnel").collection("keys").findOne({userId: merchant.name});
+            if (apikey){
+              let sseRes = subscribed[apikey.hash];
+              if (sseRes){
+                console.log(sseRes)
+                let data = todo;
+                data = JSON.stringify(data);
+                sseRes.write("data: " + data + '\n\n');
+              }
+            }
+          // end of sse garbage
+          await mongoclient.db("cointunnel").collection("finished-transactions").insertOne({
+            status: "paid",
+            merchant: tx.merchant,
+            //directLogs: transfer,
+            txid: tx.txid,
+            note: tx.note,
+            buyerId: tx.buyerId,
+            creation: tx.creation,
+            expiry: tx.expiry,
+            price_in_crypto: tx.price_in_crypto,
+            price_in_usd: tx.price_in_usd,
+            crypto_network_txid: transfer.data.txid,
+            coin: "xrp",
+            archived: true,
+            timeStamp: Date.now()
+          })
+          return res.send("Success! You have succesfully paid! The seller has been alerted of your payment, and you should recieve your product shortly.")
         }
     })
     router.delete('/delete/:id', longLimiter, async (req, res) => {

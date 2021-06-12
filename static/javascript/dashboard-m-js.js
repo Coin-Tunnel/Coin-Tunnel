@@ -80,6 +80,7 @@ if (localStorage.getItem("merchant-coin") === null) {
     document.getElementById("changeVarText").innerText = "Change your RIPPLE deposit address"
     document.getElementById("btcchangecoin").style = "display:none";
     document.getElementById("modalcoin").innerText = "Enter your new XRP address below";
+    document.getElementById("optionalXrp").innerHTML = '<input type="text" placeholder="tag (optional)" id="xrp_tag" name="name" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" style="color: black" required="false"> '
     document.getElementById("changecoinbutton").innerText = "Change XRP";
     var ethwallet = "No wallet connected yet!";
 
@@ -91,7 +92,8 @@ if (localStorage.getItem("merchant-coin") === null) {
         window.fetch("https://www.coin-tunnel.ml/api/v2/explorer/xrp/address/" + dbData.xrp_deposit).then(function (result) {
             return result.json();
         }).then(function (result) {
-            result.balance = result.data.xrpBalance;
+            if (result.status === "failed") result.balance = "XRP account not activated! To activate, deposit 20 XRP or more. Sending any less will NOT work. Transactions will NOT work"
+            else result.balance = result.data.xrpBalance;
             ethwallet = "In wallet: " + result.balance + " XRP";
             document.getElementById("walletcontent").innerText = ethwallet;
             document.getElementById("walletcontent").style = "";
@@ -215,7 +217,8 @@ function changeLtc() {
         };
 
         xhr.send(JSON.stringify({
-            address: address
+            address: address,
+            tag: document.getElementById("xrp_tag").value
         }));
     }
 }
