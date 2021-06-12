@@ -1015,4 +1015,21 @@ function addvalue(type) {
   document.getElementById("text-e0a1").value = x;
 }
 
+function exportwallet(){
+  document.getElementById("exportbutton").innerHTML = '<p>Getting your files ready...</p><img  src="/images/loading.gif" width="30px" id="loadinggif">';
+  var xhr = new XMLHttpRequest();
+      xhr.open("GET", "/operations/exportwallets");
+
+      xhr.onload = function () {
+          document.getElementById("exportbutton").innerHTML = "<a href='"+xhr.response+"' style='background: #3d85c6; border-radius: 13px; width: 187px; height: 44px; color:  #ffffff; display: inline-block; font: normal bold 19px/44px 'Open Sans', sans-serif; text-align: center;' target='_blank'>Click to download</a>"; 
+          var xhr1 = new XMLHttpRequest();
+          console.log(window.location.hostname.toString().length+5+window.location.protocol.length+window.location.port.length);
+          let id = xhr.response.toString().slice(window.location.hostname.toString().length+5+window.location.protocol.length+window.location.port.length+3, xhr.response.length-10);
+          console.log(id)
+           xhr1.open("POST", "/operations/deleteCDN/"+id);
+           xhr1.send();
+        }
+      xhr.send();
+}
+
 </script>

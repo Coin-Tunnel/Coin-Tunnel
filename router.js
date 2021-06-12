@@ -55,7 +55,7 @@ module.exports = (app) => {
     const googleClient = new OAuth2Client(secrets.googleClient);
     const litecore = require('litecore-lib')
     console.log(secrets);
-    
+    global.project_root = __dirname
     const encrypt = (text) => {
 
       const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
@@ -705,7 +705,7 @@ function getUTXOsBETA(address) {
       // check each collection and create accordingly
     }
     global.functions = functions;
-    
+
       app.use('/api/v1/create', require('./routes/api/v1/create')(functions));
       app.use('/api/v1/createNoUser', require('./routes/api/v1/createNoUser')(functions));
       app.use('/api/v1/txinfo', require('./routes/api/v1/txinfo')(functions));
