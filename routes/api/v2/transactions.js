@@ -584,7 +584,6 @@ sleep(1000).then(thing => {
         }).catch(err => {
           return "error: " + err.toString()
         })
-        let apikey = await mongoclient.db("cointunnel").collection("keys").findOne({ userId: merchant.name });
         if (apikey) {
           let sseRes = subscribed[apikey.hash];
           if (sseRes) {
