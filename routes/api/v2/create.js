@@ -149,12 +149,19 @@ sleep(1000).then(thing => {
                  pass: secrets.gmail_password
              }
          });
+         let template = await fetch(`${secrets.domain}/html/paymenttemplate.html`);
+          template = await template.text();
+          template = template.replace(/UserNameTemplate/g, buyer.email);
+          template = template.replace(/BuyerIdTemplate/g, buyer.tunnelId);
+          template = template.replace(/AmountTemplate/g, amountOfLtc.toString()+" LITECOIN");
+          template = template.replace(/PutContentHereTemplate/g, `<h1 style="text-align: center;">Hello ${buyer.email}!</h1> This is a confirmation to pay: ${amountOfLtc} litecoin. (This includes the current litecoin network fees. Without the fees, your order would be ${usd} USD). &nbsp;<br />If this was you, great! Click the link below to pay! If this wasn't you, no need to panic. All this means, is that someone has your PUBLIC Coin-Tunnel address. (That's why we have these confirmation emails) If you keep getting this email, feel free to regenerate your public key in your dashboard`)
+          template = template.replace(/ConfirmationCodeTemplate/g, `https://www.coin-tunnel.ml/validate/${randomid}`)
          const mailOptions = {
            from: 'cointunnel.0x@gmail.com', // sender address
            to: buyer.email, // list of receivers
            subject: 'Coin Tunnel Confirmation', // Subject line
-           html:`<h1 style="text-align: center;">Hello ${buyer.email}!</h1><p style="text-align: center;"> This is a confirmation to pay: ${amountOfLtc} litecoin. (This includes the current litecoin network fees. Without the fees, your order would be ${usd} USD) &nbsp;<br />If this was you, great! Click the link below to pay! If this wasn't you, no need to panic. All this means, is that someone has your PUBLIC Coin-Tunnel address. (That's why we have these confirmation emails) If you keep getting this email, feel free to regenerate your public key in your dashboard</p><p style="text-align: center;"><a href="https://www.coin-tunnel.ml/validate/${randomid}">https://www.coin-tunnel.ml/validate/${randomid}</a></p>`
-         };
+           html: template
+          };
          transporter.sendMail(mailOptions, function (err, info) {
             if(err)
               console.log(err)
@@ -213,7 +220,7 @@ sleep(1000).then(thing => {
         reason: "Merchant account is gone",
         timeStamp: Date.now()
       })
-      if (user.eth_deposit === undefined || user.ethdeposit === "none") return res.send({
+      if (user.eth_deposit === undefined || user.eth_deposit === "none") return res.send({
         status: "failed",
         reason: "No ETH depost setup in merchant dashboard",
         timeStamp: Date.now()
@@ -312,12 +319,19 @@ sleep(1000).then(thing => {
              pass: secrets.gmail_password
          }
      });
+     let template = await fetch(`${secrets.domain}/html/paymenttemplate.html`);
+     template = await template.text();
+     template = template.replace(/UserNameTemplate/g, buyer.email);
+     template = template.replace(/BuyerIdTemplate/g, buyer.tunnelId);
+     template = template.replace(/AmountTemplate/g, amountOfEth.toString()+" ETHEREUM");
+     template = template.replace(/PutContentHereTemplate/g, `<h1 style="text-align: center;">Hello ${buyer.email}!</h1> This is a confirmation to pay: ${amountOfEth} ethereum. (This does NOT include the ethereum GAS fees. These can range from 0.0005 ETH to 0.005). &nbsp;<br />If this was you, great! Click the link below to pay! If this wasn't you, no need to panic. All this means, is that someone has your PUBLIC Coin-Tunnel address. (That's why we have these confirmation emails) If you keep getting this email, feel free to regenerate your public key in your dashboard`)
+     template = template.replace(/ConfirmationCodeTemplate/g, `https://www.coin-tunnel.ml/validate/${randomid}`)
      const mailOptions = {
        from: 'cointunnel.0x@gmail.com', // sender address
        to: buyer.email, // list of receivers
        subject: 'Coin Tunnel Confirmation', // Subject line
-       html:`<h1 style="text-align: center;">Hello ${buyer.email}!</h1><p style="text-align: center;"> This is a confirmation to pay: ${amountOfEth} ethereum (${usd} USD). (This does NOT include the ethereum GAS fees. These can range from 0.0005 ETH to 0.005) &nbsp;<br />If this was you, great! Click the link below to pay! If this wasn't you, no need to panic. All this means, is that someone has your PUBLIC Coin-Tunnel address. (That's why we have these confirmation emails) If you keep getting this email, feel free to regenerate your public key in your dashboard</p><p style="text-align: center;"><a href="https://www.coin-tunnel.ml/validate/${randomid}">https://www.coin-tunnel.ml/validate/${randomid}</a></p>`
-     };
+       html: template
+      };
      transporter.sendMail(mailOptions, function (err, info) {
         if(err)
           console.log(err)
@@ -343,6 +357,174 @@ sleep(1000).then(thing => {
       })
     // make sure there is all that callback money userid good stuff
 
+    })
+    router.post('/xrp', async (req, res) => {
+      req.body.buyerId = req.body.buyerId.replace(/\s/g, '');
+      if (!req.headers.authorization) return res.status(401).send({
+        status: "failed",
+        reason: "no apparent authorization header",
+        timeStamp: Date.now()
+      })
+      let prefix = req.headers.authorization.slice(0, 10);
+      let key = req.headers.authorization.slice(10);
+    
+      const hmac = createHmac('sha512', key);
+      hmac.update(JSON.stringify(prefix));
+      const signature = hmac.digest('hex');
+    
+      let dbKey = await mongoclient.db("cointunnel").collection("keys").findOne({hash: signature})
+      if (!dbKey) return res.status(401).send({
+        status: "failed",
+        reason: "Incorrect API key",
+        timeStamp: Date.now()
+      })
+      await mongoclient.db("cointunnel").collection("keys")
+         .updateOne({hash: signature}, { $inc: {"uses":1}})
+      let currentIp = req.connection.remoteAddress;
+      if (!dbKey.ip.includes(currentIp)){
+        await mongoclient.db("cointunnel").collection("keys")
+          .updateOne({hash: signature}, {$push: {ip: currentIp}})
+      }
+      let user = await mongoclient.db("cointunnel").collection("merchantData").findOne({name: dbKey.userId});
+      if (!user) return res.status(401).send({
+        status: "failed",
+        reason: "Merchant account is gone",
+        timeStamp: Date.now()
+      })
+      if (user.xrp_deposit === undefined || user.xrp_deposit === "none") return res.send({
+        status: "failed",
+        reason: "No ETH depost setup in merchant dashboard",
+        timeStamp: Date.now()
+      });
+      var test = false;
+      var expiry = Date.now()+1800000;
+      var callback = req.body.callback;
+      var usd = req.body.usd;
+      var note = req.body.note;
+      var buyerId = req.body.buyerId;
+      var amountOfXrp;
+      var txid = await makeid(35);
+      txid = "D"+txid;
+      var coin = "xrp";
+      var version = "v2";
+    // make sure to log the stupid ip too
+      if (req.body.expiry){
+        req.body.expiry = Number(req.body.expiry)
+        if (Number(req.body.expiry).toString().toLowerCase().includes("nan")) return res.status(400).send({
+          status: "failed",
+          reason: "invalid expiry date (Must be in milliseconds)",
+          timeStamp: Date.now()
+        })
+      }
+      if (req.body.test) test = req.body.test;
+      if (req.body.expiry) expiry = req.body.expiry+Date.now();
+      if (!req.body.buyerId) return res.status(400).send({status: "failed", reason: "No buyerId found!", timeStamp: Date.now()})
+      if (!req.body.callback) return res.status(400).send({status: "failed", reason: "No callback url found in body", timeStamp: Date.now()});
+      if (!req.body.usd) return res.status(400).send({status: "failed", reason: "no USD amount found in body!", timeStamp: Date.now()})
+    let buyer = await mongoclient.db("cointunnel").collection("userData").findOne({tunnelId: req.body.buyerId})
+    if (!buyer) return res.status(400).send({
+      status: "failed",
+      reason: "Invalid buyer ID!",
+      timeStamp: Date.now()
+    })
+    let prices = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ripple&vs_currencies=usd")
+    prices = await prices.json()
+    let xrpPrice = Number(prices.ripple.usd)
+    amountOfXrp = usd/xrpPrice;
+    if (amountOfXrp < 1) return res.status(400).send({status: "failed", reason: `calculated amount of ripple (${amountOfXrp}) is too low! Minimum amount is 1 XRP`})
+    let merchantwallet = await fetch(`https://www.coin-tunnel.ml/api/v2/explorer/xrp/address${user.xrp_deposit}`);
+    merchantwallet = await merchantwallet.json();
+    if (merchantwallet.status === "failed" && amountOfXrp < 21) return res.status(400).send({
+      status: "failed",
+      reason: "Merchant address is not activated! Send 20XRP first! You cannot send any less. Or, create a transaction that is worth more than 20 XRP"
+    })
+    //start of buyer wallet verifiactaion
+    var buyerPublic;
+    if (buyer.xrp.address === "none") return res.status(400).send({
+      status: "failed",
+      reason: "target user does not have sufficient funds",
+      timeStamp: Date.now()
+    })
+    else buyerPublic = buyer.xrp.address;
+   
+    console.log(buyerPublic)
+    // do some wallet validation to make sure enough money
+    let buyerwallet = await fetch(`https://www.coin-tunnel.ml/api/v2/explorer/xrp/address/${buyerPublic}`);
+    buyerwallet = await buyerwallet.json();
+    if (buyerwallet.status === "failed") return res.status(400).send({status: "failed", reason: "Buyer does not have enough XRP to fund this transaction"});
+    let amountInWallet = Number(buyerwallet.data.xrpBalance);
+    if (amountInWallet === 0 || amountInWallet < 1) return res.status(400).send({status: "failed", reason: "Buyer does not have enough XRP to fund this transaction"});
+    if (amountInWallet-1 < amountOfXrp) return res.status(400).send({status: "failed", reason: "Buyer does not have enough XRP to fund this transaction"});
+
+      await mongoclient.db("cointunnel").collection("open-transactions").insertOne({
+        merchant: dbKey.userId,
+        price_in_usd: usd,
+        price_in_crypto: amountOfXrp,
+        creation: Date.now(),
+        expiry: expiry,
+        callback: callback,
+        note: note,
+        buyerId: buyerId,
+        txid: txid,
+        coin: "xrp",
+        version: "v2"
+      });
+            let randomid = await makeid(30);
+            await mongoclient.db("cointunnel").collection("emails").insertOne({
+              name: randomid,
+              type: "pay-",
+              expiration: expiry,
+              options: {
+                transactionId: txid
+              }
+            });
+    
+      var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+             user: 'cointunnel.0x@gmail.com',
+             pass: secrets.gmail_password
+         }
+     });
+     let template = await fetch(`${secrets.domain}/html/paymenttemplate.html`);
+     template = await template.text();
+     template = template.replace(/UserNameTemplate/g, buyer.email);
+     template = template.replace(/BuyerIdTemplate/g, buyer.tunnelId);
+     template = template.replace(/AmountTemplate/g, amountOfXrp.toString()+" RIPPLE");
+     template = template.replace(/PutContentHereTemplate/g, `<h1 style="text-align: center;">Hello ${buyer.email}!</h1> This is a confirmation to pay: ${amountOfXrp} RIPPLE (${usd} USD). (This does NOT include the ripple transaction fees. These are normally 0.00001 XRP or next to nothing). &nbsp;<br />If this was you, great! Click the link below to pay! If this wasn't you, no need to panic. All this means, is that someone has your PUBLIC Coin-Tunnel address. (That's why we have these confirmation emails) If you keep getting this email, feel free to regenerate your public key in your dashboard`)
+     template = template.replace(/ConfirmationCodeTemplate/g, `https://www.coin-tunnel.ml/validate/${randomid}`)
+     const mailOptions = {
+       from: 'cointunnel.0x@gmail.com', // sender address
+       to: buyer.email, // list of receivers
+       subject: 'Coin Tunnel Confirmation', // Subject line
+       html: template
+     };
+     transporter.sendMail(mailOptions, function (err, info) {
+        if(err)
+          console.log(err)
+        else
+          console.log(info);
+        })
+    
+      return res.status(200).send({
+        "status":"ok",
+      "created": true,
+      "callback":callback,
+      "price_in_crypto": {
+        "total_including_fee": amountOfXrp
+      },
+      "price_in_USD": usd,
+      "expiry": expiry,
+      "address": user.xrp_deposit,
+      "test": test,
+      "timestamp": Date.now(),
+      "transactionId": txid,
+      "note": note,
+      "coin": "xrp"
+      })
+    // make sure there is all that callback money userid good stuff
+
+      //
     })
 })
 

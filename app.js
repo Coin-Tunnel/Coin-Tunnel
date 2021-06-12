@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+var cors = require('cors')
 
 var secrets;
 if (process.env.secrets){
@@ -23,6 +24,8 @@ let sessionParser = session({
     expires: 604800000,
 })
 app.use(sessionParser);
+app.use(cors())
+
 require('./router')(app);
 
 app.listen(port, () => console.info(`Listening on port ${port}`));

@@ -564,9 +564,6 @@ router.get("/merchantdashboard", guiLimiter, async (req, res) => {
     res.render("dashboard-m", {db: user, key: keys, wallet: wallets, transac: transactions, ltc_wallet: ltcwallet, transactionList: txlist});
 
 })
-router.get("/test", async (req, res) => {
-  res.render("testthree")
-})
 router.get("/privacy-policy", (req, res) => {
   res.render("privacypolicy")
 })

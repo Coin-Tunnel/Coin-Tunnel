@@ -18,7 +18,7 @@ sleep(1000).then(thing => {
         var type;
         var wallet = {};
         wallet.btc = {};
-        let prices = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,litecoin,ethereum&vs_currencies=usd")
+        let prices = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,litecoin,ethereum,ripple&vs_currencies=usd")
       prices = await prices.json()
       
       let btcPrice = Number(prices.bitcoin.usd)
@@ -92,6 +92,21 @@ if (!mongo.eth || mongo.eth.address === "none"){
   everything.eth.type = "ETH (cloud)"
 }
   everything.eth.price = ethPrice;
+
+
+// start of XRP stuff
+everything.xrp = {};
+let xrpPrice = Number(prices.ripple.usd);
+if (!mongo.xrp || mongo.xrp.address === "none"){
+  everything.xrp.type = "No wallet created yet!"
+  everything.xrp.usd = "N/A";
+  everything.xrp.address = "No cloud wallet setup! Create one first.";
+  everything.xrp.amount = 0;
+}else{
+  everything.xrp.address = mongo.xrp.address;
+  everything.xrp.type = "XRP (cloud)";
+}
+everything.xrp.price = xrpPrice;
 
         everything = JSON.stringify(everything);
 

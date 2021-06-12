@@ -14,6 +14,7 @@ if (version !== false){
 }else document.getElementById("serverTime").innerHTML = "cannot reach server at this time"
 
         let theme = localStorage.getItem('theme');
+        if (!theme){localStorage.setItem("theme", "dark"); window.location.reload();}
         if (theme === "dark"){
           let slider = document.getElementById("bigTheme");
           console.log(slider)
@@ -22,22 +23,19 @@ if (version !== false){
           console.log(slider1)
           slider1.checked = true
         }
-async function changeTheme(){
+function changeTheme(){
   let localStorage = window.localStorage;
   let theme = localStorage.getItem('theme');
-  await sleep(1000);
   if (theme === "dark"){
     localStorage.setItem('theme', 'light');
   }else{
     localStorage.setItem('theme', 'dark');
   }
+  setTimeout(r, 500);
+  function r (){window.location.reload();}
   window.location.reload();
-
+  
 }
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 
   function signout() {
     console.log('User signed out.');

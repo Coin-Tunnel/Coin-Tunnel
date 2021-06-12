@@ -2,6 +2,9 @@
 secret.json
 config.json
 
+static/cdn/*
+!static/cdn/.gitkeep
+
 # Logs
 logs
 *.log
@@ -78,3 +81,4 @@ typings/
 
 # FuseBox cache
 .fusebox/
+*.xlsx

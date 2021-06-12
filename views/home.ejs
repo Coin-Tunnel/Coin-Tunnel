@@ -6,6 +6,7 @@
       <title>Home</title>
       <script class="u-script" type="text/javascript" src="/javascript/jquery.js" defer=""></script>
       <link rel="stylesheet" href="index.css" media="screen">
+      <link data-react-helmet="true" rel="icon" href="/images/smallLogo.png">
 
 
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
@@ -144,14 +145,166 @@
         </nav>
       </div>`
     let r = document.getElementsByClassName("canvas-main-container")[0];
-    r.style["margin-top"] = "60px"
+    r.style["margin-top"] = "60px";
+
+    let changingtext = document.getElementsByClassName("el-rich-text__content")[0];
+    changingtext.innerHTML = `<div id="container">
+	Welcome to <br><div id="text"> </div><div id="border"></div>
+</div>
+`
+changeText();
   }
   function sleep(ms){
         return new Promise(resolve => setTimeout(resolve, ms));
     }
+
+    async function changeText(){
+        // List of sentences
+var _CONTENT = [ 
+	"the next crypto revolution", 
+	"the most advanced crypto payment system", 
+	"the decentralized web", 
+	"the world of cryptocurrency",
+    "tax free transactions",
+    "anonymous transactions",
+    "Coin Tunnel"
+];
+_CONTENT = shuffle(_CONTENT)
+function shuffle(array) {
+  var currentIndex = array.length,  randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
+
+// Current sentence being processed
+var _PART = 0;
+
+// Character number of the current sentence being processed 
+var _PART_INDEX = 0;
+
+// Holds the handle returned from setInterval
+var _INTERVAL_VAL;
+
+// Element that holds the text
+var _ELEMENT = document.querySelector("#text");
+
+// Cursor element 
+var _CURSOR = document.querySelector("#border");
+
+// Implements typing effect
+async function Type() { 
+	// Get substring with 1 characater added
+	var text =  _CONTENT[_PART].substring(0, _PART_INDEX + 1);
+	_ELEMENT.innerHTML = text;
+	_PART_INDEX++;
+
+	// If full sentence has been displayed then start to delete the sentence after some time
+	if(text === _CONTENT[_PART]) {
+		// Hide the cursor
+    var x = 1000;
+    if (text === "Coin Tunnel") x = 4000;
+    let randomchance = Math.floor(Math.random() * 2);
+    console.log(randomchance)
+    if (randomchance === 1){
+      return
+    }
+    //console.log(text)
+    
+		clearInterval(_INTERVAL_VAL);
+		setTimeout(function() {
+			_INTERVAL_VAL = setInterval(Delete, 50);
+      _CURSOR.style.display = 'none';
+		}, x);
+	}
+}
+
+// Implements deleting effect
+function Delete() {
+	// Get substring with 1 characater deleted
+	var text =  _CONTENT[_PART].substring(0, _PART_INDEX - 1);
+	_ELEMENT.innerHTML = text;
+	_PART_INDEX--;
+
+	// If sentence has been deleted then start to display the next sentence
+	if(text === '') {
+		clearInterval(_INTERVAL_VAL);
+
+		// If current sentence was last then display the first one, else move to the next
+		if(_PART == (_CONTENT.length - 1))
+			_PART = 0;
+		else
+			_PART++;
+		
+		_PART_INDEX = 0;
+
+		// Start to display the next sentence after some time
+		setTimeout(function() {
+			_CURSOR.style.display = 'inline-block';
+			_INTERVAL_VAL = setInterval(Type, 100);
+		}, 200);
+	}
+}
+
+// Start the typing effect on load
+_INTERVAL_VAL = setInterval(Type, 100);
+    }
 </script>
+
 <style>
 p {
     margin: 0px 0px 0px 0px !important
 }
+
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+
+#container {
+  position: absolute;
+  left: 10%;
+  font-family: 'Source Code Pro', monospace;  
+  font-size: 40px;
+  color: rgba(255,255,255,.70);
+	letter-spacing: 2px;
+}
+
+#text {
+  margin-left: 100px;
+  font-family: 'Source Code Pro', monospace;  
+  font-size: 28px;
+	display: inline-block;
+	vertical-align: middle;
+  color: rgba(255,255,255,.70);
+	letter-spacing: 2px;
+}
+
+
+@keyframes animated-cursor{
+  from{border-bottom-color: rgba(0,255,0,.75);}
+  to{border-bottom-color: transparent;}
+}
+
+#border {
+  border-bottom: solid 3px rgba(0,255,0,.75);
+  margin-top: 10px;
+  padding-top: 10px;
+  position: relative;
+  display: inline-block;
+  top: 10px;
+  right: -7px;
+  width: 20px;
+  animation: animated-cursor 600ms steps(30,end) infinite;
+}
+
+
 </style>

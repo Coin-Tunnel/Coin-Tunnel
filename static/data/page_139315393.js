@@ -100,7 +100,7 @@
                     }, {
                         "action": "resize",
                         "action_value": {
-                            "h": 300,
+                            "h": 350,
                             "w": 600
                         },
                         "animation": {
@@ -189,7 +189,7 @@
             },
             "f423158e35294b9aa98a112061fec58b": {
                 "props": {
-                    "name": "Welcome to the next crypto revolution \n",
+                    "name": " \n",
                     "width": 1224,
                     "height": 82,
                     "keepRatio": false,
@@ -223,7 +223,7 @@
                     "shouldPreventAdjustingPosition": false,
                     "content": {
                         "ops": [{
-                            "insert": "Welcome to the next crypto revolution \n"
+                            "insert": " \n"
                         }]
                     },
                     "autoWidth": true,
@@ -237,7 +237,7 @@
                 "props": {
                     "name": "World_map_blue_dots_svg-6efe80490cd4177ffecc8c800593050d.png",
                     "width": 1273,
-                    "height": 663,
+                    "height": 720,
                     "keepRatio": false,
                     "x": 327,
                     "y": 184,
