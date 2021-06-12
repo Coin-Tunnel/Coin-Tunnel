@@ -2,6 +2,8 @@
 secret.json
 config.json
 
+static/cdn/
+
 # Logs
 logs
 *.log
