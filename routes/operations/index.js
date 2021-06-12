@@ -370,7 +370,7 @@ sleep(1000).then(thing => {
       ws.cell(y, 3)
       .string(key)   
     }
-    if (user.ltc && user.ltc !== "none"){
+    if (user.ltc && user.ltc.address.toLowerCase() !== "none"){
       y = y+1;
       ws.cell(y, 1)
       .string("LTC")
@@ -379,7 +379,7 @@ sleep(1000).then(thing => {
       ws.cell(y, 3)
       .string(decrypt(user.ltc.privatex))
     }
-    if (user.eth && user.eth !== "none"){
+    if (user.eth && user.eth.address.toLowerCase() !== "none"){
       y = y+1;
       ws.cell(y, 1)
       .string("ETH")
@@ -388,7 +388,7 @@ sleep(1000).then(thing => {
       ws.cell(y, 3)
       .string(decrypt(user.eth.privatex))
     }
-    if (user.xrp && user.xrp !== "none"){
+    if (user.xrp && user.xrp.address.toLowerCase() !== "none"){
       y = y+1;
       ws.cell(y, 1)
       .string("XRP")
