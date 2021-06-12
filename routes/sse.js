@@ -22,7 +22,6 @@ sleep(1000).then(thing => {
 
         for(var t = 0; t< 1000000; t++){
             if (t===10) {
-                console.log("ending session")
                 return res.end();
             }
             function date() {
