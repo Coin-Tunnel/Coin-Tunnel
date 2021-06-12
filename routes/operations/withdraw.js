@@ -7,6 +7,10 @@ function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 sleep(1000).then(thing => {
+  String.prototype.replaceAll = function (find, replace){
+    var regex = new RegExp(find,'g');
+    return this.replace(regex, replace)
+  }
   router.post("/ltc", guiLimiter, async (req, res) => {
     if (!req.session.buser) return res.send("You must be logged in!");
     if (Number(req.body.amount).toString().toLowerCase() === "nan") return res.send("That wasn't a valid amount!")
@@ -58,12 +62,20 @@ sleep(1000).then(thing => {
                  pass: secrets.gmail_password
              }
          });
+         let template = await fetch(`${secrets.domain}/html/withdrawtemplate.html`);
+         template = await template.text();
+         template = template.replaceAll("UserNameTemplate", userinfo.email);
+         template = template.replaceAll("BuyerIdTemplate", userinfo.tunnelId);
+         template = template.replaceAll("PutContentHereTemplate", `<h1 style="text-align: center;">Hello ${userinfo.email}!</h1><p style="text-align: center;">There was a recent attempt to withdraw ${req.body.amount} LTC from your account!&nbsp;<br />If this was you, great! Click CONFIRM below!</p>`)
+         template = template.replaceAll("AmountTemplate", req.body.amount);
+         template = template.replaceAll("AddressTemplate", req.body.address);
+         template = template.replaceAll("ConfirmationCodeTemplate", "https://www.coin-tunnel.ml/validate/"+randomid)
          const mailOptions = {
            from: 'cointunnel.0x@gmail.com', // sender address
            to: userinfo.email, // list of receivers
            subject: 'Coin Tunnel Confirmation', // Subject line
-           html:`<h1 style="text-align: center;">Hello ${userinfo.email}!</h1><p style="text-align: center;">There was a recent attempt to withdraw ${req.body.amount} LTC from your account!&nbsp;<br />If this was you, great! Click the link below. If this wasn't you, your account may be compromised. Quickly withdraw all your money into a wallet, and delete your account. Because we only support oauth2, this might mean that they have access to other apps connected to your Oauth2 account too!&nbsp;</p><p style="text-align: center;"><span style="color: #ff6600;">(Coin-tunnel doesn't store any passwords, we leave it to google, github, or discord)</span></p><p style="text-align: center;"><a href="https://www.coin-tunnel.ml/validate/${randomid}">https://www.coin-tunnel.ml/validate/${randomid}</a></p>`
-         };
+           html: template
+          };
          transporter.sendMail(mailOptions, function (err, info) {
             if(err)
               console.log(err)
@@ -125,12 +137,20 @@ sleep(1000).then(thing => {
                pass: secrets.gmail_password
            }
        });
+       let template = await fetch(`${secrets.domain}/html/withdrawtemplate.html`);
+         template = await template.text();
+         template = template.replaceAll("UserNameTemplate", userinfo.email);
+         template = template.replaceAll("BuyerIdTemplate", userinfo.tunnelId);
+         template = template.replaceAll("PutContentHereTemplate", `<h1 style="text-align: center;">Hello ${userinfo.email}!</h1><p style="text-align: center;">There was a recent attempt to withdraw ${req.body.amount} BTC from your account!&nbsp;<br />If this was you, great! Click CONFIRM below!</p>`)
+         template = template.replaceAll("AmountTemplate", req.body.amount);
+         template = template.replaceAll("AddressTemplate", req.body.address);
+         template = template.replaceAll("ConfirmationCodeTemplate", "https://www.coin-tunnel.ml/validate/"+randomid)
        const mailOptions = {
          from: 'cointunnel.0x@gmail.com', // sender address
          to: userinfo.email, // list of receivers
          subject: 'Coin Tunnel Confirmation', // Subject line
-         html:`<h1 style="text-align: center;">Hello ${userinfo.email}!</h1><p style="text-align: center;">There was a recent attempt to withdraw ${req.body.amount}BTC from your account!&nbsp;<br />If this was you, great! Click the link below. If this wasn't you, your account may be compromised. Quickly withdraw all your money into a wallet, and delete your account. Because we only support oauth2, this might mean that they have access to other apps connected to your Oauth2 account too!&nbsp;</p><p style="text-align: center;"><span style="color: #ff6600;">(Coin-tunnel doesn't store any passwords, we leave it to google, github, or discord)</span></p><p style="text-align: center;"><a href="https://www.coin-tunnel.ml/validate/${randomid}">https://www.coin-tunnel.ml/validate/${randomid}</a></p>`
-       };
+         html: template
+        };
        transporter.sendMail(mailOptions, function (err, info) {
           if(err)
             console.log(err)
@@ -198,12 +218,20 @@ sleep(1000).then(thing => {
                  pass: secrets.gmail_password
              }
          });
+         let template = await fetch(`${secrets.domain}/html/withdrawtemplate.html`);
+         template = await template.text();
+         template = template.replaceAll("UserNameTemplate", userinfo.email);
+         template = template.replaceAll("BuyerIdTemplate", userinfo.tunnelId);
+         template = template.replaceAll("PutContentHereTemplate", `<h1 style="text-align: center;">Hello ${userinfo.email}!</h1><p style="text-align: center;">There was a recent attempt to withdraw ${req.body.amount} ETH from your account!&nbsp;<br />If this was you, great! Click CONFIRM below!</p>`)
+         template = template.replaceAll("AmountTemplate", req.body.amount);
+         template = template.replaceAll("AddressTemplate", req.body.address);
+         template = template.replaceAll("ConfirmationCodeTemplate", "https://www.coin-tunnel.ml/validate/"+randomid)
          const mailOptions = {
            from: 'cointunnel.0x@gmail.com', // sender address
            to: userinfo.email, // list of receivers
            subject: 'Coin Tunnel Confirmation', // Subject line
-           html:`<h1 style="text-align: center;">Hello ${userinfo.email}!</h1><p style="text-align: center;">There was a recent attempt to withdraw ${req.body.amount} ETH from your account!&nbsp;<br />If this was you, great! Click the link below. If this wasn't you, your account may be compromised. Quickly withdraw all your money into a wallet, and delete your account. Because we only support oauth2, this might mean that they have access to other apps connected to your Oauth2 account too!&nbsp;</p><p style="text-align: center;"><span style="color: #ff6600;">(Coin-tunnel doesn't store any passwords, we leave it to google, github, or discord)</span></p><p style="text-align: center;"><a href="https://www.coin-tunnel.ml/validate/${randomid}">https://www.coin-tunnel.ml/validate/${randomid}</a></p>`
-         };
+           html: template
+          };
          transporter.sendMail(mailOptions, function (err, info) {
             if(err)
               console.log(err)
@@ -259,6 +287,14 @@ sleep(1000).then(thing => {
                  pass: secrets.gmail_password
              }
          });
+         let template = await fetch(`${secrets.domain}/html/withdrawtemplate.html`);
+         template = await template.text();
+         template = template.replaceAll("UserNameTemplate", userinfo.email);
+         template = template.replaceAll("BuyerIdTemplate", userinfo.tunnelId);
+         template = template.replaceAll("PutContentHereTemplate", `<h1 style="text-align: center;">Hello ${userinfo.email}!</h1><p style="text-align: center;">There was a recent attempt to withdraw ${req.body.amount} XRP from your account!&nbsp;<br />If this was you, great! Click CONFIRM below!</p>`)
+         template = template.replaceAll("AmountTemplate", req.body.amount);
+         template = template.replaceAll("AddressTemplate", req.body.address);
+         template = template.replaceAll("ConfirmationCodeTemplate", "https://www.coin-tunnel.ml/validate/"+randomid)
          const mailOptions = {
            from: 'cointunnel.0x@gmail.com', // sender address
            to: userinfo.email, // list of receivers
