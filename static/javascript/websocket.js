@@ -1,6 +1,7 @@
 document.getElementById("serverTime").innerHTML = "cannot reach server at this time"
-var version = detectIE();
-if (version !== false){
+var version = !!document.documentMode;
+
+if (version !== true){
   var source = new EventSource('/sse/server-time');
 
   // handle messages
