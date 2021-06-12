@@ -15,7 +15,19 @@ String.prototype.replaceAll = function (find, replace) {
   var regex = new RegExp(find, 'g');
   return this.replace(regex, replace)
 }
-
+var deleteFolderRecursive = function(path) {
+  if( fs.existsSync(path) ) {
+    fs.readdirSync(path).forEach(function(file,index){
+      var curPath = path + "/" + file;
+      if(fs.lstatSync(curPath).isDirectory()) { // recurse
+        deleteFolderRecursive(curPath);
+      } else { // delete file
+        fs.unlinkSync(curPath);
+      }
+    });
+    fs.rmdirSync(path);
+  }
+};
 sleep(1000).then(thing => {
   router.post('/change-ltc', longLimiter, async (req, res) => {
     if (!req.session.buser) return res.send("Your session has expired! Login to continue.");
@@ -330,6 +342,7 @@ sleep(1000).then(thing => {
     if (!req.session.buser) return; // lol we not sending them any info
     let user = await mongoclient.db("cointunnel").collection("userData").findOne({ name: req.session.buser });
     if (!user) return req.session.destroy();
+    await sleep(5000)
     var y = 1;
     var wb = new xl.Workbook();
     var ws = wb.addWorksheet('Sheet 1');
@@ -392,9 +405,9 @@ sleep(1000).then(thing => {
   })
   router.post("/deleteCDN/:id", async (req, res) => {
     // do stuff
-    fs.rmdirSync(`${global.project_root}/static/cdn/${req.params.id}`).catch(err => {
-      return res.send(err);
-    })
+
+    deleteFolderRecursive(`${global.project_root}/static/cdn/${req.params.id}`);
+    return res.send("ok")
   })
 })
 

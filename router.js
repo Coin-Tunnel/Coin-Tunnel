@@ -19,6 +19,7 @@ module.exports = (app) => {
 
     var nodemailer = require('nodemailer');
     const requestIp = require('request-ip');
+    var fs = require('file-system');
 
     const router = require('express').Router();
     const { createHmac } = require("crypto");
@@ -400,7 +401,24 @@ module.exports = (app) => {
   //return result.data.data;
       }
     };
-
+    function getDirectories(path) {
+      return fs.readdirSync(path).filter(function (file) {
+        return fs.statSync(path+'/'+file).isDirectory();
+      });
+    }
+    var deleteFolderRecursive = function(path) {
+      if( fs.existsSync(path) ) {
+        fs.readdirSync(path).forEach(function(file,index){
+          var curPath = path + "/" + file;
+          if(fs.lstatSync(curPath).isDirectory()) { // recurse
+            deleteFolderRecursive(curPath);
+          } else { // delete file
+            fs.unlinkSync(curPath);
+          }
+        });
+        fs.rmdirSync(path);
+      }
+    };
 //manually hit an insight api to retrieve utxos of address
 function getUTXOs(address) {
   return new Promise((resolve, reject) => {
@@ -796,6 +814,22 @@ async function garbageCollection(){
      await mongoclient.db("cointunnel").collection("emails").deleteMany({expiry: {$lt: Date.now()}});
      await mongoclient.db("cointunnel").collection('err-transactions').deleteMany({deletion_time: {$lt: Date.now()}});
      await mongoclient.db("cointunnel").collection('closed-transactions').deleteMany({timeStamp: {$lt: Date.now()+2073600000}});
+     
+     let excelFiles = await getDirectories(global.project_root+"/static/cdn")
+     for (let i = 0; i<excelFiles.length; i++){
+       let path = global.project_root+"/static/cdn/"+excelFiles[i]+"/meta.json";
+       let json = require(path);
+       if (json.creation + 60000 < Date.now()){
+         // delete stuff
+         let todo = {"hi":"hi"}
+         fetch(`${secrets.domain}/operations/deleteCDN/${excelFiles[i]}`, {
+          method: 'POST',
+          body: JSON.stringify(todo),
+          headers: { 'Content-Type': 'application/json' }
+         })
+       }
+     }
+  
      await sleep(10000)
    }
 }
