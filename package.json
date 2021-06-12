@@ -30,7 +30,7 @@
     "ethers": "^5.2.0",
     "express": "^4.16.3",
     "express-rate-limit": "^5.2.6",
-    "express-session": "^1.15.6",
+    "cookie-session": "1.4.0",
     "express-ws": "^4.0.0",
     "form-data": "^2.3.2",
     "google-auth-library": "^7.0.3",

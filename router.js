@@ -2,7 +2,7 @@ module.exports = (app) => {
     // '/'
     const enableWs = require('express-ws')
     enableWs(app)
-    const session = require('express-session');
+    const session = require('cookie-session');
     var secrets;
     if (process.env.secrets){
       secrets = JSON.parse(process.env.secrets)
