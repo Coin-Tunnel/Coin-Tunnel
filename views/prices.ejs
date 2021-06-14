@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link data-react-helmet="true" rel="icon" href="/images/smallLogo.png">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Prices</title>
+    <link rel="stylesheet" href="/index.css" media="screen">
+<link rel="stylesheet" href="/common.css" media="screen">
+    <script class="u-script" type="text/javascript" src="/javascript/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/javascript/main.js" defer=""></script>
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link rel="stylesheet" href="/style.css">
+
+
+    <script src="/javascript/prices-js.js"></script>
+
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "Site1",
+		"url": "index.html"
+}</script>
+    <meta property="og:title" content="Page 1">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
+  </head>
+  <body class="u-body"><header class="u-clearfix u-header u-header" id="sec-a555"><div class="u-clearfix u-sheet u-sheet-1">
+    <%- include('partials/preload.ejs') %>
+        <a href="/" class="u-image u-logo u-image-1">
+          <img src="/images/logo.png" class="u-logo-image u-logo-image-1" data-image-width="109">
+        </a>
+        <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+          <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+            <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+              <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;"><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</symbol>
+</defs></svg>
+            </a>
+          </div>
+          <div class="u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/" style="padding: 10px 10px;">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" onclick="signout()" href="#"style="padding: 10px 10px;">Signout</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/dashboard-b" style="padding: 10px 10px;">Buyer Sign In</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/signin-m" style="padding: 10px 10px;">Merchant Sign In</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/dashboard-b" style="padding: 10px 10px;">Buyer Dashboard</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/dashboard-m" style="padding: 10px 10px;">Merchant Dashboard</a>
+</li><li class="u-nav-item">
+  Toggle dark theme
+</li>
+  <label class="switch" id="switch">
+    <input type="checkbox" onclick="changeTheme()" id="bigTheme">
+    <span class="slider round" id="circle"></span>
+  </label></ul>
+          </div>
+          <div class="u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" onclick = "signout()" href="#">Sign Out</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/dashboard-b">Buyer Sign in</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/signin-m">Merchant Sign in</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/dashboard-b">Buyer Dashboard</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/dashboard-m">Merchant Dashboard</a>
+</li><li class="u-nav-item">
+  Toggle dark theme
+</li>
+  <label class="switch">
+    <input type="checkbox" onclick="changeTheme()" id="smallTheme">
+    <span class="slider round"></span>
+  </label></ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+      </div></header>
+    <section class="u-align-center u-clearfix u-section-1" id="sec-db98">
+      <div class="u-clearfix u-sheet">
+        <h2 class="u-text u-text-1">Current, Realtime prices</h2>
+        <p class="u-text u-text-2">Live price data from <a href="https://www.binance.com/en" class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-1">Bianance</a>
+        </p>
+        <div class="u-expanded-width u-list u-repeater u-list-1">
+          <div class="u-align-center u-container-style u-list-item u-repeater-item">
+              
+            <div class="u-container-layout u-similar-container u-container-layout-1"><img src="https://coin360.com/icons/128x128/bitcoin.png">            
+
+              <h3 class="u-text u-text-3">Bitcoin</h3>
+              <p class="u-text u-text-4">Current price:</p>
+              <h5 class="u-text u-text-5"id="btcprice"></h5>
+              <h4 class="u-text u-text-6">Your</h4>
+              <div class="u-clearfix u-custom-html u-custom-html-1">
+                <input name="BTC" id="btcamount" placeholder="BTC">
+              </div>
+              <h4 class="u-text u-text-7">Is equivalent to:</h4>
+              <div class="u-clearfix u-custom-html u-custom-html-2">
+                <input name="BTC" id="btcusd" placeholder="BTC">
+              </div>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-list-item u-repeater-item">
+            <div class="u-container-layout u-similar-container u-container-layout-1"><img src="https://coin360.com/icons/128x128/ethereum.png">            
+
+              <h3 class="u-text u-text-8">Ethereum</h3>
+              <p class="u-text u-text-9">Current price:&nbsp;</p>
+              <h5 class="u-text u-text-10" id="ethprice"></h5>
+              <h4 class="u-text u-text-11">Your</h4>
+              <div class="u-clearfix u-custom-html u-custom-html-3">
+                <input name="ETH" id="ethamount" placeholder="ETH">
+              </div>
+              <h4 class="u-text u-text-12">Is equivalent to:</h4>
+              <div class="u-clearfix u-custom-html u-custom-html-4">
+                <input name="ETH" id="ethusd" placeholder="ETH">
+              </div>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-list-item u-repeater-item">
+            <div class="u-container-layout u-similar-container u-container-layout-1"><img src="https://coin360.com/icons/128x128/litecoin.png">            
+
+              <h3 class="u-text u-text-13">Litecoin</h3>
+              <p class="u-text u-text-14">Current Price:</p>
+              <h5 class="u-text u-text-15" id="ltcprice"></h5>
+              <h4 class="u-text u-text-16">Your</h4>
+              <div class="u-clearfix u-custom-html u-custom-html-5">
+                <input name="LTC" id="ltcamount" placeholder="LTC">
+              </div>
+              <h4 class="u-text u-text-17">Is equivalent to:</h4>
+              <div class="u-clearfix u-custom-html u-custom-html-6">
+                <input name="LTC" id="ltcusd" placeholder="LTC">
+              </div>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-list-item u-repeater-item">
+            <div class="u-container-layout u-similar-container u-container-layout-1"><img src="https://coin360.com/icons/128x128/ripple.png">            
+
+              <h3 class="u-text u-text-18">Ripple</h3>
+              <p class="u-text u-text-19">Current Price:</p>
+              <h5 class="u-text u-text-20" id="xrpprice"></h5>
+              <h4 class="u-text u-text-21">Your</h4>
+              <div class="u-clearfix u-custom-html u-custom-html-7">
+                <input name="XRP" id="xrpamount" placeholder="XRP">
+              </div>
+              <h4 class="u-text u-text-22">Is equivalent to:</h4>
+              <div class="u-clearfix u-custom-html u-custom-html-8">
+                <input name="XRP" id="xrpusd" placeholder="XRP">
+              </div>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-list-item u-repeater-item">
+            <div class="u-container-layout u-similar-container u-container-layout-1"><img src="https://coin360.com/icons/128x128/cardano.png">            
+
+              <h3 class="u-text u-text-23">Cardano</h3>
+              <p class="u-text u-text-24">Current price:&nbsp;</p>
+              <h5 class="u-text u-text-25" id="adaprice"></h5>
+              <h4 class="u-text u-text-26">Your</h4>
+              <div class="u-clearfix u-custom-html u-custom-html-9">
+                <input name="ADA" id="adaamount" placeholder="ADA">
+              </div>
+              <h4 class="u-text u-text-27">Is equivalent to:</h4>
+              <div class="u-clearfix u-custom-html u-custom-html-10">
+                <input name="ADA" id="adausd" placeholder="ADA">
+              </div>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-list-item u-repeater-item">
+            <div class="u-container-layout u-similar-container u-container-layout-1"><img src="https://coin360.com/icons/128x128/binance-coin.png">            
+
+              <h3 class="u-text u-text-28">Bianance Coin</h3>
+              <p class="u-text u-text-29">Current price:</p>
+              <h5 class="u-text u-text-30" id="bnbprice"></h5>
+              <h4 class="u-text u-text-31">Your</h4>
+              <div class="u-clearfix u-custom-html u-custom-html-11">
+                <input name="BNB" id="bnbamount" placeholder="BNB">
+              </div>
+              <h4 class="u-text u-text-32">Is equivalent to:</h4>
+              <div class="u-clearfix u-custom-html u-custom-html-12">
+                <input name="BNB" id="bnbusd" placeholder="BNB">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>    
+    <%- include('partials/footer.ejs') %>
+    <script src="/javascript/websocket.js"></script>
+
+  </body>
+</html>
+<style>
+  .u-logo-image{
+     position: relative;
+     right: 70%;
+  }
+  .u-header a{
+    font-size: 0.85vw;
+    padding
+    
+  }
+  @media screen and (max-width: 1008px) {
+    .u-header a{
+      font-size: 20px;
+    }
+  }
+</style>

@@ -15,6 +15,7 @@ if (version !== true){
 }else document.getElementById("serverTime").innerHTML = "cannot reach server at this time"
 
         let theme = localStorage.getItem('theme');
+        console.log(theme)
         if (!theme){localStorage.setItem("theme", "dark"); window.location.reload();}
         if (theme === "dark"){
           let slider = document.getElementById("bigTheme");

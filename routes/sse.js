@@ -148,9 +148,18 @@ sleep(1000).then(thing => {
             'Cache-Control': 'no-cache',
             'Connection': 'keep-alive'
         });
-        livePrices.btc.registerListener(function (val) {
-            res.write("data: " + val + '\n\n');
-        });
+        if (req.query.static && req.query.static === "true"){
+          return res.send(livePrices.btc.a)   
+        } else if (req.query.slow && req.query.slow === "true"){
+            for (var x = 0; x<400; x++){
+                res.write("data: "+livePrices.btc.a.toString() + "\n\n");
+                await sleep(250)
+            }
+        }else{
+            livePrices.btc.registerListener(function (val) {
+                res.write("data: " + val + '\n\n');
+            });
+        }
     })
     router.get("/prices/eth", async (req, res) => {
         res.writeHead(200, {
@@ -158,9 +167,18 @@ sleep(1000).then(thing => {
             'Cache-Control': 'no-cache',
             'Connection': 'keep-alive'
         });
-        livePrices.eth.registerListener(function (val) {
-            res.write("data: " + val + '\n\n');
-        });
+        if (req.query.static && req.query.static === "true"){
+          return res.send(livePrices.eth.a)   
+        } else if (req.query.slow && req.query.slow === "true"){
+            for (var x = 0; x<100; x++){
+                res.write("data: "+livePrices.eth.a.toString() + "\n\n");
+                await sleep(1000)
+            }
+        }else{
+            livePrices.eth.registerListener(function (val) {
+                res.write("data: " + val + '\n\n');
+            });
+        }
     })
     router.get("/prices/ltc", async (req, res) => {
         res.writeHead(200, {
@@ -168,9 +186,18 @@ sleep(1000).then(thing => {
             'Cache-Control': 'no-cache',
             'Connection': 'keep-alive'
         });
-        livePrices.ltc.registerListener(function (val) {
-            res.write("data: " + val + '\n\n');
-        });
+        if (req.query.static && req.query.static === "true"){
+          return res.send(livePrices.ltc.a)   
+        } else if (req.query.slow && req.query.slow === "true"){
+            for (var x = 0; x<100; x++){
+                res.write("data: "+livePrices.ltc.a.toString() + "\n\n");
+                await sleep(1000)
+            }
+        }else{
+            livePrices.ltc.registerListener(function (val) {
+                res.write("data: " + val + '\n\n');
+            });
+        }
     })
     router.get("/prices/xrp", async (req, res) => {
         res.writeHead(200, {
@@ -178,9 +205,18 @@ sleep(1000).then(thing => {
             'Cache-Control': 'no-cache',
             'Connection': 'keep-alive'
         });
-        livePrices.xrp.registerListener(function (val) {
-            res.write("data: " + val + '\n\n');
-        });
+        if (req.query.static && req.query.static === "true"){
+          return res.send(livePrices.xrp.a)   
+        } else if (req.query.slow && req.query.slow === "true"){
+            for (var x = 0; x<100; x++){
+                res.write("data: "+livePrices.xrp.a.toString() + "\n\n");
+                await sleep(1000)
+            }
+        }else{
+            livePrices.xrp.registerListener(function (val) {
+                res.write("data: " + val + '\n\n');
+            });
+        }
     })
     router.get("/prices/ada", async (req, res) => {
         res.writeHead(200, {
@@ -188,19 +224,74 @@ sleep(1000).then(thing => {
             'Cache-Control': 'no-cache',
             'Connection': 'keep-alive'
         });
-        livePrices.ada.registerListener(function (val) {
-            res.write("data: " + val + '\n\n');
-        });
+        if (req.query.static && req.query.static === "true"){
+          return res.send(livePrices.ada.a)   
+        } else if (req.query.slow && req.query.slow === "true"){
+            for (var x = 0; x<100; x++){
+                res.write("data: "+livePrices.ada.a.toString() + "\n\n");
+                await sleep(1000)
+            }
+        }else{
+            livePrices.ada.registerListener(function (val) {
+                res.write("data: " + val + '\n\n');
+            });
+        }
     })
     router.get("/prices/bnb", async (req, res) => {
+        if (req.query.static !== "true"){
+            res.writeHead(200, {
+                'Content-Type': 'text/event-stream',
+                'Cache-Control': 'no-cache',
+                'Connection': 'keep-alive'
+            }); 
+        }
+        if (req.query.static && req.query.static === "true"){
+          return res.send(livePrices.bnb.a.toString())   
+        } else if (req.query.slow && req.query.slow === "true"){
+            for (var x = 0; x<100; x++){
+                res.write("data: "+livePrices.bnb.a + "\n\n");
+                await sleep(1000)
+            }
+        }else{
+            livePrices.bnb.registerListener(function (val) {
+                res.write("data: " + val + '\n\n');
+            });
+        }
+    })
+    router.get("/prices/all", async (req, res) => {
         res.writeHead(200, {
             'Content-Type': 'text/event-stream',
             'Cache-Control': 'no-cache',
             'Connection': 'keep-alive'
         });
-        livePrices.bnb.registerListener(function (val) {
-            res.write("data: " + val + '\n\n');
-        });
+        if (req.query.slow && req.query.slow === "true"){
+            for (var x = 0; x<100; x++){
+                let data = {
+                    btc: livePrices.btc.a,
+                    ltc: livePrices.ltc.a,
+                    eth: livePrices.eth.a,
+                    xrp: livePrices.xrp.a,
+                    ada: livePrices.ada.a,
+                    bnb: livePrices.bnb.a
+                }
+                data = JSON.stringify(data)
+                res.write("data: "+data + "\n\n");
+                await sleep(1000)
+            }
+        }else{
+            livePrices.btc.registerListener(function (val) {
+                let data = {
+                    btc: livePrices.btc.a,
+                    ltc: livePrices.ltc.a,
+                    eth: livePrices.eth.a,
+                    xrp: livePrices.xrp.a,
+                    ada: livePrices.ada.a,
+                    bnb: livePrices.bnb.a
+                }
+                data = JSON.stringify(data)
+                res.write("data: "+data + "\n\n");
+            });
+        }
     })
 })
 updatePrices();

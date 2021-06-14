@@ -1851,7 +1851,7 @@
                     "fontSize": 24,
                     "content": {
                         "ops": [{
-                            "insert": "Github Repo (src code)\nDocs\nTerms of Service\nWhat is crypto?\nProduct Hunt\n"
+                            "insert": "Github Repo (src code)\nDocs\nTerms of Service\nWhat is crypto?\nCoin Prices\nProduct Hunt\n"
                         }]
                     }
                 },

@@ -48,7 +48,7 @@ function main() {
   if (window.location.pathname === "/testdashboard" || window.location.pathname === "/dashboard-b") path = "/dashboard";
   if (window.location.pathname === "/welcome") path = "/newuser";
   if (window.location.pathname === "/dashboard-b/ltc") path = "/dashboard";
-
+  //if (window.location.pathname === "/prices") path = "nocss";
   if (path === "nocss") {
     return CSSDone();
   }
