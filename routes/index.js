@@ -570,6 +570,9 @@ router.get("/privacy-policy", (req, res) => {
 router.get("/cookie-policy", (req, res) => {
   res.render("cookie")
 })
+router.get("/prices", async (req, res) => {
+  res.render("prices")
+})
     ///404 error handling stuff
 router.use(function(req, res, next){
   res.status(404);
