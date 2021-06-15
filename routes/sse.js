@@ -143,13 +143,15 @@ sleep(1000).then(thing => {
         }
     })
     router.get("/prices/btc", async (req, res) => {
-        res.writeHead(200, {
-            'Content-Type': 'text/event-stream',
-            'Cache-Control': 'no-cache',
-            'Connection': 'keep-alive'
-        });
+        if (req.query.static !== "true"){
+            res.writeHead(200, {
+                'Content-Type': 'text/event-stream',
+                'Cache-Control': 'no-cache',
+                'Connection': 'keep-alive'
+            }); 
+        }
         if (req.query.static && req.query.static === "true"){
-          return res.send(livePrices.btc.a)   
+          return res.send(livePrices.btc.a.toString())   
         } else if (req.query.slow && req.query.slow === "true"){
             for (var x = 0; x<400; x++){
                 res.write("data: "+livePrices.btc.a.toString() + "\n\n");
@@ -162,13 +164,15 @@ sleep(1000).then(thing => {
         }
     })
     router.get("/prices/eth", async (req, res) => {
-        res.writeHead(200, {
-            'Content-Type': 'text/event-stream',
-            'Cache-Control': 'no-cache',
-            'Connection': 'keep-alive'
-        });
+        if (req.query.static !== "true"){
+            res.writeHead(200, {
+                'Content-Type': 'text/event-stream',
+                'Cache-Control': 'no-cache',
+                'Connection': 'keep-alive'
+            }); 
+        }
         if (req.query.static && req.query.static === "true"){
-          return res.send(livePrices.eth.a)   
+          return res.send(livePrices.eth.a.toString())   
         } else if (req.query.slow && req.query.slow === "true"){
             for (var x = 0; x<100; x++){
                 res.write("data: "+livePrices.eth.a.toString() + "\n\n");
@@ -181,13 +185,15 @@ sleep(1000).then(thing => {
         }
     })
     router.get("/prices/ltc", async (req, res) => {
-        res.writeHead(200, {
-            'Content-Type': 'text/event-stream',
-            'Cache-Control': 'no-cache',
-            'Connection': 'keep-alive'
-        });
+        if (req.query.static !== "true"){
+            res.writeHead(200, {
+                'Content-Type': 'text/event-stream',
+                'Cache-Control': 'no-cache',
+                'Connection': 'keep-alive'
+            }); 
+        }
         if (req.query.static && req.query.static === "true"){
-          return res.send(livePrices.ltc.a)   
+          return res.send(livePrices.ltc.a.toString())   
         } else if (req.query.slow && req.query.slow === "true"){
             for (var x = 0; x<100; x++){
                 res.write("data: "+livePrices.ltc.a.toString() + "\n\n");
@@ -200,13 +206,15 @@ sleep(1000).then(thing => {
         }
     })
     router.get("/prices/xrp", async (req, res) => {
-        res.writeHead(200, {
-            'Content-Type': 'text/event-stream',
-            'Cache-Control': 'no-cache',
-            'Connection': 'keep-alive'
-        });
+        if (req.query.static !== "true"){
+            res.writeHead(200, {
+                'Content-Type': 'text/event-stream',
+                'Cache-Control': 'no-cache',
+                'Connection': 'keep-alive'
+            }); 
+        }
         if (req.query.static && req.query.static === "true"){
-          return res.send(livePrices.xrp.a)   
+          return res.send(livePrices.xrp.a.toString())   
         } else if (req.query.slow && req.query.slow === "true"){
             for (var x = 0; x<100; x++){
                 res.write("data: "+livePrices.xrp.a.toString() + "\n\n");
@@ -219,13 +227,15 @@ sleep(1000).then(thing => {
         }
     })
     router.get("/prices/ada", async (req, res) => {
-        res.writeHead(200, {
-            'Content-Type': 'text/event-stream',
-            'Cache-Control': 'no-cache',
-            'Connection': 'keep-alive'
-        });
+        if (req.query.static !== "true"){
+            res.writeHead(200, {
+                'Content-Type': 'text/event-stream',
+                'Cache-Control': 'no-cache',
+                'Connection': 'keep-alive'
+            }); 
+        }
         if (req.query.static && req.query.static === "true"){
-          return res.send(livePrices.ada.a)   
+          return res.send(livePrices.ada.a.toString())   
         } else if (req.query.slow && req.query.slow === "true"){
             for (var x = 0; x<100; x++){
                 res.write("data: "+livePrices.ada.a.toString() + "\n\n");

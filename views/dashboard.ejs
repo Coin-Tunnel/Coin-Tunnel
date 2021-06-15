@@ -336,4 +336,9 @@
     </div>
   </body>
 </html>
-<%- include('javascript/dashboard-b-js.ejs') %>
+<script>
+    var allData = '<%- everything %>';
+    console.log(allData)
+    allData = JSON.parse(allData);
+</script>
+<script src="/javascript/dashboard-js.js"></script>
