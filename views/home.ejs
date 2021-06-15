@@ -172,6 +172,28 @@
 	Welcome to <br><div id="text"> </div><div id="border"></div>
 </div>
 `
+var event;
+  setTimeout(next, 1000);
+  function next() {
+    event = new EventSource("/sse/prices/all?slow=true");
+
+    event.onmessage = function (event) {
+      data = JSON.parse(event.data)
+
+      document.getElementById("footbtcprice").innerText = data.btc + " USD";
+
+      document.getElementById("footethprice").innerText = data.eth + " USD";
+
+      document.getElementById("footltcprice").innerText = data.ltc + " USD";
+
+      document.getElementById("footxrpprice").innerText = data.xrp + " USD";
+    }
+    let container = document.getElementById("siteVolume")
+    container.style.position = "absolute";
+    container.style["margin-top"] = "310px";
+    container.style.width="1920px";
+    container.style["font-size"] = "18px"
+  }
 changeText();
   }
   function sleep(ms){

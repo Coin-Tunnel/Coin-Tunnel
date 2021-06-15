@@ -40,7 +40,7 @@ if (!window.EventSource){
         document.getElementById("bnbprice").innerText = data.bnb+" USD";
     }
 }else{
-    const event = new EventSource("/sse/prices/all?slow=true");
+    const event = new EventSource("/sse/prices/all");
 
     event.onmessage = function(event) {
         data = JSON.parse(event.data)
