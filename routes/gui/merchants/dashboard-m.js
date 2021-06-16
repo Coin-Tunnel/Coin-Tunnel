@@ -49,7 +49,6 @@ sleep(1000).then(thing => {
         transactions.all = errorTransac;
 
        user = JSON.stringify(user);
-       //console.log(user);
        let merchant = user;
        let allSuccess = await mongoclient.db("cointunnel").collection("finished-transactions")
              .find({merchant: req.session.muser})
@@ -71,7 +70,6 @@ sleep(1000).then(thing => {
            if (failedx[i].previous_data) failedx[i].creation = Number(failedx[i].previous_data.creation)
         }
        let txlist = successful.concat(failed, open, failedx);
-       console.log(txlist)
        txlist = txlist.sort(function (a, b) {
          if (a.data && b.data) {
            return a.data.creation - b.data.creation;
