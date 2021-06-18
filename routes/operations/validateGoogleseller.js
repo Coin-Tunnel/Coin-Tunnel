@@ -15,7 +15,7 @@ sleep(1000).then(thing => {
               idToken: req.body.idtoken,
               audience: secrets.googleClient,
           });
-        
+          req.body.email = ticket.email;
           const payload = ticket.getPayload();
           const userid = payload['sub'];
           // If request specified a G Suite domain:
