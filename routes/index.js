@@ -400,7 +400,7 @@ router.get("/testdashboard", guiLimiter, async (req, res) => {
   req.session.buser = 77520157
   if (!req.session.buser) return res.redirect("/signin-b")
         let mongo = await checkUser(mongoclient, req.session.buser);
-        if (!mongo){ req.session.destroy(); return res.redirect("/signin-b")}
+        if (!mongo){ req.session = null; return res.redirect("/signin-b")}
         var publicx;
         var privatex;
         var type;
@@ -569,6 +569,9 @@ router.get("/privacy-policy", (req, res) => {
 })
 router.get("/cookie-policy", (req, res) => {
   res.render("cookie")
+})
+router.get("/prices", async (req, res) => {
+  res.render("prices")
 })
     ///404 error handling stuff
 router.use(function(req, res, next){

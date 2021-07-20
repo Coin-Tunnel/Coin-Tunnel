@@ -2,11 +2,13 @@
 <html >
 <head>
     <meta charset="utf-8">
-    
+    <link rel="stylesheet" href="/common.css">
+
       <title>Home</title>
       <script class="u-script" type="text/javascript" src="/javascript/jquery.js" defer=""></script>
       <link rel="stylesheet" href="index.css" media="screen">
       <link data-react-helmet="true" rel="icon" href="/images/smallLogo.png">
+      <script class="u-script" type="text/javascript" src="/javascript/websocket.js" defer=""></script>
 
 
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
@@ -53,8 +55,7 @@
     <div ui-view="canvas"></div>
     <div ui-view="overlay"></div>
     <div class="loader"></div>
-
-
+    <div id="footer" class="el-rich-text__content el-rich-text__content--valign-top"></div>
     <script type="text/javascript">
     window.ApplicationConfiguration = {
             awsLambdaExternalRequestUrl: 'https://rvwdyphcfb.execute-api.us-west-1.amazonaws.com/staging/external_request',
@@ -95,15 +96,34 @@
     merchantbutton.addEventListener('click', function() {
       window.location.href = "/signup-m"
     });
-    var p = document.getElementsByTagName("P")[15]
+
+    var source = new EventSource('/sse/server-time');
+
+// handle messages
+
+      let footer = $('div[data-id="085db588449a470dad8c959209fe948c"]');
+      footer[0].innerHTML = `<%- include('partials/footer.ejs') %>`
+      document.getElementById("serverTime").innerHTML = "Cannot reach server at this time";
+      document.getElementById("serverTime").style = "color: white; padding-top: 10px; padding-bottom: 20px"
+
+      source.onmessage = function(event) {
+        console.log(event.data);
+        document.getElementById("serverTime").innerHTML = event.data;
+      };
+      source.onclose = function (event) {
+        console.log(event)
+      }
+      var p = document.getElementsByTagName("P")[15]
     p.innerHTML = "<a href='https://github.com/Joshua-Zou/coin-tunnel' style='color: #ADCCE9' target='_blank'>Github Repo (src code)</a>"
     p = document.getElementsByTagName("P")[16];
     p.innerHTML = "<a href='https://docs.coin-tunnel.ml' style='color: #ADCCE9' target='_blank'>Docs<a>"
     p = document.getElementsByTagName("P")[17];
     p.innerHTML = "<a href='/tos' target='_blank' style='color: #ADCCE9'>Terms of Service<a>"
     p = document.getElementsByTagName("P")[18];
-    p.innerHTML = "<a href='https://www.investopedia.com/terms/b/bitcoin.asp' style='color: #ADCCE9' target='_blank'>What is Bitcoin?<a>";
+    p.innerHTML = "<a href='https://www.investopedia.com/terms/b/bitcoin.asp' target='_blank' style='color: #ADCCE9'>What is Bitcoin?<a>"
     p = document.getElementsByTagName("P")[19];
+    p.innerHTML = "<a href='/prices' style='color: #ADCCE9' >Coin Prices<a>";
+    p = document.getElementsByTagName("P")[20];
     p.innerHTML = `<a href='https://www.producthunt.com/posts/coin-tunnel' style='color: #ADCCE9' target='_blank'>Product Hunt<a> <a href="https://www.producthunt.com/posts/coin-tunnel?utm_source=badge-featured&amp;utm_medium=badge&amp;utm_souce=badge-coin-tunnel" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=296546&amp;theme=light" alt="Coin Tunnel - An open source, easy to use crypto payment system. | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54"></a>`
     document.getElementById("sec-a555").innerHTML = `<div class="u-clearfix u-sheet u-sheet-1">
         <a href="/" class="u-image u-logo u-image-1">
@@ -152,6 +172,28 @@
 	Welcome to <br><div id="text"> </div><div id="border"></div>
 </div>
 `
+var event;
+  setTimeout(next, 1000);
+  function next() {
+    event = new EventSource("/sse/prices/all?slow=true");
+
+    event.onmessage = function (event) {
+      data = JSON.parse(event.data)
+
+      document.getElementById("footbtcprice").innerText = data.btc + " USD";
+
+      document.getElementById("footethprice").innerText = data.eth + " USD";
+
+      document.getElementById("footltcprice").innerText = data.ltc + " USD";
+
+      document.getElementById("footxrpprice").innerText = data.xrp + " USD";
+    }
+    let container = document.getElementById("siteVolume")
+    container.style.position = "absolute";
+    container.style["margin-top"] = "310px";
+    container.style.width="1920px";
+    container.style["font-size"] = "18px"
+  }
 changeText();
   }
   function sleep(ms){
@@ -305,6 +347,8 @@ p {
   width: 20px;
   animation: animated-cursor 600ms steps(30,end) infinite;
 }
-
-
+#footerMain {
+  background: none !important;
+  
+}
 </style>

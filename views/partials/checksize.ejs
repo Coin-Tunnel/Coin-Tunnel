@@ -1,13 +1,17 @@
 <script>
-  var first = performance.now();
-      let command = '<%- command %>';
-  console.log(command)
-  var version = !!document.documentMode;
-if (command === "checksize"){
-  var second = performance.now();
-  console.log(second-first);
-  if (Number(window.innerWidth) < 1800 || Number(window.innerWidth) > 2000 || version === true || second-first > 0.5){
-     window.location.href = "/s"
-  }else window.location.href = "/n"
-}
-</script>
+  console.log(window.location.hostname);
+  if (window.location.hostname === "coin-tunnel.joshuazou.repl.co") window.location.href = "https://www.coin-tunnel.ml";
+  else{
+    var first = performance.now();
+        let command = '<%- command %>';
+    console.log(command)
+    var version = !!document.documentMode;
+  if (command === "checksize"){
+    var second = performance.now();
+    console.log(second-first);
+    if (Number(window.innerWidth) < 1800 || Number(window.innerWidth) > 2000 || version === true || second-first > 0.5){
+       window.location.href = "/s"
+    }else window.location.href = "/n"
+  }
+  }
+  </script>

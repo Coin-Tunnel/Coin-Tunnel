@@ -12,7 +12,7 @@ sleep(1000).then(thing => {
     router.get("/", guiLimiter, async (req, res) => {
         if (!req.session.buser) return res.redirect("/signin-b")
         let mongo = await checkUser(mongoclient, req.session.buser);
-        if (!mongo){ req.session.destroy(); return res.redirect("/signin-b")}
+        if (!mongo){ req.session = null; return res.redirect("/signin-b")}
         var publicx;
         var privatex;
         var type;

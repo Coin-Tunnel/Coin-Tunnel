@@ -17,7 +17,7 @@ sleep(1000).then(thing => {
               idToken: req.body.idtoken,
               audience: secrets.googleClient,
           });
-        
+          req.body.email = ticket.email;
           const payload = ticket.getPayload();
           const userid = payload['sub'];
           // If request specified a G Suite domain:
@@ -30,7 +30,7 @@ sleep(1000).then(thing => {
         }
         let results = await verify().catch(err => {res.redirect("/"); console.log("error1")});
         if (results !== req.body.requested){
-          req.session.destroy();
+          req.session = null;
           console.log("Didn't match google")
           return;
         }

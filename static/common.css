@@ -7,7 +7,8 @@ p{margin-top:0;margin-bottom:1em}
 abbr[data-original-title],abbr[title]{text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted;border-bottom:0;cursor:help}
 address{margin-bottom:1em;font-style:normal;line-height:inherit}
 input[type=number],input[type=password],input[type=text],textarea{-webkit-appearance:none}
-dl,ol,ul{list-style:none}
+dl,ol,ul{list-style:none !important}
+dl{width: 20pc}
 dt{font-weight:500}
 dd{margin-bottom:.5em;margin-left:0;line-height:2;font-weight:400}
 blockquote{margin:0 0 1em}
@@ -74,8 +75,6 @@ mark{padding:.2em;background-color:#feffe6}
 #footLogoBox>a:hover{color:#de596b}
 #footLogoBox .icon:first-child{font-size:36px;margin-right:5px}
 #footLogoBox .icon:last-child{font-size:100px;height:36px}
-.cn-body #footLogoBox .icon{position:absolute;width:145px;height:50px;background-image:url(/images/logo/open_sesame_light.png);background-size:100%;background-repeat:no-repeat}
-.cn-body #footLogoBox .night_icon{background-image:url(/images/logo/open_sesame_night.png)}
 #footerLeft dt{font-size:16px;font-weight:400;color:#666}
 #footerLeft dd{font-size:38px;display:inline-block;margin-right:10px;max-height:62px;line-height:1.5}
 #footerLeft dd .icon{padding:3px;border:1px solid;border-radius:50%}
@@ -84,7 +83,13 @@ mark{padding:.2em;background-color:#feffe6}
 #bottomServTime{margin:0 0 15px 0;color:#aaa;justify-content:flex-start;align-items:center}
 #bottomServTime time{font-size:14px;color:rgba(0,0,0,.85);margin-right:5px}
 #copyRight{font-size:14px;max-width: 280px;}
-    
+
+#footerMain {
+  font-family:Arial, Helvetica, sans-serif !important;
+  font-size:medium !important;
+  font-style:normal !important;
+  font-weight:normal !important;
+}
 
 /* The switch - the box around the slider */
 .switch {

@@ -4,7 +4,7 @@
         "page": {
             "canvas": {
                 "props": {
-                    "storedElements": ["e14c241e9f204e36b0d61950d60b768d", "f423158e35294b9aa98a112061fec58b", "e21447e15d704db8baffcce453225a75", "5364590d752a491e8a5f1bf672aa2ed1", "aff78dd5c83347bfab05babc205cc313", "ff79bb5d065244cfa1aea7a3e6055a9f", "bb4995ce31d148ceb3e94ada83e23d55", "2047b59872014abb8fbdc28b4fb3a298", "085db588449a470dad8c959209fe969a", "68be3164ab9045a4b674209b84afbcfd", "41c8a4cc21814d0190ba1dc5a292a495", "0be8592ece1144028abcb669a242c53a", "592e07d02d9a45bab8962516df155d43", "7e3ec15579684b449039bf99caefd438", "002522bc6af64bfa8f326c41a2fefeea", "b9162aea922a450a9e7fc84f6bfa6c73", "42c8916d73a64381a41ba11e6b70ada9", "16e4481772754cb78fd080c72f7a6867", "ef60ecd85a3e4392bddf47d57846197b", "0c4faa8d88524ebbb2586a4f924080bd", "5d731b01a61d45adb7169297ee897acd"],
+                    "storedElements": ["e14c241e9f204e36b0d61950d60b768d", "f423158e35294b9aa98a112061fec58b", "e21447e15d704db8baffcce453225a75", "5364590d752a491e8a5f1bf672aa2ed1", "aff78dd5c83347bfab05babc205cc313", "ff79bb5d065244cfa1aea7a3e6055a9f", "bb4995ce31d148ceb3e94ada83e23d55", "2047b59872014abb8fbdc28b4fb3a298", "085db588449a470dad8c959209fe969a", "68be3164ab9045a4b674209b84afbcfd", "41c8a4cc21814d0190ba1dc5a292a495", "0be8592ece1144028abcb669a242c53a", "592e07d02d9a45bab8962516df155d43", "7e3ec15579684b449039bf99caefd438", "002522bc6af64bfa8f326c41a2fefeea", "b9162aea922a450a9e7fc84f6bfa6c73", "42c8916d73a64381a41ba11e6b70ada9", "16e4481772754cb78fd080c72f7a6867", "ef60ecd85a3e4392bddf47d57846197b", "0c4faa8d88524ebbb2586a4f924080bd", "5d731b01a61d45adb7169297ee897acd", "68be3164ab9045a4b674209b84afb548", "085db588449a470dad8c959209fe948c"],
                     "backgroundColor": "rgb(20, 20, 20)",
                     "actions": [{
                         "action": "show",
@@ -137,7 +137,7 @@
                 "props": {
                     "name": "shapes-c83d2a7fa7912b6f01523303b24f07f4.svg",
                     "width": 1920,
-                    "height": 2483,
+                    "height": 2830,
                     "keepRatio": false,
                     "x": 0,
                     "y": 0,
@@ -1652,6 +1652,167 @@
                 "type": "SvgPolygon",
                 "v": "2.1"
             },
+            "68be3164ab9045a4b674209b84afb548": {
+                "props": {
+                    "name": "Footer",
+                    "width": 1920,
+                    "height": 330,
+                    "keepRatio": false,
+                    "x": 0,
+                    "y": 2500,
+                    "opacity": 70,
+                    "anchorX": 0,
+                    "anchorY": 0,
+                    "locked": 0,
+                    "stateIa": "visible",
+                    "fixed": 0,
+                    "elementBlur": 0,
+                    "mixBlendMode": "normal",
+                    "constraints": {
+                        "auto": true,
+                        "x": {
+                            "type": "stretch"
+                        },
+                        "y": {
+                            "type": "stretch"
+                        }
+                    },
+                    "sketchReadOnly": 0,
+                    "flipHorizontal": false,
+                    "flipVertical": false,
+                    "linkedGenerator": "",
+                    "layerColor": "",
+                    "hasClippingMask": false,
+                    "customStyles": [],
+                    "maskMode": "outline",
+                    "activePoints": [],
+                    "backgroundImage": "",
+                    "bezierPoints": {
+                        "point_16226934205733": [{
+                            "x": 0,
+                            "y": 0,
+                            "id": "point_16226934205737"
+                        }, {
+                            "x": 0,
+                            "y": 0,
+                            "id": "point_16226934205738"
+                        }],
+                        "point_16226934205734": [{
+                            "x": 1920,
+                            "y": 0,
+                            "id": "point_16226934205749"
+                        }, {
+                            "x": 1920,
+                            "y": 0,
+                            "id": "point_162269342057410"
+                        }],
+                        "point_16226934205735": [{
+                            "x": 1920,
+                            "y": 330,
+                            "id": "point_162269342057411"
+                        }, {
+                            "x": 1920,
+                            "y": 330,
+                            "id": "point_162269342057412"
+                        }],
+                        "point_16226934205736": [{
+                            "x": 0,
+                            "y": 330,
+                            "id": "point_162269342057413"
+                        }, {
+                            "x": 0,
+                            "y": 330,
+                            "id": "point_162269342057414"
+                        }]
+                    },
+                    "color": "#21325b",
+                    "svgGradientColor": "",
+                    "isPathClosed": true,
+                    "offsetX": 0,
+                    "offsetY": 0,
+                    "points": [{
+                        "x": 0,
+                        "y": 0,
+                        "id": "point_16226934205733",
+                        "type": "straight"
+                    }, {
+                        "x": 1920,
+                        "y": 0,
+                        "id": "point_16226934205734",
+                        "type": "straight"
+                    }, {
+                        "x": 1920,
+                        "y": 330,
+                        "id": "point_16226934205735",
+                        "type": "straight"
+                    }, {
+                        "x": 0,
+                        "y": 330,
+                        "id": "point_16226934205736",
+                        "type": "straight"
+                    }],
+                    "viewBox": "0 0 376 315",
+                    "objectFit": "cover",
+                    "isReversed": false,
+                    "radiusLock": true,
+                    "borderTopLeftRadius": 0,
+                    "borderTopRightRadius": 0,
+                    "borderBottomLeftRadius": 0,
+                    "borderBottomRightRadius": 0,
+                    "stroke": "#8c8c8c",
+                    "strokeWidth": 0
+                },
+                "type": "SvgPolygon",
+                "v": "2.1"
+            },
+            "085db588449a470dad8c959209fe948c": {
+                "props": {
+                    "name": "Please work I need this to work",
+                    "width": 1920,
+                    "height": 330,
+                    "keepRatio": false,
+                    "x": 0,
+                    "y": 2500,
+                    "opacity": 100,
+                    "anchorX": 0,
+                    "anchorY": 0,
+                    "locked": 0,
+                    "stateIa": "visible",
+                    "fixed": 0,
+                    "elementBlur": 0, 
+                    "mixBlendMode": "normal",
+                    "constraints": {
+                        "auto": true,
+                        "x": {
+                            "type": "stretch"
+                        },
+                        "y": {
+                            "type": "stretch"
+                        }
+                    },
+                    "sketchReadOnly": 0,
+                    "flipHorizontal": false,
+                    "flipVertical": false,
+                    "linkedGenerator": "",
+                    "layerColor": "",
+                    "hasClippingMask": false,
+                    "customStyles": [],
+                    "autoNamed": true,
+                    "autoWidth": false,
+                    "color": "rgb(255, 255, 255)",
+                    "content": {
+                        "ops": [{
+                            "insert": "Please I need this to work"
+                        }]
+                    },
+                    "fontSize": 24,
+                    "verticalAlign": "top",
+                    "autoHeight": false,
+                    "scrollHeight": 420
+                },
+                "type": "RichTextElement",
+                "v": "2.1"
+            },
             "5d731b01a61d45adb7169297ee897acd": {
                 "props": {
                     "name": "<a href='https://helpme.com'>Github Repo (src code)</a>\nDocs\nTerms of Service\nWhat is crypto?\nProduct Hunt\n",
@@ -1690,7 +1851,7 @@
                     "fontSize": 24,
                     "content": {
                         "ops": [{
-                            "insert": "Github Repo (src code)\nDocs\nTerms of Service\nWhat is crypto?\nProduct Hunt\n"
+                            "insert": "Github Repo (src code)\nDocs\nTerms of Service\nWhat is crypto?\nCoin Prices\nProduct Hunt\n"
                         }]
                     }
                 },
