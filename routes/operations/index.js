@@ -33,7 +33,7 @@ sleep(1000).then(thing => {
     if (!req.session.buser) return res.send("Your session has expired! Login to continue.");
     // send email 
     let userinfo = await checkStuff(mongoclient, req.session.buser);
-    if (!userinfo) { req.session.destroy(); req.session.save(); return res.send("That account doesn't exist!"); }
+    if (!userinfo) { req.session = null; req.session.save(); return res.send("That account doesn't exist!"); }
     let expiry = Date.now() + 600000;
     let randomid = await makeid(30);
     let result = await mongoclient.db("cointunnel").collection("emails").insertOne({
@@ -74,7 +74,7 @@ sleep(1000).then(thing => {
     if (!req.session.buser) return res.send("Your session has expired! Login to continue.");
     // send email 
     let userinfo = await checkStuff(mongoclient, req.session.buser);
-    if (!userinfo) { req.session.destroy(); req.session.save(); return res.send("That account doesn't exist!"); }
+    if (!userinfo) { req.session = null; req.session.save(); return res.send("That account doesn't exist!"); }
     let expiry = Date.now() + 600000;
     let randomid = await makeid(30);
     let result = await mongoclient.db("cointunnel").collection("emails").insertOne({
@@ -250,7 +250,7 @@ sleep(1000).then(thing => {
     if (!req.session.buser) return res.send("Your session has expired! Login to continue.");
     // send email 
     let userinfo = await checkStuff(mongoclient, req.session.buser);
-    if (!userinfo) { req.session.destroy(); req.session.save(); return res.send("That account doesn't exist!"); }
+    if (!userinfo) { req.session = null; req.session.save(); return res.send("That account doesn't exist!"); }
     let expiry = Date.now() + 600000;
     let randomid = await makeid(30);
     let result = await mongoclient.db("cointunnel").collection("emails").insertOne({
@@ -343,7 +343,7 @@ sleep(1000).then(thing => {
   router.get("/exportwallets", longLimiter, async (req, res) => {
     if (!req.session.buser) return; // lol we not sending them any info
     let user = await mongoclient.db("cointunnel").collection("userData").findOne({ name: req.session.buser });
-    if (!user) return req.session.destroy();
+    if (!user) return req.session = null;
     await sleep(5000)
     var y = 1;
     var wb = new xl.Workbook();

@@ -13,7 +13,7 @@ sleep(1000).then(thing => {
     const accessCode = req.query.code;
     if (!accessCode){
       res.redirect("/signup-b")
-    req.session.destroy();
+      req.session = null;
     }
     const data = new FormData();
     data.append('client_id', clientId);
