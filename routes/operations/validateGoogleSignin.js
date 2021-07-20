@@ -32,21 +32,16 @@ sleep(1000).then(thing => {
           console.log("Didn't match google")
           return;
         }
-        console.log(results)
-        console.log("goog: "+req.session.buser)
         
         const db = mongoclient.db("cointunnel");
                 let testresult = await db.collection("userData").find( {"name": results}).count();
-                console.log("testrueslts: "+testresult)
                 if (testresult === 0){
                   res.send("No account set up! Create an account here: https://www.coin-tunnel.ml/signup-b")
                 } else {
                   req.session.buser = results;
-                  req.session.save((err) => {
-                        if (!err) {
-                            res.send("good")
-                        }
-                    })
+                  req.session.save();
+                  await sleep(500)
+                  res.send("good")
                 }
         
     })
