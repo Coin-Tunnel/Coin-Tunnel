@@ -161,9 +161,6 @@
     </div>
   </section>
 
-<div style="background: rgba(10, 10, 10, 0.25); position: fixed; z-index: 100; top: 0; width: 100vw; height: 100vh; display: none;" id="loadinggif">
-  <img src="/images/loading1.gif" style="display: block; margin-left: auto; margin-right: auto; width: 15%; margin-top: 10%;">
-</div>
   <%- include('partials/footer.ejs') %>
 
 </body>
@@ -201,7 +198,7 @@
 
   }
   function checkUser() {
-    document.getElementById("loadinggif").style.display = "block";
+    document.getElementById("loadinggif2").style.display = "block";
     googleperm = true;
   }
   function sleep(ms) {
