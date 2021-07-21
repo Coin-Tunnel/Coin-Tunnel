@@ -724,7 +724,7 @@ sleep(1000).then(thing => {
           reason: "User has no wallet set up!",
           timeStamp: Date.now()
         };
-        
+
         await fetch(tx.callback, {
           method: 'POST',
           body: JSON.stringify(todo),
@@ -924,7 +924,8 @@ sleep(1000).then(thing => {
       let secret = await decrypt(user.xrp.privatex);
       console.log(list.options.withdrawto, user.xrp.address, secret, list.options.amount, tag, false)
       let result = await sendXRP(list.options.withdrawto, user.xrp.address, secret, list.options.amount, tag, false).catch(err => { console.log(err); return "Error: " + err.toString() });
-      if (result.toString().includes("Error: ")) return res.send("There was an error! Direct logs: " + result.toString());
+      if (result.resultCode === "tecUNFUNDED_PAYMENT") return res.send("Error: The blockchain rejected your transaction! Try lowering the amount of XRP!");
+      if (result.resultCode === "tecDST_TAG_NEEDED") return res.send("The destination wallet has indicated that you must input a destination tag!")
       return res.send("Success! TX HASH: " + JSON.stringify(result.tx_json.hash));
     } else if (list.type === "merchant-change-ripple") {
       await mongoclient.db("cointunnel").collection("merchantData").updateOne({ name: list.user }, {
@@ -1549,22 +1550,19 @@ async function sendXRP(recieverAddress, sourcePublicAddress, sourcePrivateAddres
       }
     }
   }
+  await api.connect();
+  let prepared = await api.preparePayment(ADDRESS_1, payment, instructions);
+  const { signedTransaction, id } = api.sign(prepared.txJSON, SECRET_1)
+  console.log(id)
+  let result = await api.submit(signedTransaction);
+  console.log(JSON.parse(JSON.stringify(result, null, 2)))
+  api.disconnect()
+  returnedResult = JSON.stringify(result, null, 2);
+  return JSON.parse(JSON.stringify(result, null, 2))
 
-  let finalresult = await api.connect().then(async () => {
-    console.log('Connected...')
-    let secondaryresult = await api.preparePayment(ADDRESS_1, payment, instructions).then(async prepared => {
-      const { signedTransaction, id } = api.sign(prepared.txJSON, SECRET_1)
-      console.log(id)
-      let primaryresult = await api.submit(signedTransaction).then(async result => {
-        console.log(JSON.stringify(result, null, 2))
-        api.disconnect()
-        return JSON.stringify(result, null, 2)
-      })
-      return primaryresult;
-    })
-    return secondaryresult;
-  }).catch(err => { throw err; });
-  return finalresult;
+
+  //return returnedResult;
+
 }
 async function sseHeartbeat() {
   while (true) {

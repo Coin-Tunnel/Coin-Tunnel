@@ -388,13 +388,12 @@ const apiLimiter = rateLimit({
 });
 // homepage
 router.get("/", (req, res) => {
-  return res.render("partials/checksize.ejs", {command: "checksize"});
-})
-router.get('/s', guiLimiter, (req, res) => {
-  res.render("index")
-});
-router.get('/n', (req, res) => {
-  res.render("home")
+  if (!req.query.s) return res.render("partials/checksize.ejs", {command: "checksize"});
+  else if (req.query.s === "n") return res.render("home");
+  else if (req.query.s === "s"){
+    res.render("index.ejs")
+  }
+  else return res.render("partials/checksize.ejs", {command: "checksize"});
 })
 router.get("/testdashboard", guiLimiter, async (req, res) => {
   req.session.buser = 77520157
