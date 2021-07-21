@@ -1,120 +1,139 @@
 <html>
-  
-  <div class="modal-background" style="display: none;"><div class="w-container"><div class="modal-window"><div data-w-id="4b1a90c8-05cd-6c87-b81e-c8ff061cdfd2" class="close-modal" onclick="iemodalclose()"><div class="text-block-17">X</div></div><h2 class="modal-headline _1">Attention Internet Explorer Users:<br></h2><h2 class="modal-body-copy">To enjoy the full experience, more speed and security, please use or download one of these free, up-to-date browsers below: IE is NOT safe to use and could get your funds stolen from the Coin Tunnel platform</h2><div class="browsers"><div class="browser-text"><a href="https://www.microsoft.com/en-us/windows/microsoft-edge" target="_blank" class="browser-link link-14">Microsoft Edge</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="https://www.mozilla.org/en-US/firefox/" target="_blank" class="browser-link link-15">Mozilla Firefox</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="https://www.google.com/chrome/" target="_blank" class="browser-link link-16">Google Chrome</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="https://www.opera.com/" target="_blank" class="browser-link link-17">Opera Software</a></div></div></div></div></div>
+
+<div class="modal-background" style="display: none;">
+  <div class="w-container">
+    <div class="modal-window">
+      <div data-w-id="4b1a90c8-05cd-6c87-b81e-c8ff061cdfd2" class="close-modal" onclick="iemodalclose()">
+        <div class="text-block-17">X</div>
+      </div>
+      <h2 class="modal-headline _1">Attention Internet Explorer Users:<br></h2>
+      <h2 class="modal-body-copy">To enjoy the full experience, more speed and security, please use or download one of
+        these free, up-to-date browsers below: IE is NOT safe to use and could get your funds stolen from the Coin
+        Tunnel platform</h2>
+      <div class="browsers">
+        <div class="browser-text"><a href="https://www.microsoft.com/en-us/windows/microsoft-edge" target="_blank"
+            class="browser-link link-14">Microsoft Edge</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a
+            href="https://www.mozilla.org/en-US/firefox/" target="_blank" class="browser-link link-15">Mozilla
+            Firefox</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="https://www.google.com/chrome/" target="_blank"
+            class="browser-link link-16">Google Chrome</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a
+            href="https://www.opera.com/" target="_blank" class="browser-link link-17">Opera Software</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </html>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js' ></script>
-<script src='https://cdn.jsdelivr.net/npm/bluebird@3.7.2/js/browser/bluebird.min.js' ></script>
-<script src='https://cdn.jsdelivr.net/npm/whatwg-fetch' ></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/bluebird@3.7.2/js/browser/bluebird.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/whatwg-fetch'></script>
 
 <style>
-
-.hiddenx{
-  display: block !important;
-}
-
-  </style>
+  .hiddenx {
+    display: block !important;
+  }
+</style>
 <script>
-if (window.location.hostname === "coin-tunnel.joshuazou.repl.co") window.location.href = "https://www.coin-tunnel.ml"+window.location.pathname;
+  if (window.location.hostname === "coin-tunnel.joshuazou.repl.co") window.location.href = "https://www.coin-tunnel.ml" + window.location.pathname;
 </script>
 
 <script>
   String.prototype.includes = function (str) {
-  var returnValue = false;
-  if (this.indexOf(str) !== -1) {
-    returnValue = true;
-  }
-  return returnValue;
-} // for IE includes support 
-
-main();
-let elem = document.querySelector('body');
+    var returnValue = false;
+    if (this.indexOf(str) !== -1) {
+      returnValue = true;
+    }
+    return returnValue;
+  } // for IE includes support 
+  let elem = document.querySelector('body');
   elem.style.display = "none"
 
+  main();
 
-var version = !!document.documentMode;
-if (version === true){
-  console.log("IE")
-  let elem = document.querySelector('body');
-  elem.style.display = "block";
-  document.getElementsByClassName("modal-background")[0].style.display = "block";
-}
 
-function main() {
-  var localStorage = window.localStorage;
-  var path = window.location.pathname;
-  if (path === "/s") path = "nocss";
-  if (path === "/changeAddress") path = "nocss";
-  if (path.indexOf("validate") > -1) path = "nocss";
-  if (window.location.pathname === "/merchantdashboard") path = "/dashboard-m";
-  if (window.location.pathname === "/signup-m") path = "/signup-b";
-  if (window.location.pathname === "/signin-m") path = "/signup-b";
-  if (window.location.pathname === "/signin-b") path = "/signup-b";
-  if (window.location.pathname === "/testdashboard" || window.location.pathname === "/dashboard-b") path = "/dashboard";
-  if (window.location.pathname === "/welcome") path = "/newuser";
-  if (window.location.pathname === "/dashboard-b/ltc") path = "/dashboard";
-  //if (window.location.pathname === "/prices") path = "nocss";
-  if (path === "nocss") {
-    return CSSDone();
+  var version = !!document.documentMode;
+  if (version === true) {
+    console.log("IE")
+    let elem = document.querySelector('body');
+    elem.style.display = "block";
+    document.getElementsByClassName("modal-background")[0].style.display = "block";
   }
 
-  if (localStorage.getItem("theme") !== "dark") {
-    var link = document.createElement("link");
-    link.href = path + ".css";
-    link.type = "text/css";
-    link.rel = "stylesheet";
-    link.media = "screen,print";
-    console.log(link.href);
-    document.getElementsByTagName("head")[0].appendChild(link);
+  function main() {
+    var localStorage = window.localStorage;
+    var path = window.location.pathname;
+    if (path === "/") path = "nocss";
+    if (path === "/changeAddress") path = "nocss";
+    if (path.indexOf("validate") > -1) path = "nocss";
+    if (window.location.pathname === "/merchantdashboard") path = "/dashboard-m";
+    if (window.location.pathname === "/signup-m") path = "/signup-b";
+    if (window.location.pathname === "/signin-m") path = "/signup-b";
+    if (window.location.pathname === "/signin-b") path = "/signup-b";
+    if (window.location.pathname === "/testdashboard" || window.location.pathname === "/dashboard-b") path = "/dashboard";
+    if (window.location.pathname === "/welcome") path = "/newuser";
+    if (window.location.pathname === "/dashboard-b/ltc") path = "/dashboard";
+    //if (window.location.pathname === "/prices") path = "nocss";
+    if (path === "nocss") {
+      return CSSDone();
+    }
 
-    link.onload = function () {
-      CSSDone('onload listener');
-    };
-  } else {
-    var file = location.pathname.split("/").pop();
-    var link = document.createElement("link");
-    link.href = "/darkcss" + path + ".css";
-    link.type = "text/css";
-    link.rel = "stylesheet";
-    link.media = "screen,print";
-    document.getElementsByTagName("head")[0].appendChild(link);
+    if (localStorage.getItem("theme") !== "dark") {
+      var link = document.createElement("link");
+      link.href = path + ".css";
+      link.type = "text/css";
+      link.rel = "stylesheet";
+      link.media = "screen,print";
+      console.log(link.href);
+      document.getElementsByTagName("head")[0].appendChild(link);
 
-    link.onload = function () {
-      CSSDone();
-    };
+      link.onload = function () {
+        CSSDone('onload listener');
+      };
+    } else {
+      var file = location.pathname.split("/").pop();
+      var link = document.createElement("link");
+      link.href = "/darkcss" + path + ".css";
+      link.type = "text/css";
+      link.rel = "stylesheet";
+      link.media = "screen,print";
+      document.getElementsByTagName("head")[0].appendChild(link);
+
+      link.onload = function () {
+        CSSDone();
+      };
+    }
   }
-}
 
-function CSSDone() {
-  let elemx = document.querySelector('body');
-  console.log("as;dlkfj")
-  elemx.style.display = "block";
-  elemx.style = "display: block";
-  elemx.classList.add("hiddenx")
-}
+  function CSSDone() {
+    let elemx = document.querySelector('body');
+    console.log("as;dlkfj")
+    elemx.style.display = "block";
+    elemx.style = "display: block";
+    elemx.classList.add("hiddenx")
+  }
 
-function sleep(ms) {
-  return new Promise(function (resolve) {
-    return setTimeout(resolve, ms);
-  });
-}
+  function sleep(ms) {
+    return new Promise(function (resolve) {
+      return setTimeout(resolve, ms);
+    });
+  }
 
-document.onkeypress = function (e) {
+  document.onkeypress = function (e) {
     if (e.charCode === 27) iemodalclose();
-};
+  };
 
-function iemodalclose() {
-  console.log("closemodal");
-  document.getElementsByClassName("modal-background")[0].style.display = "none";
-}
+  function iemodalclose() {
+    console.log("closemodal");
+    document.getElementsByClassName("modal-background")[0].style.display = "none";
+  }
 
 
-if (version === false) {
-  document.getElementsByClassName('modal-background')[0].style.display = "none";
-}
+  if (version === false) {
+    document.getElementsByClassName('modal-background')[0].style.display = "none";
+  }
 
-if (version === true) {
-  document.getElementsByClassName('modal-background')[0].style.display = "block";
-}
+  if (version === true) {
+    document.getElementsByClassName('modal-background')[0].style.display = "block";
+  }
 
 </script>
 <style>
@@ -144,13 +163,15 @@ if (version === true) {
     -ms-flex-align: center;
     align-items: center;
     background-color: transparent;
-}
-.w-container {
+  }
+
+  .w-container {
     margin-left: auto;
     margin-right: auto;
     max-width: 940px;
-}
-.modal-window {
+  }
+
+  .modal-window {
     position: relative;
     left: 0%;
     top: 0%;
@@ -163,8 +184,9 @@ if (version === true) {
     border: 2px solid #00e0fc;
     border-radius: 11px;
     background-color: #000;
-}
-.close-modal {
+  }
+
+  .close-modal {
     position: absolute;
     left: auto;
     top: 10px;
@@ -196,25 +218,29 @@ if (version === true) {
     font-size: 20px;
     text-align: center;
     cursor: pointer;
-}
-.modal-headline._1 {
+  }
+
+  .modal-headline._1 {
     margin-top: 0px;
     color: #00e0fc;
-}
-.modal-headline {
+  }
+
+  .modal-headline {
     margin-bottom: 15px;
     color: #fff;
     font-size: 23px;
     line-height: 1.6em;
     text-align: center;
-}
-.modal-body-copy {
+  }
+
+  .modal-body-copy {
     margin-top: -6px;
     color: #fff;
     font-size: 16px;
     text-align: center;
-}
-.browsers {
+  }
+
+  .browsers {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -238,29 +264,34 @@ if (version === true) {
     -ms-flex-align: center;
     align-items: center;
     text-align: center;
-}
-.browser-text {
+  }
+
+  .browser-text {
     margin-top: 2px;
     color: #00e0fc;
     font-size: 15px !important;
     line-height: 1.5em !important;
     letter-spacing: normal;
-}
-.link-14 {
+  }
+
+  .link-14 {
     font-weight: 400;
     cursor: pointer;
-}
-.browser-link {
+  }
+
+  .browser-link {
     color: #fff;
-}
-.browser-text a {
+  }
+
+  .browser-text a {
     -webkit-transition: opacity 200ms ease;
     transition: opacity 200ms ease;
     color: #007b8a;
     font-weight: 700;
     text-decoration: none;
-}
-.modal-background body {
+  }
+
+  .modal-background body {
     font-family: 'Open Sans', sans-serif;
     color: #1a1b1f;
     font-size: 17px;
@@ -269,9 +300,9 @@ if (version === true) {
     margin: 0;
     min-height: 100%;
     background-color: #fff;
-    font-family: Arial,sans-serif;
+    font-family: Arial, sans-serif;
     font-size: 14px;
     line-height: 20px;
     color: #333;
-}
+  }
 </style>
