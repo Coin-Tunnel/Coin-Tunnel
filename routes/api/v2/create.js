@@ -436,7 +436,7 @@ sleep(1000).then(thing => {
     merchantwallet = await merchantwallet.json();
     if (merchantwallet.status === "failed" && amountOfXrp < 21) return res.status(400).send({
       status: "failed",
-      reason: "Merchant address is not activated! Send 20XRP first! You cannot send any less. Or, create a transaction that is worth more than 20 XRP"
+      reason: "Merchant address is not activated! Send 20 XRP first! You cannot send any less. Or, create a transaction that is worth more than 20 XRP"
     })
     //start of buyer wallet verifiactaion
     var buyerPublic;
@@ -454,7 +454,7 @@ sleep(1000).then(thing => {
     if (buyerwallet.status === "failed") return res.status(400).send({status: "failed", reason: "Buyer does not have enough XRP to fund this transaction"});
     let amountInWallet = Number(buyerwallet.data.xrpBalance);
     if (amountInWallet === 0 || amountInWallet < 1) return res.status(400).send({status: "failed", reason: "Buyer does not have enough XRP to fund this transaction"});
-    if (amountInWallet-1 < amountOfXrp) return res.status(400).send({status: "failed", reason: "Buyer does not have enough XRP to fund this transaction"});
+    if (amountInWallet-20.05 < amountOfXrp) return res.status(400).send({status: "failed", reason: "Buyer does not have enough XRP to fund this transaction"});
 
       await mongoclient.db("cointunnel").collection("open-transactions").insertOne({
         merchant: dbKey.userId,

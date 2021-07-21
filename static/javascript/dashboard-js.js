@@ -373,10 +373,10 @@ function showData() {
                     text2 = "0 USD";
                 } else {
                     text2 = (Number(allData.xrp.price) * Number(response.data.xrpBalance)).toString() + " USD";
-                    text = "Amount in wallet: ".concat(response.data.xrpBalance, " XRP");
+                    text = "Amount in wallet: "+response.data.xrpBalance+ " XRP <br><br> Withdrawable: "+(Math.floor(Number((response.data.xrpBalance)-20) * 1000000) / 1000000).toString();
                 }
 
-                document.getElementById("amountinwallet").innerText = text;
+                document.getElementById("amountinwallet").innerHTML = text;
                 document.getElementsByClassName("loadingimage")[0].style = "display: none;";
                 document.getElementsByClassName("loadingimage")[1].style = "display: none;";
                 document.getElementById("usdequivalent").innerHTML = text2;

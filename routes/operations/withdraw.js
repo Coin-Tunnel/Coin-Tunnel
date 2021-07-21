@@ -264,7 +264,7 @@ sleep(1000).then(thing => {
     if (Number(req.body.amount).toString().toLowerCase() === "nan" || req.body.amount === "") return res.send("The amount must be a number")
     let originalAdr = await fetch(`https://www.coin-tunnel.ml/api/v2/explorer/xrp/address/${user.xrp.address}`);
     originalAdr = await originalAdr.json();
-    if (originalAdr.status === "failed" || Number(originalAdr.data.xrpBalance) < Number(req.body.amount)) return res.send("You do not have enough XRP to fund this transaction!");
+    if (originalAdr.status === "failed" || Number(originalAdr.data.xrpBalance)-20 < Number(req.body.amount)) return res.send("You do not have enough XRP to fund this transaction!");
     // create mongodb document email thingy and send email;
     let expiry = Date.now()+600000;
                 let randomid = await makeid(30);
@@ -299,8 +299,8 @@ sleep(1000).then(thing => {
            from: 'cointunnel.0x@gmail.com', // sender address
            to: userinfo.email, // list of receivers
            subject: 'Coin Tunnel Confirmation', // Subject line
-           html:`<h1 style="text-align: center;">Hello ${userinfo.email}!</h1><p style="text-align: center;">There was a recent attempt to withdraw ${req.body.amount} XRP from your account to deposit tag ${req.body.tag}!&nbsp;<br />If this was you, great! Click the link below. If this wasn't you, your account may be compromised. Quickly withdraw all your money into a wallet, and delete your account. Because we only support oauth2, this might mean that they have access to other apps connected to your Oauth2 account too!&nbsp;</p><p style="text-align: center;"><span style="color: #ff6600;">(Coin-tunnel doesn't store any passwords, we leave it to google, github, or discord)</span></p><p style="text-align: center;"><a href="https://www.coin-tunnel.ml/validate/${randomid}">https://www.coin-tunnel.ml/validate/${randomid}</a></p>`
-         };
+           html: template
+          };
          transporter.sendMail(mailOptions, function (err, info) {
             if(err)
               console.log(err)
