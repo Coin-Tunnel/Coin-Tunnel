@@ -1,0 +1,145 @@
+.fa-chevron-right {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    right: 50px;
+    transform: translate(0, -200%);
+}
+.invisible {
+    display: none;
+}
+#search-coin {
+    float: right;
+    margin-right: 50px;
+    border:none;
+    border-bottom: 1px solid #2c83ca;
+    outline-width: 0;
+}
+#search-coin[type="text"] {
+    font-family: 'goodFont';
+    font-size: 15px;
+}
+#search-coin::-webkit-input-placeholder {
+    font-family: 'goodFont';
+    font-size: 15px;
+}
+
+#search-coin::-ms-input-placeholder {
+    font-family: 'goodFont';
+    font-size: 15px;
+}
+
+#search-coin:-ms-input-placeholder {
+    font-family: 'goodFont';
+    font-size: 15px;
+}
+.coinTitle {
+    margin-left: 10px;
+}
+
+.content-container .coin-row {
+    border-bottom: 1px solid rgb(218, 218, 218);
+}
+
+.coin-details a:hover {
+    color: #2196F3;
+}
+
+.coin-details a {
+    color: #2c83ca;
+    margin: 0 3px;
+}
+
+.content-container .coin-details .monospace-font {
+    color: #878787;
+}
+
+.content-container {
+    margin: 10px 50px;
+    margin-top: 30px;
+    font-family: 'goodFont';
+}
+
+.u-body {
+    line-height: 1.6;
+}
+
+.sub-menu li:hover {
+    background-color: rgba(33, 150, 243, 0.2);
+}
+
+.sub-menu li {
+    transition: all 0.25s;
+    padding-bottom: 10px;
+    z-index: 0;
+}
+
+.sub-menu .on-page {
+    border-bottom: 2px solid #2196F3;
+    color: #2196F3;
+}
+
+@media (max-width: 1000px) {
+    .content-container {
+        padding-left: 10px;
+    }
+    .fa-chevron-right {
+        display: block;
+    }
+    .coin-row {
+        cursor: pointer;
+    }
+    .mobileconstrained {
+        display: none !important;
+    }
+    header .secondary-header .u-sheet-1 {
+        margin-left: 20px;
+        width: 100vw;
+    }
+}
+
+.data-font {
+    font-family: goodFont;
+}
+
+.monospace-font {
+    font-family: Roboto Mono, Courier New, Courier, monospace;
+}
+
+
+
+
+.loading-text {
+    color: rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 20px;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    background-color: rgb(158, 158, 158);
+    background-size: 400% 400%;
+    transition: 0.6s;
+}
+
+.loading-text::after {
+    content: "";
+    display: block;
+    position: absolute;
+    background: rgb(129, 129, 129);
+    width: 50%;
+    height: 100%;
+    top: 0;
+    filter: blur(10px);
+    transform: translateX(-50%) skew(30deg);
+    animation: loadingText 2s infinite;
+}
+
+@keyframes loadingText {
+    0% {
+        transform: translateX(-100%) skew(30deg);
+    }
+
+    100% {
+        transform: translateX(250%) skew(30deg);
+    }
+}

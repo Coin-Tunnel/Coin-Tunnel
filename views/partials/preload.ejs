@@ -74,7 +74,7 @@
     if (path === "/") path = "nocss";
     if (path === "/changeAddress") path = "nocss";
     if (path.indexOf("validate") > -1) path = "nocss";
-    if (path.indexOf("assets") > -1) path = "nocss"
+    if (window.location.pathname === "/assets") path = "/assets-main"
     if (window.location.pathname === "/merchantdashboard") path = "/dashboard-m";
     if (window.location.pathname === "/signup-m") path = "/signup-b";
     if (window.location.pathname === "/signin-m") path = "/signup-b";
