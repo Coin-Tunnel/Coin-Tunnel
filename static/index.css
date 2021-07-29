@@ -36112,7 +36112,8 @@ blockquote {
 
 ul:not(.u-unstyled) {
 	margin-top: 20px;
-	margin-bottom: 20px
+	margin-bottom: 20px;
+	padding-left: 0;
 }
 
 ol {

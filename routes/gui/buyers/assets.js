@@ -109,7 +109,7 @@ everything.xrp.price = xrpPrice;
 
         everything = JSON.stringify(everything);
 
-        res.render("dashboard.ejs", {user: req.session.buser || null, db: mongo || null, publicx: publicx, privatex: privatex, type: type, everything: everything})
+        res.render("assets/main.ejs", {user: req.session.buser || null, db: mongo || null, publicx: publicx, privatex: privatex, type: type, everything: everything})
       })
 })
 

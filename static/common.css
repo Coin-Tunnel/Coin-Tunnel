@@ -516,3 +516,18 @@ border-radius: 5px;
 .copiedtext {
 margin-bottom: 0rem !important
 }
+@media (min-width: 1000px) {
+  header .u-sheet-1 {
+      margin-left: 40px;
+      width: 100vw;
+  }
+
+  header nav .u-nav-container {
+      position: absolute;
+      right: 80px;
+  }
+}
+@font-face {
+  font-family: goodFont;
+  src: url("/data/fonts/URWDIN-Medium.woff2")
+}

@@ -10,10 +10,28 @@ function sleep(ms){
 sleep(1000).then(thing => {
     const Web3 = require("web3");
     const ethNetwork = `https://mainnet.infura.io/v3/${secrets.infura}`;
-    const web3 = new Web3(new Web3.providers.HttpProvider(ethNetwork));
-    const eventProvider = new Web3.providers.WebsocketProvider(`wss://mainnet.infura.io/ws/v3/${secrets.infura}`)
+    const web3 = new Web3(new Web3.providers.HttpProvider(ethNetwork), {
+        reconnect: {
+          auto: true,
+          delay: 5000, // ms
+          maxAttempts: 5,
+          onTimeout: false,
+        },
+      });
+    const eventProvider = new Web3.providers.WebsocketProvider(`wss://mainnet.infura.io/ws/v3/${secrets.infura}`, {
+        reconnect: {
+          auto: true,
+          delay: 5000, // ms
+          maxAttempts: 5,
+          onTimeout: false,
+        },
+      })
     web3.setProvider(eventProvider)
-
+    const checkActive = () => {
+        if (!web3.currentProvider.connected) {
+          web3.setProvider(newProvider())
+        }
+      }
     router.get('/auto/:hash', async (req, res) => {
         if (!req.params.hash) return res.status(400).send({status: "failed", reason: "No ethereum hash included in path!"});
         var type;
@@ -108,7 +126,16 @@ sleep(1000).then(thing => {
         }
         res.send({status: "ok", data: result})
     })
+
+
+    async function restartWeb3(){
+        while(true){
+            await sleep(2000);
+            checkActive();
+        }
+    }
 })
+
 
 
 module.exports = function(var1){
