@@ -1,5 +1,5 @@
 article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}
-body{margin:0;color:rgba(0,0,0,.85);font-size:14px;font-family:din,-apple-system,BlinkMacSystemFont,Microsoft YaHei,å¾®è½¯é›…é»‘,Segoe UI,PingFang SC,Hiragino Sans GB,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;font-variant:tabular-nums;-webkit-font-feature-settings:"tnum";font-feature-settings:"tnum";font-style:normal;font-weight:400;text-rendering:optimizeLegibility}
+body{overflow: visible !important; margin:0;color:rgba(0,0,0,.85);font-size:14px;font-family:din,-apple-system,BlinkMacSystemFont,Microsoft YaHei,å¾®è½¯é›…é»‘,Segoe UI,PingFang SC,Hiragino Sans GB,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;font-variant:tabular-nums;-webkit-font-feature-settings:"tnum";font-feature-settings:"tnum";font-style:normal;font-weight:400;text-rendering:optimizeLegibility}
 [tabindex="-1"]:focus{outline:0!important}
 hr{-webkit-box-sizing:content-box;box-sizing:content-box;height:0;overflow:visible}
 h1,h2,h3,h4,h5,h6{margin-top:0;font-weight:500}
@@ -517,6 +517,11 @@ border-radius: 5px;
 margin-bottom: 0rem !important
 }
 @media (min-width: 1000px) {
+  .switch {
+    top: 0;
+    margin-top: 8px;
+    position: absolute;
+  }
   header .u-sheet-1 {
       margin-left: 40px;
       width: 100vw;
@@ -524,10 +529,15 @@ margin-bottom: 0rem !important
 
   header nav .u-nav-container {
       position: absolute;
-      right: 80px;
+      right: 120px;
   }
 }
 @font-face {
   font-family: goodFont;
   src: url("/data/fonts/URWDIN-Medium.woff2")
+}
+.centerX {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
