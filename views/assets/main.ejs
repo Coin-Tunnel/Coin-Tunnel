@@ -269,6 +269,12 @@
 
 </html>
 <script>
+    var observer = new IntersectionObserver(function(entries) {
+	if(entries[0].isIntersecting === true)
+        document.querySelectorAll(".secondary-header")[0].style = "max-height: 50px; color: #b7b7b7; overflow: hidden;";
+    else document.querySelectorAll(".secondary-header")[0].style = "max-height: 50px; color: #b7b7b7; overflow: hidden; background: #1D2946; position: fixed; z-index: 1; top: 0; padding-top: 10px;"
+    }, { threshold: [0] });
+    observer.observe(document.querySelector(".u-logo-image"));
     " <%allCoins = JSON.stringify(allCoins);%> "
     var allCoins = '<%- allCoins %>';
     allCoins = JSON.parse(allCoins);
