@@ -265,11 +265,15 @@
     }, { threshold: [0] });
 
     observer.observe(document.querySelector(".u-logo-image"));
-    async function showAlertModal(text){
+
+    async function showAlertModal(text, params){
         let modal = document.querySelector(".alert-modal");
+        if ((params) && params.backgroundColor) modal.style.backgroundColor = params.backgroundColor;
+        var waitTime = 1000;
+        if (params && params.waitTime) waitTime = params.waitTime; 
         modal.innerHTML = text;
         modal.style.transform = "translateY(400px)";
-        await sleep(1000);
+        await sleep(waitTime);
         modal.style.transition = "all cubic-bezier(1, 0.03, 1, 1) 1s";
         modal.style.opacity = "0.1";
         modal.style.transform = "translateY(100vh)";
@@ -354,13 +358,11 @@
                 console.log(xhr.response);
 
                 if (xhr.response.includes("good")) {
-                    alert("An email has been sent to the connected email address (check your spam folder)");
-                    window.location.reload();
+                    showAlertModal("<i class='fas fa-check'></i> An email has been sent to the connected email address (check your spam folder)!", {waitTime: 3000}); 
                 } else {
-                    alert(xhr.response);
+                    showAlertModal("<i class='fas fa-exclamation-circle'></i> "+xhr.response, {waitTime: 3000, backgroundColor: "red"}); 
                 }
-            }; //document.getElementById("custId").value = googleUser.getAuthResponse().id_token;
-            //var wait=setTimeout("document.hidden.submit();",2000);
+            }; 
 
 
             xhr.send(JSON.stringify({
@@ -428,12 +430,12 @@
         margin-left: 50%;
         margin-right: 50%;
         background-color: #96cc96;
-        width: 100px;
+        width: max-content;
+        max-width: 200px;
         text-align: center;
         color: white;
-        height: 40px;
-        padding-top: 10px;
         border-radius: 2px;
+        padding: 10px 5px;
     }
     body{
         background-color: #F3F5F9;
