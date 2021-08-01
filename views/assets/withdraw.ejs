@@ -10,7 +10,7 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <title>Deposit | Coin Tunnel</title>
+    <title>Withdraw | Coin Tunnel</title>
     <link rel="stylesheet" href="/index.css" media="screen">
     <script class="u-script" type="text/javascript" src="/javascript/main.js" defer=""></script>
     <link id="u-theme-google-font" rel="stylesheet"
@@ -39,6 +39,7 @@
     <link rel="stylesheet" type="text/css" class="ui" href="/assets-main.css">
     <link rel="stylesheet" type="text/css" class="ui" href="/javascript/semantic/semantic.min.css">
     <script src="/javascript/semantic/semantic.min.js"></script>
+    <script src="/javascript/withdraw.js"></script>
 </head>
 
 <body>
@@ -142,11 +143,11 @@
                                 href="/assets" style="padding: 10px 20px; color: inherit !important;">Asset Overview</a>
                         </li>
                         <li class="u-nav-item"><a
-                                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base on-page"
+                                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
                                 data-link="/assets/deposit" style="padding: 10px 20px; color: inherit !important;">Deposit</a>
                         </li>
                         <li class="u-nav-item"><a
-                                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base on-page"
                                 data-link="/assets/withdraw"
                                 style="padding: 10px 20px; color: inherit !important;">Withdraw</a>
                         </li>
@@ -155,35 +156,35 @@
             </div>
         </header>
     </div>
-    <div class="content-container" style="width: 50vw; background-color: white; height: 60vh; display: block; margin-left: auto; margin-right: auto ;border-radius: 10px;  box-shadow: 0px 0px 20px 2px rgb(0 0 0 / 20%)">
+    <div class="content-container" style="width: 50vw; background-color: white; height: 65vh; display: block; margin-left: auto; margin-right: auto ;border-radius: 10px;  box-shadow: 0px 0px 20px 2px rgb(0 0 0 / 20%)">
        <div style="display: block; text-align: center;">
-        <span style="text-align: center; display: inline; font-size: 30px;">Deposit</span>
+        <a style="text-align: center; display: inline; font-size: 30px; color: #2c83ca;" href="/assets/deposit/<%-coin%>">Deposit</a>
         <span style="text-align: center; display: inline; font-size: 25px;">/</span>
-        <a style="text-align: center; display: inline; font-size: 30px; color: #2c83ca;" href="/assets/withdraw/<%-coin%>">Withdraw</a>
+        <span style="text-align: center; display: inline; font-size: 30px;">Withdraw</span>
        </div>
 
         <div class="not-invisible deposit-field" style="background-color: #F3F5F9;">
             <div style="border-bottom: 1px solid grey; padding-bottom: 10px; padding-top: 10px;">
-                <span class="coin-name"><%-coin%> | <span style="color: grey; font-size: 0.7em;"><%-allCoins[coin]%></span> <span style="float: right; font-size: 0.8em; color: grey;">Deposit Info</span></span>
+                <span class="coin-name"><%-coin%> | <span style="color: grey; font-size: 0.7em;"><%-allCoins[coin]%> |</span> 
+                <span style="color: grey; font-size: 0.7em;" id="coin-amount"><div class="loading-text" style="width: fit-content; height: 10px;">Querying...</div></span><span style="color: grey; font-size: 0.7em;"> <%-coin%></span><span style="float: right; font-size: 0.8em; color: grey;">Withdraw</span></span>
             </div>
             <div style="padding-top: 8px; padding-left: 3px; margin-bottom: 20px;">
-                <span style="margin-left: 10px; color: grey;"><%-allCoins[coin]%> deposit address:</span>
-                <span style="float: right;"><i class="fas fa-qrcode" style="margin-right: 10px;"><div id="qrcode" style="position: absolute; transform: translate(-35px, -95px); width: 75px; height: 75px; background-color: white;"></div></i><i class="fas fa-copy" onclick="copy(document.getElementById('crypto-deposit-address'))" style="cursor: pointer;"></i></span>
+                <span style="margin-left: 10px; color: grey;">Withdrawal wallet address:</span>
+                <span style="float: right; margin-right: 50px; color: grey; display: none;" id="xrp-tag-indicator">XRP Tag:</span>
                 <br>
-                <% if (coin !== "none" && allData[coin.toLowerCase()]) { %>
-                    <span style="position: relative; top: 5px;" id="crypto-deposit-address"><%-allData[coin.toLowerCase()].address%></span>
-                <% } %>
-            </div>
-            <div style="padding-top: 8px; padding-left: 3px; margin-top: 10px; border-top: 1px solid grey;">
-                <span style="margin-left: 10px; color: grey;"><%-allCoins[coin]%> secret key:</span>
-                <span class="secret-copy" style="float: right; cursor: not-allowed;"><i class="fas fa-copy" style="pointer-events: none;;" onclick="copy(document.getElementById('crypto-secret-key'))" style="cursor: pointer;"></i></span>
+                <input type="text" id="withdraw-input" style="display: inline-block;"><input type="number" id="xrp-tag" style="margin-left: 10px; display: none; width: 30%;">
+                <span for="withdraw-input" style="color: red; margin-left: 10px; opacity: 0; transition: all 1s ease;">This field is required!</span>
                 <br>
-                <% if (coin !== "none" && allData[coin.toLowerCase()]) { %>
-                    <span style="position: relative; top: 5px;" class="highlight-hidden" id="crypto-secret-key" onclick="getSecret();">----------------------Reveal---------------------</span>
-                <% } %>
+                <br>
+                <span style="margin-left: 10px; color: grey; margin-top: 100px;">Withdrawal amount:</span>
+                <span style="float: right;">Max: <a style="color: #2c83ca" id="max-withdrawal" onclick="document.getElementById('amount-input').value = this.innerText"><div class="loading-text" style="width: fit-content; height: 10px;">.......</div></a></span>
+                <br>
+                <input type="number" id="amount-input">
+                <span for="amount-input" style="color: red; margin-left: 10px; opacity: 0; transition: all 1s ease;">This field is required!</span>
             </div>
+            <button onclick="withdraw();" class="withdraw-btn" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span>Confirm</span></button>
         </div>
-        <div class="dropdown" style="width: 500px; top: -150px;">
+        <div class="dropdown" style="width: 500px; top: -275px;">
             <div class="ui fluid search selection dropdown">
                 <input type="hidden" name="coin-selector">
                 <i class="dropdown icon"></i>
@@ -191,7 +192,7 @@
                 <div class="default text" style="display: block;"><i class="fas fa-search"></i> <span style="float: right;">Select</span></div>
                 <div class="menu" tabindex="-1">
                     <% Object.entries(allCoins).forEach(([key, value]) => { %>
-                        <div class="item" id="<%-key%>-dropdown-item" onclick="window.location.href='/assets/deposit/<%-key%>'"><object data="/images/assetImages/<%-key%>.svg" type="image/png" style="width: 30px; height: 30px; float: left; display: inline-block; top: -6px; position: relative; margin-right: 10px;">
+                        <div class="item" id="<%-key%>-dropdown-item" onclick="window.location.href='/assets/withdraw/<%-key%>'"><object data="/images/assetImages/<%-key%>.svg" type="image/png" style="width: 30px; height: 30px; float: left; display: inline-block; top: -6px; position: relative; margin-right: 10px;">
                             <img src="/images/assetImages/<%-key%>.png" style="width: 40px; height: 40px; float: left; margin-right: 4px;">
                           </object><span style="font-weight: 600;"><%-key%></span> <span style="font-family: 'monospace-font'; color: #878787; float: right;"><%-value%></span></div>
                     <% }) %>
@@ -201,18 +202,15 @@
         </div>
         <% if (coin !== "none") { %>
             <div class="extra-info" style="width: 500px; margin-left: auto; margin-right: auto; display: block; padding-left: 60px;">
-                <i class="far fa-circle"></i> <span style="color: grey; font-size: 1em;">This deposit address ONLY excepts <%-coin-%> and none other! Any attempts at depositing other crypto's will result in failure! </span>
+                <span>Pay someone on the Coin Tunnel plaform: <span id="tunnelId" style="background-color: black; cursor: pointer;" onclick="copy(this)"><%-db.tunnelId%></span>
                 <br>
-                <i class="far fa-circle"></i> <span style="color: grey; font-size: 1em;">All deposits will be confirmed according the the crypto's protocol. All deposits are fully automated.</span>
+                <i class="far fa-circle"></i> <span style="color: grey; font-size: 1em;">Withdrawing <%-coin-%> will take approximately 30 minutes, but may be significantly longer due to network congestion</span>
+                <br>
+                <i class="far fa-circle"></i> <span style="color: grey; font-size: 1em;">All withdrawals will be confirmed according the the crypto's protocol. All withdrawals are fully automated.</span>
                 <br>
                 <i class="far fa-circle"></i> <span style="color: grey; font-size: 1em;">All transactions on the <%-coin%> chain are IRREVERSIBLE!</span>
                 <br>
                 <i class="far fa-circle"></i> <span style="color: #2c83ca; text-decoration: underline; cursor: pointer; font-size: 1.25em;" onclick="goToHomePage();"><%-allCoins[coin]%> homepage</span>
-                <br>
-                <i class="far fa-circle"></i> <span style="color: #EB3941; text-decoration: underline; cursor: pointer; font-size: 1.25em;" id="exportbtn" onclick="exportwallet()">Export all wallets</span>
-                <br>
-                <i class="far fa-circle"></i> <span style="color: #EB3941; text-decoration: underline; cursor: pointer; font-size: 1.25em;" onclick="change();">Change wallet</span>
-                <br>
             </div>
         <% } %>
     </div>
@@ -223,21 +221,14 @@
 
 </html>
 <script src="/javascript/qrcode.min.js"></script>
-<script src="/javascript/deposit.js"></script>
-
 <script>
-    "<%if (allData[coin.toLowerCase()]){%>"
-    new QRCode(document.getElementById("qrcode"), "<%-allData[coin.toLowerCase()].address%>");
-    "<%}%>"
-    async function copy(elem) {
-        let text = elem.innerText;
-        await navigator.clipboard.writeText(text);
-        showAlertModal("<i class='fas fa-check'></i> copied!"); //change this!!!
-    }
     $('.dropdown').dropdown();
     "<%allCoins = JSON.stringify(allCoins);%> "
     var allCoins = '<%- allCoins %>';
     allCoins = JSON.parse(allCoins);
+    var allData = '<%- everything %>';
+    allData = JSON.parse(allData);
+    let data = allData;
     let coin = '<%-coin%>';
     if (coin !== "none"){
         let html = document.getElementById(coin+"-dropdown-item").innerHTML;
@@ -254,6 +245,16 @@
             }
         })
     })
+    var minWithdrawals = {
+        ETH: 0.00037,
+        LTC: 0.0069,
+        BTC: 0.00012,
+        XRP: 21,
+        DOGE: 10,
+        ETC: 0.1
+    }
+    document.getElementById("amount-input").placeholder = "Min withdraw: "+minWithdrawals[coin]+" "+coin
+
     document.addEventListener("keydown", function(event){
         if (event.key === "Enter" && currentCoin !== "none"){
             window.location.href = "/assets/deposit/"+currentCoin;
@@ -269,7 +270,49 @@
     }, { threshold: [0] });
 
     observer.observe(document.querySelector(".u-logo-image"));
+    async function copy(elem) {
+        let text = elem.innerText;
+        await navigator.clipboard.writeText(text);
+        showAlertModal("<i class='fas fa-check'></i> copied!"); //change this!!!
+    }
+    function withdraw() {
+        var currentcoin = coin.toLowerCase();
+        var address = document.getElementById("withdraw-input").value;
+        var tag;
+        if (currentcoin === "xrp") tag = document.getElementById("xrp-tag").value;
+        var amount = Number(document.getElementById("amount-input").value);
+        if (address === "") return document.querySelector("[for='withdraw-input']").style.opacity = "1";
+        if (document.getElementById("amount-input").value === "") return document.querySelector("[for='amount-input']").style.opacity = "1";
+            // do some extra validation
+        var maxAmount = Number(document.getElementById("max-withdrawal").innerText);
+        if (maxAmount < amount) return showAlertModal("You don't have enough funds for this transaction", {backgroundColor: 'red', waitTime: 2000})
 
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/withdraw/' + currentcoin);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function () {
+            console.log(xhr.response);
+
+            if (xhr.response.includes("good")) {
+                showAlertModal("Check your email for a verification code! Further instructions are located there.", {waitTime: 3000})
+            } else {
+                return showAlertModal(xhr.response, {backgroundColor: 'red', waitTime: 2000})
+            }
+            let inputs = document.querySelectorAll("input")
+            for (let i = 0; i<inputs.length; i++){
+                inputs[i].value = ""
+            }
+        };
+
+
+        xhr.send(JSON.stringify({
+            address: address,
+            amount: amount,
+            tag: tag
+        }));
+    }
     async function showAlertModal(text, params){
         let modal = document.querySelector(".alert-modal");
         if ((params) && params.backgroundColor) modal.style.backgroundColor = params.backgroundColor;
@@ -287,13 +330,6 @@
         elClone.style = "";
         el.parentNode.replaceChild(elClone, el);
     }
-    document.querySelector(".fa-qrcode").addEventListener("mouseenter", function(){
-        document.getElementById("qrcode").style.pointerEvents = "all"
-    });
-    document.querySelector(".fa-qrcode").addEventListener("mouseleave", async function(){
-        await sleep(100)
-        document.getElementById("qrcode").style.pointerEvents = "none"
-    })
     document.addEventListener("keyup", function(event){
         if (event.key === "/"){
             document.querySelectorAll(".search")[1].select()
@@ -304,84 +340,9 @@
             document.querySelectorAll(".search")[1].select()
         }
     })
-    function getSecret(){
-        document.getElementsByClassName("secret-copy")[0].style.cursor = "pointer";
-        document.getElementsByClassName("fa-copy")[1].style.pointerEvents = "all";
-        document.getElementById("topleftLoading").style.display = "block";
-        let element = document.getElementById("crypto-secret-key");
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/operations/reveal-' + coin.toLowerCase());
-        xhr.setRequestHeader('Content-Type', 'application/json');
-
-        xhr.onload = async function () {
-            await sleep(1000)
-            document.getElementById("crypto-secret-key").innerHTML = xhr.response;
-            document.getElementById("topleftLoading").style.display = "none";
-            document.getElementById("crypto-secret-key").style.cursor = "auto";
-            document.getElementById("crypto-secret-key").style.pointerEvents = "none";
-        }; 
-        xhr.send();
-    }
-    function exportwallet() {
-        console.log("EXPORTING WALLETS!");
-        document.getElementById("topleftLoading").style.display = "block";
-        document.getElementById("exportbtn").onclick = emptyFunction;
-        document.getElementById("exportbtn").innerHTML = 'Getting your files ready...';
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/operations/exportwallets");
-
-        xhr.onload = function () {
-            document.getElementById("topleftLoading").style.display = "none";
-            document.getElementById("exportbtn").onclick = deleteServer;
-            document.getElementById("exportbtn").innerText = "Click to download";
-            document.variables = {};
-            document.variables.response = xhr.response;
-        }
-        xhr.send();
-    }
-    function deleteServer() {
-        window.open(document.variables.response, '_blank');
-        setTimeout(continuefunc, 5000);
-        function continuefunc() {
-            var xhr1 = new XMLHttpRequest();
-            console.log(window.location.hostname.toString().length + 5 + window.location.protocol.length + window.location.port.length);
-            let id = document.variables.response.toString().slice(window.location.hostname.toString().length + 5 + window.location.protocol.length + window.location.port.length + 3, document.variables.response.length - 10);
-            console.log(id)
-            xhr1.open("POST", "/operations/deleteCDN/" + id);
-            xhr1.send();
-        }
-    }
     function emptyFunction(){
         return null;
     }
-    function change() {
-        var currentcoin = coin.toLowerCase();
-        if (currentcoin === "btc") return window.location.href = "/welcome"
-        if (confirm('Are you sure you want to submit a request to change your wallet to a ' + currentcoin + ' cloud wallet?')) {
-            // Save it!
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/operations/change-' + currentcoin);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-
-            xhr.onload = function () {
-                console.log(xhr.response);
-
-                if (xhr.response.includes("good")) {
-                    showAlertModal("<i class='fas fa-check'></i> An email has been sent to the connected email address (check your spam folder)!", {waitTime: 3000}); 
-                } else {
-                    showAlertModal("<i class='fas fa-exclamation-circle'></i> "+xhr.response, {waitTime: 3000, backgroundColor: "red"}); 
-                }
-            }; 
-
-
-            xhr.send(JSON.stringify({
-                hello: "world"
-            }));
-        } else {
-            // Do nothing!
-            return window.location.href = "#";
-        }
-    } 
     function goToHomePage(){
         var websites = {
             BTC: "https://bitcoin.org/en/",
@@ -393,8 +354,174 @@
         }
         window.open(websites[coin])
     }
+    var withdrawInput = false;
+    var amountInput = false;
+    document.getElementById("withdraw-input").addEventListener("click", function(){
+        withdrawInput = true;
+    })
+    document.getElementById("amount-input").addEventListener("click", function(){
+        amountInput = true;
+    })
+    document.addEventListener('click', function(event) {
+        if (withdrawInput === true){
+            var isClickInsideElement = document.getElementById("withdraw-input").contains(event.target);
+            if (!isClickInsideElement) {
+                if (document.getElementById("withdraw-input").value === ""){
+                    document.getElementById("withdraw-input").style.border = "solid 1px red";
+                    document.querySelector("[for='withdraw-input']").style.opacity = "100%"
+                }else{
+                    document.querySelector("[for='withdraw-input']").style.opacity = "0";
+                    document.getElementById("withdraw-input").style.border = "solid 1px #24AE8F";
+                }
+            }
+        }
+        if (amountInput === true){
+            var isClickInsideElement = document.getElementById("amount-input").contains(event.target);
+            if (!isClickInsideElement) {
+                if (document.getElementById("amount-input").value === ""){
+                    document.getElementById("amount-input").style.border = "solid 1px red";
+                    document.querySelector("[for='amount-input']").style.opacity = "100%"
+                }else{
+                    document.querySelector("[for='amount-input']").style.opacity = "0";
+                    document.getElementById("amount-input").style.border = "solid 1px #24AE8F";
+                }
+            }
+        }
+    });
+    document.addEventListener("keydown", function(event){
+        if (withdrawInput === true){
+            if (document.getElementById("withdraw-input").value === ""){
+                document.getElementById("withdraw-input").style.border = "solid 1px red";
+                document.querySelector("[for='withdraw-input']").style.opacity = "100%"
+            }else{
+                document.querySelector("[for='withdraw-input']").style.opacity = "0";
+                document.getElementById("withdraw-input").style.border = "solid 1px #24AE8F";
+            }
+        }
+        if (amountInput === true){
+            if (document.getElementById("amount-input").value === ""){
+                document.getElementById("amount-input").style.border = "solid 1px red";
+                document.querySelector("[for='amount-input']").style.opacity = "100%"
+            }else{
+                document.querySelector("[for='amount-input']").style.opacity = "0";
+                document.getElementById("amount-input").style.border = "solid 1px #24AE8F";
+            }
+        }
+    })
+    var balances = {
+        btc: 0,
+        eth: 0,
+        ltc: 0,
+        xrp: 0
+    }
+    getMax();
+    function getMax(){
+        var functions = {
+            BTC: getBtcData,
+            LTC: getLtcData,
+            ETH: getEthData,
+            XRP: getXrpData,
+            DOGE: getDogeData,
+            ETC: getEtcData
+        }
+        let runFunction = functions[coin];
+        runFunction();
+    }
+    function dataCallback(){
+        let balance = balances[coin.toLowerCase()];
+        console.log(balance);
+        document.getElementById("coin-amount").innerText = balance;
+        let max = Number(balance)-minWithdrawals[coin];
+        if (max < 0) max = 0;
+        document.getElementById("max-withdrawal").innerText = max
+    }
+    async function getBtcData() {
+        let results = await fetch("https://api.blockcypher.com/v1/btc/main/addrs/" + data["btc"].address + "/balance");
+        results = await results.json();
+        if (results.error) balances.btc = 0;
+        else balances.btc = results["balance"] * 0.00000001;
+        return dataCallback();
+    }
+    async function getLtcData() {
+        let results = await fetch("https://api.blockcypher.com/v1/ltc/main/addrs/" + data["ltc"].address + "/balance");
+        results = await results.json();
+        if (results.error) balances.ltc = 0;
+        else balances.ltc = results["balance"] * 0.00000001;
+        return dataCallback();
+    }
+    async function getEthData() {
+        let results = await fetch("/api/v2/explorer/eth/auto/" + data["eth"].address);
+        results = await results.json();
+        for (let i = 0; i<10; i++){
+            if (results.status === "ok") break;
+            results = await fetch("/api/v2/explorer/eth/auto/" + data["eth"].address);
+            results = await results.json();
+        }
+        if (results.status === "failed") balances.eth = 0;
+        else balances.eth = results["data"]["wei"] * 0.000000000000000001;
+        return dataCallback();
+    }
+    async function getXrpData() {
+        let results = await fetch("/api/v2/explorer/xrp/address/" + data["xrp"].address);
+        results = await results.json();
+        if (results.status === "failed") balances.xrp = 0;
+        else balances.xrp = Number(results["data"]["xrpBalance"]);
+        return dataCallback();
+    }
+    async function getDogeData() {
+
+    }
+    async function getEtcData() {
+
+    }
 </script>
 <style>
+    <% if (coin === "XRP"){ %>
+        #withdraw-input {
+            width: 60%;
+        }
+        #xrp-tag {
+            display: inline-block !important;
+        }
+        #xrp-tag-indicator {
+            display: block !important;
+        }
+    <% } %>
+
+    .withdraw-btn {
+        width: 100%;
+        color: #fff;
+        background-color: #0F7DFF;
+        border-color: #0e73eb;
+        box-shadow: 0 2px 8px 0 rgb(15 125 255 / 16%);
+        border-radius: 2px;
+        transition: all 0s;
+        background-clip: padding-box;
+        height: 30px;
+        cursor: pointer;
+    }
+    .withdraw-btn:hover {
+        color: #fff;
+        background-color: #1e85ff;
+        border-color: #0e73eb;
+    }
+    .deposit-field {
+        top: 80px !important;
+    }
+
+    input {
+        margin-top: 5px;
+        border: none;
+        display: block;
+        width: 90%;
+        height: 25px;
+        padding-left: 10px;
+        border-radius: 0px;
+        box-shadow: 2px 5px 9px 0px #ccc;
+    }
+    input:focus {
+        outline: 1px solid #0F7DFF;
+    }
     .loadingGiftopLeftactive {
         position: fixed !important;
         top: 15px !important;
@@ -492,7 +619,7 @@
             width: 95vw !important;
         }
         .content-container {
-            height: calc(750px - 15%) !important;
+            height: calc(800px - 15%) !important;
             min-height: 80%;
         }
     }

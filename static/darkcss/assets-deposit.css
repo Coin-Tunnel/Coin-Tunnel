@@ -47,3 +47,7 @@ body{
 .deposit-field {
     background-color: #333838 !important;
 }
+input {
+    background-color: #24292E !important;
+    box-shadow: 2px 5px 9px 0px #484c4c !important;
+}

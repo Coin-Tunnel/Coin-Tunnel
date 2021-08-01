@@ -133,8 +133,9 @@ sleep(1000).then(thing => {
     res.render("assets/deposit.ejs", { user: req.session.buser || null, everything: everything, coin: "none" })
   })
   router.get("/deposit/:coin", guiLimiter, async (req, res) => {
+    if (!req.session.buser) return res.redirect("/signin-b");
+    if (req.params.coin === "none") return res.redirect("/assets/deposit")
     if (!allCoins[req.params.coin]) return res.render("404_error");
-    if (!req.session.buser) return res.redirect("/signin-b")
     let mongo = await checkUser(mongoclient, req.session.buser);
     if (!mongo) { req.session = null; return res.redirect("/signin-b") }
     var publicx;
@@ -234,6 +235,124 @@ sleep(1000).then(thing => {
     everything = JSON.stringify(everything);
 
     res.render("assets/deposit.ejs", { user: req.session.buser || null, db: mongo || null, publicx: publicx, privatex: privatex, type: type, everything: everything, coin: req.params.coin })
+  })
+  router.get("/withdraw", guiLimiter, async (req, res) => {
+    if (!req.session.buser) return res.redirect("/signin-b");
+    let everything = {
+      btc: { address: "", price: "" },
+      eth: { address: "", price: "" },
+      xrp: { address: "", price: "" },
+      ltc: { address: "", price: "" },
+      etc: { address: "", price: "" },
+      doge: { address: "", price: "" }
+    }
+    everything = JSON.stringify(everything);
+
+    res.render("assets/withdraw.ejs", { user: req.session.buser || null, everything: everything, coin: "none" })
+  })
+  router.get("/withdraw/:coin", guiLimiter, async (req, res) => {
+    if (!req.session.buser) return res.redirect("/signin-b");
+    if (req.params.coin === "none") return res.redirect("/assets/withdraw")
+    if (!allCoins[req.params.coin]) return res.render("404_error");
+    let mongo = await checkUser(mongoclient, req.session.buser);
+    if (!mongo) { req.session = null; return res.redirect("/signin-b") }
+    var publicx;
+    var privatex;
+    var type;
+    var wallet = {};
+    wallet.btc = {};
+    let prices = global.livePrices;
+
+    let btcPrice = Number(prices.btc.a)
+    wallet.btc.price = btcPrice;
+    if (mongo.generatedPrivate === "none" && mongo.userPrivate === "none") {
+      publicx = "No wallet! Connect a wallet or create a cloud wallet first!";
+      privatex = "No wallet";
+      type = "No wallet set up!";
+      wallet.amount = 0;
+    } else if (mongo.userPrivate === "none") {
+      publicx = mongo.generatedPublic;
+      privatex = mongo.generatedPrivate;
+      type = "Cloud wallet";
+    } else if (mongo.generatedPrivate === "none") {
+      publicx = mongo.userPublic;
+      privatex = mongo.userPrivate;
+      type = "Connected Wallet";
+    }
+
+    var everything = {};
+    everything.ltc = {};
+    everything.eth = {};
+
+    everything.btc = {
+      type: type,
+      address: publicx,
+      wallet: wallet
+    };
+    everything.btc.price = btcPrice;
+    // start of ltc stuff (garbage)
+    let ltcPrice = Number(prices.ltc.a);
+    everything.ltc.price = ltcPrice;
+    if (!mongo.ltc) await mongoclient.db("cointunnel").collection("userData").updateOne({ name: req.session.buser }, {
+      $set: {
+        ltc: {
+          address: "none",
+          privatex: "none"
+        }
+      }
+    })
+    if (!mongo.ltc || mongo.ltc.address === "none") {
+      everything.ltc.type = "None"
+      everything.ltc.address = "No cloud wallet setup! Create one first.";
+      everything.ltc.amount = 0;
+      everything.ltc.usd = "N/A"
+    } else {
+      everything.ltc.type = "LTC (cloud)"
+      everything.ltc.address = mongo.ltc.address;
+    }
+
+
+    // start ethereum garbage
+    let ethPrice = Number(prices.eth.a);
+    if (!mongo.eth || mongo.eth.address === "none") {
+      everything.eth.type = "No wallet created yet!"
+      everything.eth.usd = "N/A";
+      everything.eth.address = "No cloud wallet setup! Create one first.";
+      everything.eth.amount = 0;
+      if (!mongo.eth) {
+        await mongoclient.db("cointunnel").collection("userData").updateOne({ name: req.session.buser }, {
+          $set: {
+            eth: {
+              address: "none",
+              privatex: "none"
+            }
+          }
+        })
+      }
+    } else {
+      everything.eth.address = mongo.eth.address;
+      everything.eth.type = "ETH (cloud)"
+    }
+    everything.eth.price = ethPrice;
+
+
+    // start of XRP stuff
+    everything.xrp = {};
+    let xrpPrice = Number(prices.xrp.a);
+    if (!mongo.xrp || mongo.xrp.address === "none") {
+      everything.xrp.type = "No wallet created yet!"
+      everything.xrp.usd = "N/A";
+      everything.xrp.address = "No cloud wallet setup! Create one first.";
+      everything.xrp.amount = 0;
+    } else {
+      everything.xrp.address = mongo.xrp.address;
+      everything.xrp.type = "XRP (cloud)";
+    }
+    everything.xrp.price = xrpPrice;
+
+    everything = JSON.stringify(everything);
+
+    res.render("assets/withdraw.ejs", { user: req.session.buser || null, db: mongo || null, publicx: publicx, privatex: privatex, type: type, everything: everything, coin: req.params.coin })
   })
 })
 

@@ -4,3 +4,4 @@ window.semantic = {
 };
 
 $(document).ready(semantic.ready);
+
