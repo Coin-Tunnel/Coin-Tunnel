@@ -19,3 +19,7 @@ body{
         width: 95vw !important;
     }
 }
+#crypto-secret-key {
+    background-color: white !important;
+    color: black !important;
+}

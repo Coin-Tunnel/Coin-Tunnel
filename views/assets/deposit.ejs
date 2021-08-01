@@ -260,8 +260,11 @@
     })
     var observer = new IntersectionObserver(function(entries) {
 	if(entries[0].isIntersecting === true)
-        document.querySelectorAll(".secondary-header")[0].style = "max-height: 50px; color: #b7b7b7; overflow: hidden;";
-    else document.querySelectorAll(".secondary-header")[0].style = "max-height: 50px; color: #b7b7b7; overflow: hidden; background: #1D2946; position: fixed; z-index: 1; top: 0; padding-top: 10px;"
+        {document.querySelectorAll(".secondary-header")[0].style = "max-height: 50px; color: #b7b7b7; overflow: hidden;";
+    document.getElementById("topleftLoading").classList.remove("loadingGiftopLeftactive")}
+    else {
+        document.querySelectorAll(".secondary-header")[0].style = "max-height: 50px; color: #b7b7b7; overflow: hidden; background: #1D2946; position: fixed; z-index: 1; top: 0; padding-top: 10px;";
+        document.getElementById("topleftLoading").classList.add("loadingGiftopLeftactive")}
     }, { threshold: [0] });
 
     observer.observe(document.querySelector(".u-logo-image"));
@@ -303,26 +306,31 @@
     function getSecret(){
         document.getElementsByClassName("secret-copy")[0].style.cursor = "pointer";
         document.getElementsByClassName("fa-copy")[1].style.pointerEvents = "all";
+        document.getElementById("topleftLoading").style.display = "block";
         let element = document.getElementById("crypto-secret-key");
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/operations/reveal-' + coin.toLowerCase());
         xhr.setRequestHeader('Content-Type', 'application/json');
 
-        xhr.onload = function () {
+        xhr.onload = async function () {
+            await sleep(1000)
             document.getElementById("crypto-secret-key").innerHTML = xhr.response;
+            document.getElementById("topleftLoading").style.display = "none";
             document.getElementById("crypto-secret-key").style.cursor = "auto";
             document.getElementById("crypto-secret-key").style.pointerEvents = "none";
         }; 
         xhr.send();
     }
     function exportwallet() {
-        console.log("EXPORTING WALLETS!")
+        console.log("EXPORTING WALLETS!");
+        document.getElementById("topleftLoading").style.display = "block";
         document.getElementById("exportbtn").onclick = emptyFunction;
-        document.getElementById("exportbtn").innerHTML = 'Getting your files ready...<img  src="/images/loading.gif" width="30px" id="loadinggif">';
+        document.getElementById("exportbtn").innerHTML = 'Getting your files ready...';
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "/operations/exportwallets");
 
         xhr.onload = function () {
+            document.getElementById("topleftLoading").style.display = "none";
             document.getElementById("exportbtn").onclick = deleteServer;
             document.getElementById("exportbtn").innerText = "Click to download";
             document.variables = {};
@@ -386,6 +394,11 @@
     }
 </script>
 <style>
+    .loadingGiftopLeftactive {
+        position: fixed !important;
+        top: 15px !important;
+        z-index: 2;
+    }
     .fa-circle {
         font-size: 8px;
         top: -1px;
