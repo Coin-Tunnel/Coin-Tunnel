@@ -1,0 +1,53 @@
+body{
+    background-color: #333838 !important;
+    color: #D3D3D3 !important;
+}
+.content-container {
+    padding-top: 20px;
+    background-color: #24292E !important;
+}
+.dropdown {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 25px;
+    background-color: #333838 !important;
+    border-color: #14609e !important;
+    border-top-color: #14609e !important;
+    border-right-color: #14609e !important;
+    border-bottom-color: #14609e !important;
+    border-left-color: #14609e !important;
+}
+.dropdown .text {
+    color: white !important;
+}
+.search {
+    color: #D3D3D3;
+}
+.menu.transition {
+    background-color: #1D2946 !important;
+    border: #14609e solid 1px !important;
+}
+.menu.transition .item {
+    color: whitesmoke !important;
+    border: none !important;
+}
+@media (max-width: 1000px){
+    .dropdown .selection {
+        width: 90vw !important;
+        margin-left: 0;
+    }
+    .content-container {
+        width: 95vw !important;
+    }
+}
+.dropdown.icon {
+    color: white !important;
+}
+.deposit-field {
+    background-color: #333838 !important;
+}
+input {
+    background-color: #24292E !important;
+    box-shadow: 2px 5px 9px 0px #484c4c !important;
+}

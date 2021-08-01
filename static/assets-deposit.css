@@ -1,0 +1,28 @@
+body{
+    background-color: #F3F5F9;
+}
+.content-container {
+    padding-top: 20px;
+}
+.dropdown {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 25px;
+}
+@media (max-width: 1000px){
+    .dropdown .selection {
+        width: 90vw !important;
+        margin-left: 0;
+    }
+    .content-container {
+        width: 95vw !important;
+    }
+}
+#crypto-secret-key {
+    background-color: white !important;
+    color: black !important;
+}
+#tunnelId {
+    background-color: #c9cacc !important;
+}

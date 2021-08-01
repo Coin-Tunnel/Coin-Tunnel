@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<link data-react-helmet="true" rel="icon" href="/images/smallLogo.png">
+<html style="font-size: 16px;">
+
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <!--<link rel="stylesheet" href="/assets-main.css">-->
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Assets | Coin Tunnel</title>
+    <link rel="stylesheet" href="/index.css" media="screen">
+    <script class="u-script" type="text/javascript" src="/javascript/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/javascript/main.js" defer=""></script>
+    <link id="u-theme-google-font" rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700|Archivo+Black:400">
+
+    <%- include('../partials/preload.ejs') %>
+
+
+        <link rel="stylesheet" href="/common.css">
+        <link rel="stylesheet" href="/style.css">
+        <script class="u-script" type="text/javascript" src="/javascript/websocket.js" defer=""></script>
+
+        <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "Site1",
+		"url": "index.html",
+		"logo": "images/unknown-removebg-preview.png"
+}</script>
+        <meta property="og:title" content="Buyer Dashboard">
+        <meta property="og:type" content="website">
+        <meta name="theme-color" content="#478ac9">
+        <link rel="canonical" href="index.html">
+        <meta property="og:url" content="index.html">
+</head>
+
+<body>
+    <div class="top-parts" style="background-color: #1D2946;">
+        <header class="u-clearfix u-header u-header" id="sec-a555" style="color: whitesmoke; font-weight: 525;">
+            <div class="u-clearfix u-sheet u-sheet-1">
+                <a href="/" class="u-image u-logo u-image-1">
+                    <img src="/images/logo.png" class="u-logo-image u-logo-image-1" data-image-width="109">
+                </a>
+                <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+                    <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+                        <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                            href="#">
+                            <svg>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use>
+                            </svg>
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <defs>
+                                    <symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;">
+                                        <rect y="1" width="16" height="2"></rect>
+                                        <rect y="7" width="16" height="2"></rect>
+                                        <rect y="13" width="16" height="2"></rect>
+                                    </symbol>
+                                </defs>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="u-custom-menu u-nav-container">
+                        <ul class="u-nav u-unstyled u-nav-1">
+                            <li class="u-nav-item"><a
+                                    class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                    href="/" style="padding: 10px 20px;">Home</a>
+                            </li>
+                            <li class="u-nav-item"><a
+                                    class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                    href="#" onclick="signout()" style="padding: 10px 20px;">Sign out</a>
+                            </li>
+                            <li class="u-nav-item"><a
+                                    class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                    href="/dashboard-b" style="padding: 10px 20px; color: #478ac9!important;">Buyer Dashboard</a>
+                            </li>
+                            <li class="u-nav-item">
+                                Dark theme
+                            </li>
+                            <label class="switch">
+                                <input type="checkbox" onclick="changeTheme()" id="bigTheme">
+                                <span class="slider round"></span>
+                            </label>
+                        </ul>
+                    </div>
+                    <div class="u-custom-menu u-nav-container-collapse">
+                        <div
+                            class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+                            <div class="u-sidenav-overflow">
+                                <div class="u-menu-close"></div>
+                                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+                                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/"
+                                            style="padding: 10px 20px;">Home</a>
+                                    </li>
+                                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="#"
+                                            onclick="signout()" style="padding: 10px 20px;">Sign out</a>
+                                    </li>
+                                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/dashboard-b"
+                                            style="padding: 10px 20px; color: #478ac9!important;">Buyer Dashboard</a>
+                                    </li>
+                                    <li class="u-nav-item">
+                                        Dark theme
+                                    </li>
+                                    <label class="switch">
+                                        <input type="checkbox" onclick="changeTheme()" id="smallTheme">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <header class="u-clearfix u-header u-header secondary-header"
+            style="max-height: 50px; color: #b7b7b7; overflow: hidden;">
+            <div class="u-clearfix u-sheet u-sheet-1" style="width: 100vw;">
+                <div class="u-custom-menu u-nav-container">
+                    <ul class="u-nav u-unstyled u-nav-1 sub-menu">
+                        <li class="u-nav-item"><a
+                                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base on-page"
+                                href="/assets" style="padding: 10px 20px; color: inherit !important;">Asset Overview</a>
+                        </li>
+                        <li class="u-nav-item"><a
+                                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                data-link="./deposit" style="padding: 10px 20px; color: inherit !important;">Deposit</a>
+                        </li>
+                        <li class="u-nav-item"><a
+                                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                data-link="./withdraw"
+                                style="padding: 10px 20px; color: inherit !important;">Withdraw</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+    </div>
+
+<%
+    var allCoins = {
+        ETH: "Ethereum",
+        ETC: "Ethereum Classic",
+        DOGE: "Dogecoin",
+        BTC: "Bitcoin",
+        XRP: "Ripple",
+        LTC: "Litecoin",
+    }
+%>
+    <div class="content-container" style="display: block; max-width: 1200px; margin-left: auto; margin-right: auto;">
+        <section class="total-assets">
+            <span style="font-size: 2.25em; font-weight: 500;">Total assets</span>
+            <br>
+            <div style="height: 10px;"></div>
+            <span class="data-font" style="margin-left: 10px; font-size: 1.5em;"><span id="btc-total-assets">
+                    <div class="loading-text" style="width: fit-content;">Querying...</div>
+                </span> <span style="font-size: 1em;" class="monospace-font">BTC ≈
+                </span><span><span id="usd-total-assets">
+                        <div class="loading-text" style="width: fit-content;">Querying...</div>
+                    </span><span style="font-size: 1em;" class="monospace-font"> USD</span></span>
+            <input type="text" id="search-coin" placeholder="Search...">
+        </section>
+        <section style="margin-top: 22px;">
+            <div class="coin-details">
+                <div>
+                    <div>
+                        <table class="coin-row-header-border" style="width: 100%; table-layout: fixed; background-color: gainsboro;">
+                            <thead>
+                                <tr class="coin-row coin-row-header" style="background-color: gainsboro;">
+                                    <th
+                                        style="overflow-wrap: break-word; padding: 9px 16px; float: left; margin-right: 3%;">
+                                        Coin</th>
+                                    <th class="mobileconstrained" style="width: 25%; float: left; overflow-wrap: break-word; padding: 9px 16px;">
+                                        Total</th>
+                                    <th class="mobileconstrained" 
+                                        style="width: 25%; float: left; overflow-wrap: break-word; padding: 9px 16px; margin-left: 4%;">
+                                        Incoming</th>
+                                    <th class="mobileconstrained" 
+                                        style="width: 25%; float: left; overflow-wrap: break-word; padding: 9px 16px; margin-left: 1%;">
+                                        Manage</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <div>
+                            <div>
+                                <table style="width: 100%; table-layout: fixed;  border-collapse: collapse;">
+                                    <tbody>
+                                        <% Object.entries(allCoins).forEach(([key, value]) => { %>
+                                            <tr class="coin-row" id="<%-key%>-coin-row">
+                                                <td style="width: 15%; height: 80px;">
+                                                    <div
+                                                        style="max-height: 80px; overflow: hidden; overflow-wrap: break-word;">
+                                                        <div>
+                                                            <div style="display: inline-flex; align-items: center;">                                                                    
+                                                                    <object data="/images/assetImages/<%-key%>.svg" type="image/png" style="width: 40px; height: 40px; float: left; margin-right: 4px;">
+                                                                        <img src="/images/assetImages/<%-key%>.png" style="width: 40px; height: 40px; float: left; margin-right: 4px;">
+                                                                      </object>
+
+                                                                    <span
+                                                                    class="coinTitle"><span
+                                                                        style="font-weight: 500;"><%-key%></span>
+                                                                    <br>
+                                                                    <span class="monospace-font"
+                                                                        style="font-size: 13px; font-weight: normal;"><%-value%></span></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="width: 20%; height: 80px;">
+                                                    <div
+                                                        style="max-height: 80px; overflow: hidden; overflow-wrap: break-word;">
+                                                        <span id="<%-key%>-total-in-coin">
+                                                            <div class="loading-text" style="width: fit-content;">Querying...</div>
+                                                        </span><br><span
+                                                                    ><span>≈
+                                                                        <span id="<%-key%>-total-in-usd">
+                                                                            <div class="loading-text" style="width: fit-content;">Querying...</div>
+                                                                        </span></span><span
+                                                                        style="margin-left: 4px;">USD</span></span></span></span>
+                                                                        <i class="fas fa-chevron-right"></i>
+                                                    </div>
+                                                </td>
+                                                <td class="mobileconstrained" style="width: 20%; height: 80px;">
+                                                    <div
+                                                        style="max-height: 80px; overflow: hidden; overflow-wrap: break-word;">
+                                                        <span id="<%-key%>-incoming-in-coin">
+                                                            <div class="loading-text" style="width: fit-content;">Querying...</div>
+                                                        </span><br><span
+                                                                    ><span>≈
+                                                                        <span id="<%-key%>-incoming-in-usd">
+                                                                            <div class="loading-text" style="width: fit-content;">Querying...</div>
+                                                                        </span></span><span
+                                                                        style="margin-left: 4px;">USD</span></span></span></span>
+                                                    </div>
+                                                </td>
+                                                <td class="mobileconstrained" style="width: 20%; height: 80px;">
+                                                    <div
+                                                        style="max-height: 80px; overflow: hidden; overflow-wrap: break-word;">
+                                                        <div><a href="./deposit/<%-key%>">Deposit</a><a
+                                                                href="./withdraw/<%-key%>">Withdraw</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <%- include('../partials/footer.ejs') %>
+</body>
+
+</html>
+<script>
+    var observer = new IntersectionObserver(function(entries) {
+    if(entries[0].isIntersecting === true)
+        {document.querySelectorAll(".secondary-header")[0].style = "max-height: 50px; color: #b7b7b7; overflow: hidden;";
+    document.getElementById("topleftLoading").classList.remove("loadingGiftopLeftactive")}
+    else {
+        document.querySelectorAll(".secondary-header")[0].style = "max-height: 50px; color: #b7b7b7; overflow: hidden; background: #1D2946; position: fixed; z-index: 1; top: 0; padding-top: 10px;";
+        document.getElementById("topleftLoading").classList.add("loadingGiftopLeftactive")}
+    }, { threshold: [0] });
+    " <%allCoins = JSON.stringify(allCoins);%> "
+    var allCoins = '<%- allCoins %>';
+    allCoins = JSON.parse(allCoins);
+    var allData = '<%- everything %>';
+    var balances = {
+        btc: 0,
+        eth: 0,
+        ltc: 0,
+        xrp: 0
+    }
+    allData = JSON.parse(allData);
+    console.log(allData)
+    var data = allData;
+    var walletCBvar = 0;
+    document.getElementById("topleftLoading").style.display = "block";
+    getBtcData();
+    getLtcData();
+    getEthData();
+    getXrpData();
+    getDogeData();
+    getEtcData();
+
+    let input = document.getElementById("search-coin");
+    input.addEventListener("input", updateList);
+    
+    async function updateList(){
+        await sleep(5)
+        let value = input.value;
+        value = value.toLowerCase();
+        var showCoins = [];
+        Object.entries(allCoins).forEach(
+            ([key, valuex]) => {
+                document.getElementById(key+"-coin-row").classList.add("invisible");
+                key = key.toLowerCase();
+                valuex = valuex.toLowerCase();
+                if (key.includes(value) || valuex.includes(value)){
+                    showCoins.push(key.toUpperCase())
+                }
+            }
+        );
+        showCoins.forEach(element => {
+            document.getElementById(element+"-coin-row").classList.remove("invisible")
+        });
+    }
+
+    async function getBtcData() {
+        let results = await fetch("https://api.blockcypher.com/v1/btc/main/addrs/" + data["btc"].address + "/balance");
+        results = await results.json();
+        if (results.error) balances.btc = 0;
+        else balances.btc = results["balance"] * 0.00000001;
+        walletCallback();
+        document.getElementById("BTC-total-in-coin").innerText = balances.btc;
+        document.getElementById("BTC-incoming-in-coin").innerText = results.unconfirmed_balance * 0.00000001;
+        document.getElementById("BTC-total-in-usd").innerText = balances.btc * allData.btc.price;
+        document.getElementById("BTC-incoming-in-usd").innerText = results.unconfirmed_balance * 0.00000001 * allData.btc.price;
+    }
+    async function getLtcData() {
+        let results = await fetch("https://api.blockcypher.com/v1/ltc/main/addrs/" + data["ltc"].address + "/balance");
+        results = await results.json();
+        if (results.error) balances.ltc = 0;
+        else balances.ltc = results["balance"] * 0.00000001;
+        walletCallback();
+        document.getElementById("LTC-total-in-coin").innerText = balances.ltc;
+        document.getElementById("LTC-incoming-in-coin").innerText = results.unconfirmed_balance * 0.00000001;
+        document.getElementById("LTC-total-in-usd").innerText = balances.ltc * allData.ltc.price;
+        document.getElementById("LTC-incoming-in-usd").innerText = results.unconfirmed_balance * 0.00000001 * allData.btc.price;
+    }
+    async function getEthData() {
+        let results = await fetch("/api/v2/explorer/eth/auto/" + data["eth"].address);
+        results = await results.json();
+        for (let i = 0; i<10; i++){
+            if (results.status === "ok") break;
+            results = await fetch("/api/v2/explorer/eth/auto/" + data["eth"].address);
+            results = await results.json();
+        }
+        if (results.status === "failed") balances.eth = 0;
+        else balances.eth = results["data"]["wei"] * 0.000000000000000001;
+        walletCallback();
+        document.getElementById("ETH-total-in-coin").innerText = balances.eth;
+        document.getElementById("ETH-incoming-in-coin").innerText = "N/A"
+        document.getElementById("ETH-total-in-usd").innerText = balances.eth * allData.eth.price;
+        document.getElementById("ETH-incoming-in-usd").innerText = "N/A"
+    }
+    async function getXrpData() {
+        let results = await fetch("/api/v2/explorer/xrp/address/" + data["xrp"].address);
+        results = await results.json();
+        if (results.status === "failed") balances.xrp = 0;
+        else balances.xrp = Number(results["data"]["xrpBalance"]);
+        walletCallback();
+        document.getElementById("XRP-total-in-coin").innerText = balances.xrp;
+        document.getElementById("XRP-incoming-in-coin").innerText = "N/A"
+        document.getElementById("XRP-total-in-usd").innerText = balances.xrp * allData.xrp.price;
+        document.getElementById("XRP-incoming-in-usd").innerText = "N/A"
+    }
+    async function getDogeData() {
+        document.getElementById("DOGE-total-in-coin").innerText = "N/A"
+        document.getElementById("DOGE-incoming-in-coin").innerText = "N/A"
+        document.getElementById("DOGE-total-in-usd").innerText = "N/A"
+        document.getElementById("DOGE-incoming-in-usd").innerText = "N/A"
+        let first = document.querySelectorAll("#DOGE-coin-row a")[0];
+        first.removeAttribute("href");
+        first.style = "color: #B8B8B8 !important; cursor: context-menu"
+        first.innerText = "Coming Soon!";
+        removeElement("#DOGE-coin-row a", 1)
+    }
+    async function getEtcData() {
+        document.getElementById("ETC-total-in-coin").innerText = "N/A"
+        document.getElementById("ETC-incoming-in-coin").innerText = "N/A"
+        document.getElementById("ETC-total-in-usd").innerText = "N/A"
+        document.getElementById("ETC-incoming-in-usd").innerText = "N/A"
+        let first = document.querySelectorAll("#ETC-coin-row a")[0];
+        first.removeAttribute("href");
+        first.style = "color: #B8B8B8 !important; cursor: context-menu"
+        first.innerText = "Coming Soon!";
+        removeElement("#ETC-coin-row a", 1)
+    }
+    function removeElement(query, childNum) {
+        var element = document.querySelector(query);
+        if (childNum) element = document.querySelectorAll(query)[childNum]
+        element.parentNode.removeChild(element);
+    }
+    function walletCallback() {
+        walletCBvar++;
+        if (walletCBvar !== Object.keys(balances).length) return;
+        document.getElementById("topleftLoading").style.display = "none";
+        var allUsd = 0;
+        Object.entries(allData).forEach(
+            ([key, value]) => {
+                let price = value.price;
+                let amount = balances[key];
+                allUsd += price * amount;
+            }
+        );
+        document.getElementById("usd-total-assets").innerText = allUsd.toString();
+        document.getElementById("btc-total-assets").innerText = (allUsd / allData.btc.price).toString();
+    }
+    if (window.innerWidth < 1000) whenMobile();
+    $(window).resize(function() {
+        if (window.innerWidth < 1000 && window.screensize === "big") whenMobile();
+        else if (window.innerWidth > 1000 && window.screensize === "mobile") whenNotMobile();
+    });
+    function whenMobile(){
+        window.screensize = "mobile";
+        let elements = document.querySelectorAll(".coin-row");
+        elements.forEach(element => {
+            let coin = element.id.slice(0, element.id.length-9);
+            element.addEventListener("click", function(){
+                window.location.href = "/assets/deposit/"+coin
+            })
+        });
+    }
+    function whenNotMobile(){
+        window.screensize = "big";
+        let elements = document.querySelectorAll(".coin-row");
+        elements.forEach(element => {
+            var el = element
+            elClone = el.cloneNode(true);
+            el.parentNode.replaceChild(elClone, el);
+        });
+    }
+</script>
+
+<style>
+    
+</style>

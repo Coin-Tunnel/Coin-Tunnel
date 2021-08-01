@@ -36,6 +36,7 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/bluebird@3.7.2/js/browser/bluebird.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/whatwg-fetch'></script>
+<img src="/images/loader-top-right.gif" id="topleftLoading" style="position: absolute; top: 115px; right: 15px; width: 35px; display: none;">
 
 <style>
   .hiddenx {
@@ -73,7 +74,12 @@
     var path = window.location.pathname;
     if (path === "/") path = "nocss";
     if (path === "/changeAddress") path = "nocss";
-    if (path.indexOf("validate") > -1) path = "nocss";
+    if (path === "/connect") path = "nocss";
+    if (path.includes("validate")) path = "nocss";
+    if (window.location.pathname.includes("/assets/deposit")) path = "/assets-deposit";
+    if (window.location.pathname.includes("/assets/withdraw")) path = "/assets-deposit";
+    if (window.location.pathname === "/dashboard-m") path = "/dashboard-m"
+    if (window.location.pathname === "/assets") path = "/assets-main";
     if (window.location.pathname === "/merchantdashboard") path = "/dashboard-m";
     if (window.location.pathname === "/signup-m") path = "/signup-b";
     if (window.location.pathname === "/signin-m") path = "/signup-b";
@@ -115,7 +121,6 @@
 
   function CSSDone() {
     let elemx = document.querySelector('body');
-    console.log("as;dlkfj")
     elemx.style.display = "block";
     elemx.style = "display: block";
     elemx.classList.add("hiddenx")

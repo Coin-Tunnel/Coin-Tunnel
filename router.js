@@ -764,6 +764,7 @@ function getUTXOsBETA(address) {
       app.use('/welcome-m', require('./routes/gui/merchants/welcome-m')(functions));
       app.use('/signin-m', require('./routes/gui/merchants/signin-m')(functions));
       app.use('/welcome', require('./routes/gui/buyers/welcome')(functions));
+      app.use('/assets', require('./routes/gui/buyers/assets')(functions))
 
       app.use('/operations', require('./routes/operations/index')(functions));
       app.use('/discord-seller-callback-signin', require('./routes/callbacks/discord-seller-callback-signin')(functions))

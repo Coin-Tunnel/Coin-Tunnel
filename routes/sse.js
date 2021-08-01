@@ -8,7 +8,7 @@ function sleep(ms) {
 }
 var W3CWebSocket = require('websocket').w3cwebsocket;;
 // you can't save sessions *in* web sockets, but you can still read them, you just can't write. (This is fine anyways lol);
-var livePrices = {
+global.livePrices = {
     btc: {
         aInternal: 10,
         aListener: function (val) { },
@@ -151,14 +151,14 @@ sleep(1000).then(thing => {
             }); 
         }
         if (req.query.static && req.query.static === "true"){
-          return res.send(livePrices.btc.a.toString())   
+          return res.send(global.livePrices.btc.a.toString())   
         } else if (req.query.slow && req.query.slow === "true"){
             for (var x = 0; x<400; x++){
-                res.write("data: "+livePrices.btc.a.toString() + "\n\n");
+                res.write("data: "+global.livePrices.btc.a.toString() + "\n\n");
                 await sleep(250)
             }
         }else{
-            livePrices.btc.registerListener(function (val) {
+            global.livePrices.btc.registerListener(function (val) {
                 res.write("data: " + val + '\n\n');
             });
         }
@@ -172,14 +172,14 @@ sleep(1000).then(thing => {
             }); 
         }
         if (req.query.static && req.query.static === "true"){
-          return res.send(livePrices.eth.a.toString())   
+          return res.send(global.livePrices.eth.a.toString())   
         } else if (req.query.slow && req.query.slow === "true"){
             for (var x = 0; x<100; x++){
-                res.write("data: "+livePrices.eth.a.toString() + "\n\n");
+                res.write("data: "+global.livePrices.eth.a.toString() + "\n\n");
                 await sleep(1000)
             }
         }else{
-            livePrices.eth.registerListener(function (val) {
+            global.livePrices.eth.registerListener(function (val) {
                 res.write("data: " + val + '\n\n');
             });
         }
@@ -193,14 +193,14 @@ sleep(1000).then(thing => {
             }); 
         }
         if (req.query.static && req.query.static === "true"){
-          return res.send(livePrices.ltc.a.toString())   
+          return res.send(global.livePrices.ltc.a.toString())   
         } else if (req.query.slow && req.query.slow === "true"){
             for (var x = 0; x<100; x++){
-                res.write("data: "+livePrices.ltc.a.toString() + "\n\n");
+                res.write("data: "+global.livePrices.ltc.a.toString() + "\n\n");
                 await sleep(1000)
             }
         }else{
-            livePrices.ltc.registerListener(function (val) {
+            global.livePrices.ltc.registerListener(function (val) {
                 res.write("data: " + val + '\n\n');
             });
         }
@@ -214,14 +214,14 @@ sleep(1000).then(thing => {
             }); 
         }
         if (req.query.static && req.query.static === "true"){
-          return res.send(livePrices.xrp.a.toString())   
+          return res.send(global.livePrices.xrp.a.toString())   
         } else if (req.query.slow && req.query.slow === "true"){
             for (var x = 0; x<100; x++){
-                res.write("data: "+livePrices.xrp.a.toString() + "\n\n");
+                res.write("data: "+global.livePrices.xrp.a.toString() + "\n\n");
                 await sleep(1000)
             }
         }else{
-            livePrices.xrp.registerListener(function (val) {
+            global.livePrices.xrp.registerListener(function (val) {
                 res.write("data: " + val + '\n\n');
             });
         }
@@ -235,14 +235,14 @@ sleep(1000).then(thing => {
             }); 
         }
         if (req.query.static && req.query.static === "true"){
-          return res.send(livePrices.ada.a.toString())   
+          return res.send(global.livePrices.ada.a.toString())   
         } else if (req.query.slow && req.query.slow === "true"){
             for (var x = 0; x<100; x++){
-                res.write("data: "+livePrices.ada.a.toString() + "\n\n");
+                res.write("data: "+global.livePrices.ada.a.toString() + "\n\n");
                 await sleep(1000)
             }
         }else{
-            livePrices.ada.registerListener(function (val) {
+            global.livePrices.ada.registerListener(function (val) {
                 res.write("data: " + val + '\n\n');
             });
         }
@@ -256,14 +256,14 @@ sleep(1000).then(thing => {
             }); 
         }
         if (req.query.static && req.query.static === "true"){
-          return res.send(livePrices.bnb.a.toString())   
+          return res.send(global.livePrices.bnb.a.toString())   
         } else if (req.query.slow && req.query.slow === "true"){
             for (var x = 0; x<100; x++){
-                res.write("data: "+livePrices.bnb.a + "\n\n");
+                res.write("data: "+global.livePrices.bnb.a + "\n\n");
                 await sleep(1000)
             }
         }else{
-            livePrices.bnb.registerListener(function (val) {
+            global.livePrices.bnb.registerListener(function (val) {
                 res.write("data: " + val + '\n\n');
             });
         }
@@ -277,26 +277,26 @@ sleep(1000).then(thing => {
         if (req.query.slow && req.query.slow === "true"){
             for (var x = 0; x<100; x++){
                 let data = {
-                    btc: livePrices.btc.a,
-                    ltc: livePrices.ltc.a,
-                    eth: livePrices.eth.a,
-                    xrp: livePrices.xrp.a,
-                    ada: livePrices.ada.a,
-                    bnb: livePrices.bnb.a
+                    btc: global.livePrices.btc.a,
+                    ltc: global.livePrices.ltc.a,
+                    eth: global.livePrices.eth.a,
+                    xrp: global.livePrices.xrp.a,
+                    ada: global.livePrices.ada.a,
+                    bnb: global.livePrices.bnb.a
                 }
                 data = JSON.stringify(data)
                 res.write("data: "+data + "\n\n");
                 await sleep(1000)
             }
         }else{
-            livePrices.btc.registerListener(function (val) {
+            global.livePrices.btc.registerListener(function (val) {
                 let data = {
-                    btc: livePrices.btc.a,
-                    ltc: livePrices.ltc.a,
-                    eth: livePrices.eth.a,
-                    xrp: livePrices.xrp.a,
-                    ada: livePrices.ada.a,
-                    bnb: livePrices.bnb.a
+                    btc: global.livePrices.btc.a,
+                    ltc: global.livePrices.ltc.a,
+                    eth: global.livePrices.eth.a,
+                    xrp: global.livePrices.xrp.a,
+                    ada: global.livePrices.ada.a,
+                    bnb: global.livePrices.bnb.a
                 }
                 data = JSON.stringify(data)
                 res.write("data: "+data + "\n\n");
@@ -330,7 +330,7 @@ async function updateBtc() {
         } catch (err) {
             return;
         }
-        livePrices.btc.a = btcPrice;
+        global.livePrices.btc.a = btcPrice;
     };
     client.onclose = async function () {
         console.log('echo-protocol Connection Closed. Attempting to reconnect in 10 seconds...');
@@ -363,7 +363,7 @@ async function updateEth() {
         } catch (err) {
             return;
         }
-        livePrices.eth.a = price;
+        global.livePrices.eth.a = price;
     };
     client.onclose = async function () {
         console.log('echo-protocol Connection Closed. Attempting to reconnect in 10 seconds...');
@@ -396,7 +396,7 @@ async function updateLtc() {
         } catch (err) {
             return;
         }
-        livePrices.ltc.a = price;
+        global.livePrices.ltc.a = price;
     };
     client.onclose = async function () {
         console.log('echo-protocol Connection Closed. Attempting to reconnect in 10 seconds...');
@@ -429,7 +429,7 @@ async function updateXrp() {
         } catch (err) {
             return;
         }
-        livePrices.xrp.a = price;
+        global.livePrices.xrp.a = price;
     };
     client.onclose = async function () {
         console.log('echo-protocol Connection Closed. Attempting to reconnect in 10 seconds...');
@@ -462,7 +462,7 @@ async function updateAda() {
         } catch (err) {
             return;
         }
-        livePrices.ada.a = price;
+        global.livePrices.ada.a = price;
     };
     client.onclose = async function () {
         console.log('echo-protocol Connection Closed. Attempting to reconnect in 10 seconds...');
@@ -495,7 +495,7 @@ async function updateBnb() {
         } catch (err) {
             return;
         }
-        livePrices.bnb.a = price;
+        global.livePrices.bnb.a = price;
     };
     client.onclose = async function () {
         console.log('echo-protocol Connection Closed. Attempting to reconnect in 10 seconds...');

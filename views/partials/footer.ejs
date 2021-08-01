@@ -1,4 +1,5 @@
-<section id="footerMain" class="flex" style="padding-left: 20px; padding-bottom: 20px;">
+<section id="footerMain" style="padding-left: 20px; padding-bottom: 20px;  position: absolute; width: 100vw; top: 100%; color: black !important;">
+<grid style="display: grid; grid-gap: 5px 0px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
   <div id="footerLeft" class="foot-box">
     <div id="footLogoBox" style="padding-left: 30px;">
       <img src="/images/logo.png" style="width:100px;height:70px;">
@@ -65,16 +66,41 @@
 
     </dd>
   </dl>
-
-</section>
-<aside id="siteVolume" class="flex-center" style="background-color: rgba(0, 128, 128, 0.2); color: black;">
+</grid>
+<aside id="siteVolume" class="flex-center" style="background-color: rgba(0, 128, 128, 0.2); color: black; position: absolute; left: 0; bottom: 0; width: 100vw;">
   <span style="padding-right: 10px">Prices:
     <span> <b>BTC</b> : $<span id="footbtcprice">0</span></span> </span>
   <span style="padding-right: 10px"> <b>ETH</b> : $<span id="footethprice">0</span></span> </span>
   <span style="padding-right: 10px"> <b>LTC</b> : $<span id="footltcprice">0</span></span> </span>
   <span style="padding-right: 10px"> <b>XRP</b> : $<span id="footxrpprice">0</span></span> </span>
 </aside>
+</section>
 
-<div style="background: rgba(10, 10, 10, 0.25); position: fixed; z-index: 100; top: 0; width: 100vw; height: 100vh; display: none;" id="loadinggif2">
-  <img src="/images/loading1.gif" style="display: block; margin-left: auto; margin-right: auto; width: 15%; margin-top: 10%;">
+<div
+  style="background: rgba(10, 10, 10, 0.25); position: fixed; z-index: 100; top: 0; width: 100vw; height: 100vh; display: none;"
+  id="loadinggif2">
+  <img src="/images/loading1.gif"
+    style="display: block; margin-left: auto; margin-right: auto; width: 15%; margin-top: 10%;">
 </div>
+
+<script>
+  let links = document.querySelectorAll("[data-link]");
+  for (let i = 0; i < links.length; i++) {
+    links[i].style.cursor = "pointer";
+    links[i].addEventListener("click", function (event) {
+      let url = links[i].dataset.link;
+      if (url.startsWith("./")) window.location.href = window.location.href + "/" + (url.slice(2));
+      else window.location.href = url
+    })
+  }
+
+  secondaryLinks();
+  function secondaryLinks() {
+    let links = document.querySelectorAll("[href]");
+    for (let i = 0; i < links.length; i++) {
+      links[i].style.cursor = "pointer";
+      let url = links[i].getAttribute("href");
+      if (url.startsWith("./")) links[i].href = window.location.href + "/" + (url.slice(2));
+    }
+  }
+</script>

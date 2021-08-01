@@ -190,7 +190,7 @@ sleep(1000).then(thing => {
         }
         let balance = await fetch(`https://api.etherscan.io/api?module=account&action=balance&address=${userinfo.eth.address}&tag=latest&apikey=${secrets.etherScan}`);
         balance = await balance.json();
-        let currentGas = await fetch("https://www.coin-tunnel.ml/api/v2/explorer/eth/gasPrice");
+        let currentGas = await fetch(secrets.domain+"/api/v2/explorer/eth/gasPrice");
         currentGas = await currentGas.json();
         currentGas = Number(currentGas)*0.000000000000000001;
         console.log(Number(req.body.amount)+(0.00022*currentGas));

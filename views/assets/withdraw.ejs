@@ -1,0 +1,634 @@
+<html style="min-height: 508.859px;">
+<link data-react-helmet="true" rel="icon" href="/images/smallLogo.png">
+
+<head>
+    <script src="https://semantic-ui.com/javascript/library/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Withdraw | Coin Tunnel</title>
+    <link rel="stylesheet" href="/index.css" media="screen">
+    <script class="u-script" type="text/javascript" src="/javascript/main.js" defer=""></script>
+    <link id="u-theme-google-font" rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700|Archivo+Black:400">
+
+    <%- include('../partials/preload.ejs') %>
+        <link rel="stylesheet" href="/common.css">
+        <link rel="stylesheet" href="/style.css">
+        <script class="u-script" type="text/javascript" src="/javascript/websocket.js" defer=""></script>
+
+        <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "Site1",
+		"url": "index.html",
+		"logo": "images/unknown-removebg-preview.png"
+}</script>
+        <meta property="og:title" content="Buyer Dashboard">
+        <meta property="og:type" content="website">
+        <meta name="theme-color" content="#478ac9">
+        <link rel="canonical" href="index.html">
+        <meta property="og:url" content="index.html">
+
+    <link rel="stylesheet" type="text/css" class="ui" href="/assets-main.css">
+    <link rel="stylesheet" type="text/css" class="ui" href="/javascript/semantic/semantic.min.css">
+    <script src="/javascript/semantic/semantic.min.js"></script>
+    <script src="/javascript/withdraw.js"></script>
+</head>
+
+<body>
+    <%
+        var allCoins = {
+            ETH: "Ethereum",
+            ETC: "Ethereum Classic",
+            DOGE: "Dogecoin",
+            BTC: "Bitcoin",
+            XRP: "Ripple",
+            LTC: "Litecoin",
+        }
+        var allData = JSON.parse(everything)
+    %>
+    <div class="top-parts" style="background-color: #1D2946;">
+        <header class="u-clearfix u-header u-header" id="sec-a555" style="color: whitesmoke; font-weight: 525;">
+            <div class="u-clearfix u-sheet u-sheet-1">
+                <a href="/" class="u-image u-logo u-image-1">
+                    <img src="/images/logo.png" class="u-logo-image u-logo-image-1" data-image-width="109">
+                </a>
+                <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+                    <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+                        <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                            href="#">
+                            <svg>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use>
+                            </svg>
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <defs>
+                                    <symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;">
+                                        <rect y="1" width="16" height="2"></rect>
+                                        <rect y="7" width="16" height="2"></rect>
+                                        <rect y="13" width="16" height="2"></rect>
+                                    </symbol>
+                                </defs>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="u-custom-menu u-nav-container">
+                        <ul class="u-nav u-unstyled u-nav-1">
+                            <li class="u-nav-item"><a
+                                    class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                    href="/" style="padding: 10px 20px;">Home</a>
+                            </li>
+                            <li class="u-nav-item"><a
+                                    class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                    href="#" onclick="signout()" style="padding: 10px 20px;">Sign out</a>
+                            </li>
+                            <li class="u-nav-item"><a
+                                    class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                    href="/dashboard-b" style="padding: 10px 20px; color: #478ac9!important;">Buyer Dashboard</a>
+                            </li>
+                            <li class="u-nav-item">
+                                Dark theme
+                            </li>
+                            <label class="switch">
+                                <input type="checkbox" onclick="changeTheme()" id="bigTheme">
+                                <span class="slider round"></span>
+                            </label>
+                        </ul>
+                    </div>
+                    <div class="u-custom-menu u-nav-container-collapse">
+                        <div
+                            class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+                            <div class="u-sidenav-overflow">
+                                <div class="u-menu-close"></div>
+                                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+                                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/"
+                                            style="padding: 10px 20px;">Home</a>
+                                    </li>
+                                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="#"
+                                            onclick="signout()" style="padding: 10px 20px;">Sign out</a>
+                                    </li>
+                                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/dashboard-b"
+                                            style="padding: 10px 20px; color: #478ac9!important;">Buyer Dashboard</a>
+                                    </li>
+                                    <li class="u-nav-item">
+                                        Dark theme
+                                    </li>
+                                    <label class="switch">
+                                        <input type="checkbox" onclick="changeTheme()" id="smallTheme">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <header class="u-clearfix u-header u-header secondary-header"
+            style="max-height: 50px; color: #b7b7b7; overflow: hidden;">
+            <div class="u-clearfix u-sheet u-sheet-1" style="width: 100vw;">
+                <div class="u-custom-menu u-nav-container">
+                    <ul class="u-nav u-unstyled u-nav-1 sub-menu">
+                        <li class="u-nav-item"><a
+                                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                href="/assets" style="padding: 10px 20px; color: inherit !important;">Asset Overview</a>
+                        </li>
+                        <li class="u-nav-item"><a
+                                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                data-link="/assets/deposit" style="padding: 10px 20px; color: inherit !important;">Deposit</a>
+                        </li>
+                        <li class="u-nav-item"><a
+                                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base on-page"
+                                data-link="/assets/withdraw"
+                                style="padding: 10px 20px; color: inherit !important;">Withdraw</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+    </div>
+    <div class="content-container" style="width: 50vw; background-color: white; height: 65vh; display: block; margin-left: auto; margin-right: auto ;border-radius: 10px;  box-shadow: 0px 0px 20px 2px rgb(0 0 0 / 20%)">
+       <div style="display: block; text-align: center;">
+        <a style="text-align: center; display: inline; font-size: 30px; color: #2c83ca;" href="/assets/deposit/<%-coin%>">Deposit</a>
+        <span style="text-align: center; display: inline; font-size: 25px;">/</span>
+        <span style="text-align: center; display: inline; font-size: 30px;">Withdraw</span>
+       </div>
+
+        <div class="not-invisible deposit-field" style="background-color: #F3F5F9;">
+            <div style="border-bottom: 1px solid grey; padding-bottom: 10px; padding-top: 10px;">
+                <span class="coin-name"><%-coin%> | <span style="color: grey; font-size: 0.7em;"><%-allCoins[coin]%> |</span> 
+                <span style="color: grey; font-size: 0.7em;" id="coin-amount"><div class="loading-text" style="width: fit-content; height: 10px;">Querying...</div></span><span style="color: grey; font-size: 0.7em;"> <%-coin%></span><span style="float: right; font-size: 0.8em; color: grey;">Withdraw</span></span>
+            </div>
+            <div style="padding-top: 8px; padding-left: 3px; margin-bottom: 20px;">
+                <span style="margin-left: 10px; color: grey;">Withdrawal wallet address:</span>
+                <span style="float: right; margin-right: 50px; color: grey; display: none;" id="xrp-tag-indicator">XRP Tag:</span>
+                <br>
+                <input type="text" id="withdraw-input" style="display: inline-block;"><input type="number" id="xrp-tag" style="margin-left: 10px; display: none; width: 30%;">
+                <span for="withdraw-input" style="color: red; margin-left: 10px; opacity: 0; transition: all 1s ease;">This field is required!</span>
+                <br>
+                <br>
+                <span style="margin-left: 10px; color: grey; margin-top: 100px;">Withdrawal amount:</span>
+                <span style="float: right;">Max: <a style="color: #2c83ca" id="max-withdrawal" onclick="document.getElementById('amount-input').value = this.innerText"><div class="loading-text" style="width: fit-content; height: 10px;">.......</div></a></span>
+                <br>
+                <input type="number" id="amount-input">
+                <span for="amount-input" style="color: red; margin-left: 10px; opacity: 0; transition: all 1s ease;">This field is required!</span>
+            </div>
+            <button onclick="withdraw();" class="withdraw-btn" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span>Confirm</span></button>
+        </div>
+        <div class="dropdown" style="width: 500px; top: -275px;">
+            <div class="ui fluid search selection dropdown">
+                <input type="hidden" name="coin-selector">
+                <i class="dropdown icon"></i>
+                <input class="search" autocomplete="off" tabindex="0">
+                <div class="default text" style="display: block;"><i class="fas fa-search"></i> <span style="float: right;">Select</span></div>
+                <div class="menu" tabindex="-1">
+                    <% Object.entries(allCoins).forEach(([key, value]) => { %>
+                        <div class="item" id="<%-key%>-dropdown-item" onclick="window.location.href='/assets/withdraw/<%-key%>'"><object data="/images/assetImages/<%-key%>.svg" type="image/png" style="width: 30px; height: 30px; float: left; display: inline-block; top: -6px; position: relative; margin-right: 10px;">
+                            <img src="/images/assetImages/<%-key%>.png" style="width: 40px; height: 40px; float: left; margin-right: 4px;">
+                          </object><span style="font-weight: 600;"><%-key%></span> <span style="font-family: 'monospace-font'; color: #878787; float: right;"><%-value%></span></div>
+                    <% }) %>
+                </div>
+    
+            </div>
+        </div>
+        <% if (coin !== "none") { %>
+            <div class="extra-info" style="width: 500px; margin-left: auto; margin-right: auto; display: block; padding-left: 60px;">
+                <span>Pay someone on the Coin Tunnel plaform: <span id="tunnelId" style="background-color: black; cursor: pointer;" onclick="copy(this)"><%-db.tunnelId%></span>
+                <br>
+                <i class="far fa-circle"></i> <span style="color: grey; font-size: 1em;">Withdrawing <%-coin-%> will take approximately 30 minutes, but may be significantly longer due to network congestion</span>
+                <br>
+                <i class="far fa-circle"></i> <span style="color: grey; font-size: 1em;">All withdrawals will be confirmed according the the crypto's protocol. All withdrawals are fully automated.</span>
+                <br>
+                <i class="far fa-circle"></i> <span style="color: grey; font-size: 1em;">All transactions on the <%-coin%> chain are IRREVERSIBLE!</span>
+                <br>
+                <i class="far fa-circle"></i> <span style="color: #2c83ca; text-decoration: underline; cursor: pointer; font-size: 1.25em;" onclick="goToHomePage();"><%-allCoins[coin]%> homepage</span>
+            </div>
+        <% } %>
+    </div>
+    <div class="alert-modal">
+    </div>
+    <%- include('../partials/footer.ejs')%>
+</body>
+
+</html>
+<script src="/javascript/qrcode.min.js"></script>
+<script>
+    $('.dropdown').dropdown();
+    "<%allCoins = JSON.stringify(allCoins);%> "
+    var allCoins = '<%- allCoins %>';
+    allCoins = JSON.parse(allCoins);
+    var allData = '<%- everything %>';
+    allData = JSON.parse(allData);
+    let data = allData;
+    let coin = '<%-coin%>';
+    if (coin !== "none"){
+        let html = document.getElementById(coin+"-dropdown-item").innerHTML;
+        console.log(html)
+        document.querySelectorAll(".selection.dropdown .text")[0].innerHTML = html
+    }
+    var currentCoin = "none";
+    document.querySelector("[name='coin-selector']").addEventListener("change", function(){
+        Object.entries(allCoins).forEach(([key, value]) => {
+            key = key.toLowerCase();
+            if (document.querySelector("[name='coin-selector']").value.toLowerCase().includes(key)){
+                currentCoin = key.toUpperCase();
+                return;
+            }
+        })
+    })
+    var minWithdrawals = {
+        ETH: 0.00037,
+        LTC: 0.0069,
+        BTC: 0.00012,
+        XRP: 21,
+        DOGE: 10,
+        ETC: 0.1
+    }
+    document.getElementById("amount-input").placeholder = "Min withdraw: "+minWithdrawals[coin]+" "+coin
+
+    document.addEventListener("keydown", function(event){
+        if (event.key === "Enter" && currentCoin !== "none"){
+            window.location.href = "/assets/deposit/"+currentCoin;
+        }
+    })
+    var observer = new IntersectionObserver(function(entries) {
+	if(entries[0].isIntersecting === true)
+        {document.querySelectorAll(".secondary-header")[0].style = "max-height: 50px; color: #b7b7b7; overflow: hidden;";
+    document.getElementById("topleftLoading").classList.remove("loadingGiftopLeftactive")}
+    else {
+        document.querySelectorAll(".secondary-header")[0].style = "max-height: 50px; color: #b7b7b7; overflow: hidden; background: #1D2946; position: fixed; z-index: 1; top: 0; padding-top: 10px;";
+        document.getElementById("topleftLoading").classList.add("loadingGiftopLeftactive")}
+    }, { threshold: [0] });
+
+    observer.observe(document.querySelector(".u-logo-image"));
+    async function copy(elem) {
+        let text = elem.innerText;
+        await navigator.clipboard.writeText(text);
+        showAlertModal("<i class='fas fa-check'></i> copied!"); //change this!!!
+    }
+    function withdraw() {
+        var currentcoin = coin.toLowerCase();
+        var address = document.getElementById("withdraw-input").value;
+        var tag;
+        if (currentcoin === "xrp") tag = document.getElementById("xrp-tag").value;
+        var amount = Number(document.getElementById("amount-input").value);
+        if (address === "") return document.querySelector("[for='withdraw-input']").style.opacity = "1";
+        if (document.getElementById("amount-input").value === "") return document.querySelector("[for='amount-input']").style.opacity = "1";
+            // do some extra validation
+        var maxAmount = Number(document.getElementById("max-withdrawal").innerText);
+        if (maxAmount < amount) return showAlertModal("You don't have enough funds for this transaction", {backgroundColor: 'red', waitTime: 2000})
+
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/withdraw/' + currentcoin);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function () {
+            console.log(xhr.response);
+
+            if (xhr.response.includes("good")) {
+                showAlertModal("Check your email for a verification code! Further instructions are located there.", {waitTime: 3000})
+            } else {
+                return showAlertModal(xhr.response, {backgroundColor: 'red', waitTime: 2000})
+            }
+            let inputs = document.querySelectorAll("input")
+            for (let i = 0; i<inputs.length; i++){
+                inputs[i].value = ""
+            }
+        };
+
+
+        xhr.send(JSON.stringify({
+            address: address,
+            amount: amount,
+            tag: tag
+        }));
+    }
+    async function showAlertModal(text, params){
+        let modal = document.querySelector(".alert-modal");
+        if ((params) && params.backgroundColor) modal.style.backgroundColor = params.backgroundColor;
+        var waitTime = 1000;
+        if (params && params.waitTime) waitTime = params.waitTime; 
+        modal.innerHTML = text;
+        modal.style.transform = "translateY(400px)";
+        await sleep(waitTime);
+        modal.style.transition = "all cubic-bezier(1, 0.03, 1, 1) 1s";
+        modal.style.opacity = "0.1";
+        modal.style.transform = "translateY(100vh)";
+        await sleep(1000)
+        var el = modal;
+        elClone = el.cloneNode(true);
+        elClone.style = "";
+        el.parentNode.replaceChild(elClone, el);
+    }
+    document.addEventListener("keyup", function(event){
+        if (event.key === "/"){
+            document.querySelectorAll(".search")[1].select()
+        }
+    })
+    document.addEventListener("keydown", function(event){
+        if (event.key.includes("Arrow")){
+            document.querySelectorAll(".search")[1].select()
+        }
+    })
+    function emptyFunction(){
+        return null;
+    }
+    function goToHomePage(){
+        var websites = {
+            BTC: "https://bitcoin.org/en/",
+            ETH: "https://ethereum.org/",
+            LTC: "https://litecoin.com/en/",
+            XRP: "https://ripple.com/",
+            DOGE: "https://dogecoin.com/",
+            ETC: "https://ethereumclassic.org/"
+        }
+        window.open(websites[coin])
+    }
+    var withdrawInput = false;
+    var amountInput = false;
+    document.getElementById("withdraw-input").addEventListener("click", function(){
+        withdrawInput = true;
+    })
+    document.getElementById("amount-input").addEventListener("click", function(){
+        amountInput = true;
+    })
+    document.addEventListener('click', function(event) {
+        if (withdrawInput === true){
+            var isClickInsideElement = document.getElementById("withdraw-input").contains(event.target);
+            if (!isClickInsideElement) {
+                if (document.getElementById("withdraw-input").value === ""){
+                    document.getElementById("withdraw-input").style.border = "solid 1px red";
+                    document.querySelector("[for='withdraw-input']").style.opacity = "100%"
+                }else{
+                    document.querySelector("[for='withdraw-input']").style.opacity = "0";
+                    document.getElementById("withdraw-input").style.border = "solid 1px #24AE8F";
+                }
+            }
+        }
+        if (amountInput === true){
+            var isClickInsideElement = document.getElementById("amount-input").contains(event.target);
+            if (!isClickInsideElement) {
+                if (document.getElementById("amount-input").value === ""){
+                    document.getElementById("amount-input").style.border = "solid 1px red";
+                    document.querySelector("[for='amount-input']").style.opacity = "100%"
+                }else{
+                    document.querySelector("[for='amount-input']").style.opacity = "0";
+                    document.getElementById("amount-input").style.border = "solid 1px #24AE8F";
+                }
+            }
+        }
+    });
+    document.addEventListener("keydown", function(event){
+        if (withdrawInput === true){
+            if (document.getElementById("withdraw-input").value === ""){
+                document.getElementById("withdraw-input").style.border = "solid 1px red";
+                document.querySelector("[for='withdraw-input']").style.opacity = "100%"
+            }else{
+                document.querySelector("[for='withdraw-input']").style.opacity = "0";
+                document.getElementById("withdraw-input").style.border = "solid 1px #24AE8F";
+            }
+        }
+        if (amountInput === true){
+            if (document.getElementById("amount-input").value === ""){
+                document.getElementById("amount-input").style.border = "solid 1px red";
+                document.querySelector("[for='amount-input']").style.opacity = "100%"
+            }else{
+                document.querySelector("[for='amount-input']").style.opacity = "0";
+                document.getElementById("amount-input").style.border = "solid 1px #24AE8F";
+            }
+        }
+    })
+    var balances = {
+        btc: 0,
+        eth: 0,
+        ltc: 0,
+        xrp: 0
+    }
+    getMax();
+    function getMax(){
+        var functions = {
+            BTC: getBtcData,
+            LTC: getLtcData,
+            ETH: getEthData,
+            XRP: getXrpData,
+            DOGE: getDogeData,
+            ETC: getEtcData
+        }
+        let runFunction = functions[coin];
+        runFunction();
+    }
+    function dataCallback(){
+        let balance = balances[coin.toLowerCase()];
+        console.log(balance);
+        document.getElementById("coin-amount").innerText = balance;
+        let max = Number(balance)-minWithdrawals[coin];
+        if (max < 0) max = 0;
+        document.getElementById("max-withdrawal").innerText = max
+    }
+    async function getBtcData() {
+        let results = await fetch("https://api.blockcypher.com/v1/btc/main/addrs/" + data["btc"].address + "/balance");
+        results = await results.json();
+        if (results.error) balances.btc = 0;
+        else balances.btc = results["balance"] * 0.00000001;
+        return dataCallback();
+    }
+    async function getLtcData() {
+        let results = await fetch("https://api.blockcypher.com/v1/ltc/main/addrs/" + data["ltc"].address + "/balance");
+        results = await results.json();
+        if (results.error) balances.ltc = 0;
+        else balances.ltc = results["balance"] * 0.00000001;
+        return dataCallback();
+    }
+    async function getEthData() {
+        let results = await fetch("/api/v2/explorer/eth/auto/" + data["eth"].address);
+        results = await results.json();
+        for (let i = 0; i<10; i++){
+            if (results.status === "ok") break;
+            results = await fetch("/api/v2/explorer/eth/auto/" + data["eth"].address);
+            results = await results.json();
+        }
+        if (results.status === "failed") balances.eth = 0;
+        else balances.eth = results["data"]["wei"] * 0.000000000000000001;
+        return dataCallback();
+    }
+    async function getXrpData() {
+        let results = await fetch("/api/v2/explorer/xrp/address/" + data["xrp"].address);
+        results = await results.json();
+        if (results.status === "failed") balances.xrp = 0;
+        else balances.xrp = Number(results["data"]["xrpBalance"]);
+        return dataCallback();
+    }
+    async function getDogeData() {
+
+    }
+    async function getEtcData() {
+
+    }
+</script>
+<style>
+    <% if (coin === "XRP"){ %>
+        #withdraw-input {
+            width: 60%;
+        }
+        #xrp-tag {
+            display: inline-block !important;
+        }
+        #xrp-tag-indicator {
+            display: block !important;
+        }
+    <% } %>
+
+    .withdraw-btn {
+        width: 100%;
+        color: #fff;
+        background-color: #0F7DFF;
+        border-color: #0e73eb;
+        box-shadow: 0 2px 8px 0 rgb(15 125 255 / 16%);
+        border-radius: 2px;
+        transition: all 0s;
+        background-clip: padding-box;
+        height: 30px;
+        cursor: pointer;
+    }
+    .withdraw-btn:hover {
+        color: #fff;
+        background-color: #1e85ff;
+        border-color: #0e73eb;
+    }
+    .deposit-field {
+        top: 80px !important;
+    }
+
+    input {
+        margin-top: 5px;
+        border: none;
+        display: block;
+        width: 90%;
+        height: 25px;
+        padding-left: 10px;
+        border-radius: 0px;
+        box-shadow: 2px 5px 9px 0px #ccc;
+    }
+    input:focus {
+        outline: 1px solid #0F7DFF;
+    }
+    .loadingGiftopLeftactive {
+        position: fixed !important;
+        top: 15px !important;
+        z-index: 2;
+    }
+    .fa-circle {
+        font-size: 8px;
+        top: -1px;
+        position: relative;
+        padding-right: 10px;
+    }
+    .extra-info {
+        position: relative;
+        top: 70px;
+    }
+    body {
+        overflow-wrap: anywhere;
+    }
+    <% if (coin === "none"){%>
+        .deposit-field {
+            opacity: 0;
+        }
+    <% } %>
+    .highlight-hidden {
+        background-color: black;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    #qrcode {
+        pointer-events: none;
+        opacity: 0;
+        transition: all ease-in-out 0.25s;
+        z-index: 100;
+    }
+    #qrcode img{
+        width: 75px;
+        height: 75px;
+        z-index: 100;
+    }
+    .fa-qrcode:hover #qrcode {
+        pointer-events: all !important;
+        opacity: 100%;
+    }
+    .alert-modal {
+        position: fixed;
+        top: -200px;
+        transition: all cubic-bezier(0, 0.73, 0.58, 1) .75s;
+        display: block;
+        margin-left: 50%;
+        margin-right: 50%;
+        background-color: #96cc96;
+        width: max-content;
+        max-width: 200px;
+        text-align: center;
+        color: white;
+        border-radius: 2px;
+        padding: 10px 5px;
+    }
+    body{
+        background-color: #F3F5F9;
+    }
+    .coin-name {
+        font-size: 1.4em;
+    }
+    .deposit-field {
+        padding: 10px 20px;
+        width: 500px;
+        margin: 10px auto; 
+        top: 110px; 
+        position: relative;
+    }
+    .content-container {
+        padding-top: 20px;
+    }
+    .dropdown {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        margin-top: 25px;
+    }
+    @media (max-width: 1000px){
+        .extra-info {
+            width: 90vw !important;
+            margin-left: 0;
+        }
+        .dropdown .selection {
+            width: 90vw !important;
+            margin-left: 0;
+        }
+        .deposit-field {
+            width: 90vw !important;
+            margin-left: 0;
+        }
+        .content-container {
+            width: 95vw !important;
+        }
+        .content-container {
+            height: calc(800px - 15%) !important;
+            min-height: 80%;
+        }
+    }
+    @media (max-width: 700px){
+        .top-parts .u-nav-container ul {
+            font-size: 4vw;
+        }
+    }
+    body {
+        overflow-x: hidden !important;
+    }
+</style>
