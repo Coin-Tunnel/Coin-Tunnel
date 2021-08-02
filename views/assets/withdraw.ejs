@@ -223,7 +223,8 @@
 <script src="/javascript/qrcode.min.js"></script>
 <script>
     $('.dropdown').dropdown();
-    "<%allCoins = JSON.stringify(allCoins);%> "
+    "<%allCoins = JSON.stringify(allCoins);%> ";
+    document.getElementById("topleftLoading").style.display = "block";
     var allCoins = '<%- allCoins %>';
     allCoins = JSON.parse(allCoins);
     var allData = '<%- everything %>';
@@ -253,6 +254,7 @@
         DOGE: 10,
         ETC: 0.1
     }
+    
     document.getElementById("amount-input").placeholder = "Min withdraw: "+minWithdrawals[coin]+" "+coin
 
     document.addEventListener("keydown", function(event){
@@ -273,7 +275,7 @@
     async function copy(elem) {
         let text = elem.innerText;
         await navigator.clipboard.writeText(text);
-        showAlertModal("<i class='fas fa-check'></i> copied!"); //change this!!!
+        showAlertModal("<i class='fas fa-check'></i> copied!"); 
     }
     function withdraw() {
         var currentcoin = coin.toLowerCase();
@@ -428,6 +430,7 @@
         runFunction();
     }
     function dataCallback(){
+        document.getElementById("topleftLoading").style.display = "none";
         let balance = balances[coin.toLowerCase()];
         console.log(balance);
         document.getElementById("coin-amount").innerText = balance;
@@ -459,6 +462,11 @@
         }
         if (results.status === "failed") balances.eth = 0;
         else balances.eth = results["data"]["wei"] * 0.000000000000000001;
+        let ethGas = await fetch("/api/v2/explorer/eth/gasPrice");
+        ethGas = Number(await ethGas.text());
+        ethGas = ethGas*0.000000001;
+        let amountOfGas = 23000 * ethGas * 0.000000001;
+        minWithdrawals.ETH = amountOfGas;
         return dataCallback();
     }
     async function getXrpData() {
