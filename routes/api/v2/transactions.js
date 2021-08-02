@@ -1456,7 +1456,6 @@ async function sendEth(recieverAddress, sourcePrivateAddress, sourcePublicAddres
     //let amountToSend = 0.1;
     let weitoSend = amountToSend * 1000000000000000000;
     var gasPrice = await getCurrentGasPrices();
-
     // Passing in the eth or web3 package is necessary to allow retrieving chainId, gasPrice and nonce automatically
     // for accounts.signTransaction().
     // var accounts = new Accounts('ws://localhost:8546');
