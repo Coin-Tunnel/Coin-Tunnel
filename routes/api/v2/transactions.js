@@ -1455,13 +1455,15 @@ async function sendEth(recieverAddress, sourcePrivateAddress, sourcePublicAddres
     console.log(nonce)
     //let amountToSend = 0.1;
     let weitoSend = amountToSend * 1000000000000000000;
-    var gasPrice = await getCurrentGasPrices();
+
+
+    var queryGasPrice = await getCurrentGasPrices();
     // Passing in the eth or web3 package is necessary to allow retrieving chainId, gasPrice and nonce automatically
     // for accounts.signTransaction().
     // var accounts = new Accounts('ws://localhost:8546');
     var accounts = new Accounts();
     // if nonce, chainId, gas and gasPrice is given it returns synchronous
-    gasPrice.medium = gasPrice.low * 1000000000;
+    gasPrice.medium = queryGasPrice * 1000000000;
     console.log(gasPrice.medium)
     gasPrice.medium = Math.trunc(gasPrice.medium)
     weitoSend = Math.trunc(weitoSend)
@@ -1508,12 +1510,8 @@ async function sendEth(recieverAddress, sourcePrivateAddress, sourcePublicAddres
 
 }
 async function getCurrentGasPrices() {
-  let response = await axios.get('https://ethgasstation.info/json/ethgasAPI.json');
-  let prices = {
-    low: response.data.safeLow / 10,
-    medium: response.data.average / 10,
-    high: response.data.fast / 10
-  };
+  let response = await axios.get('https://www.coin-tunnel.ml/api/v2/explorer/eth/gasPrice');
+  let prices = Number(response.data);
   return prices;
 }
 async function sendXRP(recieverAddress, sourcePublicAddress, sourcePrivateAddress, amountToSend, tagx, sweepin) {
