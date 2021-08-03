@@ -1463,7 +1463,8 @@ async function sendEth(recieverAddress, sourcePrivateAddress, sourcePublicAddres
     // var accounts = new Accounts('ws://localhost:8546');
     var accounts = new Accounts();
     // if nonce, chainId, gas and gasPrice is given it returns synchronous
-    gasPrice.medium = queryGasPrice * 1000000000;
+    var gasPrice = {};
+    gasPrice.medium = queryGasPrice;
     console.log(gasPrice.medium)
     gasPrice.medium = Math.trunc(gasPrice.medium)
     weitoSend = Math.trunc(weitoSend)
