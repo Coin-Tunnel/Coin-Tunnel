@@ -229,9 +229,9 @@
     "<%if (allData[coin.toLowerCase()]){%>"
     new QRCode(document.getElementById("qrcode"), "<%-allData[coin.toLowerCase()].address%>");
     "<%}%>"
-    async function copy(elem) {
+    function copy(elem) {
         let text = elem.innerText;
-        await navigator.clipboard.writeText(text);
+        navigator.clipboard.writeText(text);
         showAlertModal("<i class='fas fa-check'></i> copied!"); //change this!!!
     }
     $('.dropdown').dropdown();
@@ -246,7 +246,9 @@
     }
     var currentCoin = "none";
     document.querySelector("[name='coin-selector']").addEventListener("change", function(){
-        Object.entries(allCoins).forEach(([key, value]) => {
+        Object.entries(allCoins).forEach(function(element) {
+            let key = element[0];
+            let value = element[1];
             key = key.toLowerCase();
             if (document.querySelector("[name='coin-selector']").value.toLowerCase().includes(key)){
                 currentCoin = key.toUpperCase();
@@ -270,29 +272,32 @@
 
     observer.observe(document.querySelector(".u-logo-image"));
 
-    async function showAlertModal(text, params){
+    function showAlertModal(text, params){
         let modal = document.querySelector(".alert-modal");
         if ((params) && params.backgroundColor) modal.style.backgroundColor = params.backgroundColor;
         var waitTime = 1000;
         if (params && params.waitTime) waitTime = params.waitTime; 
         modal.innerHTML = text;
         modal.style.transform = "translateY(400px)";
-        await sleep(waitTime);
-        modal.style.transition = "all cubic-bezier(1, 0.03, 1, 1) 1s";
-        modal.style.opacity = "0.1";
-        modal.style.transform = "translateY(100vh)";
-        await sleep(1000)
-        var el = modal;
-        elClone = el.cloneNode(true);
-        elClone.style = "";
-        el.parentNode.replaceChild(elClone, el);
+        sleep(waitTime).then(function(){
+            modal.style.transition = "all cubic-bezier(1, 0.03, 1, 1) 1s";
+            modal.style.opacity = "0.1";
+            modal.style.transform = "translateY(100vh)";
+            sleep(1000).then(function(){
+                var el = modal;
+                elClone = el.cloneNode(true);
+                elClone.style = "";
+                el.parentNode.replaceChild(elClone, el);
+            })
+        })
     }
     document.querySelector(".fa-qrcode").addEventListener("mouseenter", function(){
         document.getElementById("qrcode").style.pointerEvents = "all"
     });
-    document.querySelector(".fa-qrcode").addEventListener("mouseleave", async function(){
-        await sleep(100)
-        document.getElementById("qrcode").style.pointerEvents = "none"
+    document.querySelector(".fa-qrcode").addEventListener("mouseleave", function(){
+        sleep(100).then(function(){
+            document.getElementById("qrcode").style.pointerEvents = "none"
+        })
     })
     document.addEventListener("keyup", function(event){
         if (event.key === "/"){
@@ -313,12 +318,13 @@
         xhr.open('POST', '/operations/reveal-' + coin.toLowerCase());
         xhr.setRequestHeader('Content-Type', 'application/json');
 
-        xhr.onload = async function () {
-            await sleep(1000)
-            document.getElementById("crypto-secret-key").innerHTML = xhr.response;
-            document.getElementById("topleftLoading").style.display = "none";
-            document.getElementById("crypto-secret-key").style.cursor = "auto";
-            document.getElementById("crypto-secret-key").style.pointerEvents = "none";
+        xhr.onload = function () {
+            sleep(1000).then(function(){
+                document.getElementById("crypto-secret-key").innerHTML = xhr.response;
+                document.getElementById("topleftLoading").style.display = "none";
+                document.getElementById("crypto-secret-key").style.cursor = "auto";
+                document.getElementById("crypto-secret-key").style.pointerEvents = "none";
+            })
         }; 
         xhr.send();
     }

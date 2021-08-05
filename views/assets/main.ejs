@@ -269,7 +269,7 @@
 
 </html>
 <script>
-    var observer = new IntersectionObserver(function(entries) {
+        var observer = new IntersectionObserver(function(entries) {
     if(entries[0].isIntersecting === true)
         {document.querySelectorAll(".secondary-header")[0].style = "max-height: 50px; color: #b7b7b7; overflow: hidden;";
     document.getElementById("topleftLoading").classList.remove("loadingGiftopLeftactive")}
@@ -277,6 +277,8 @@
         document.querySelectorAll(".secondary-header")[0].style = "max-height: 50px; color: #b7b7b7; overflow: hidden; background: #1D2946; position: fixed; z-index: 1; top: 0; padding-top: 10px;";
         document.getElementById("topleftLoading").classList.add("loadingGiftopLeftactive")}
     }, { threshold: [0] });
+</script>
+<script>
     " <%allCoins = JSON.stringify(allCoins);%> "
     var allCoins = '<%- allCoins %>';
     allCoins = JSON.parse(allCoins);
@@ -292,6 +294,7 @@
     var data = allData;
     var walletCBvar = 0;
     document.getElementById("topleftLoading").style.display = "block";
+    
     getBtcData();
     getLtcData();
     getEthData();
@@ -302,13 +305,15 @@
     let input = document.getElementById("search-coin");
     input.addEventListener("input", updateList);
     
-    async function updateList(){
-        await sleep(5)
-        let value = input.value;
+    function updateList(){
+        sleep(5).then(function(){
+            let value = input.value;
         value = value.toLowerCase();
         var showCoins = [];
-        Object.entries(allCoins).forEach(
-            ([key, valuex]) => {
+        Object.entries(allCoins).forEach(function(element){
+                let key = element[0];
+                let valuex = element[1];
+                console.log(key, valuex)
                 document.getElementById(key+"-coin-row").classList.add("invisible");
                 key = key.toLowerCase();
                 valuex = valuex.toLowerCase();
@@ -317,61 +322,69 @@
                 }
             }
         );
-        showCoins.forEach(element => {
-            document.getElementById(element+"-coin-row").classList.remove("invisible")
-        });
+            showCoins.forEach(function(element){
+                document.getElementById(element+"-coin-row").classList.remove("invisible")
+            });
+        })
     }
 
-    async function getBtcData() {
-        let results = await fetch("https://api.blockcypher.com/v1/btc/main/addrs/" + data["btc"].address + "/balance");
-        results = await results.json();
-        if (results.error) balances.btc = 0;
-        else balances.btc = results["balance"] * 0.00000001;
-        walletCallback();
-        document.getElementById("BTC-total-in-coin").innerText = balances.btc;
-        document.getElementById("BTC-incoming-in-coin").innerText = results.unconfirmed_balance * 0.00000001;
-        document.getElementById("BTC-total-in-usd").innerText = balances.btc * allData.btc.price;
-        document.getElementById("BTC-incoming-in-usd").innerText = results.unconfirmed_balance * 0.00000001 * allData.btc.price;
+    function getBtcData() {
+        fetch("https://api.blockcypher.com/v1/btc/main/addrs/" + data["btc"].address + "/balance").then(function(res){return res.json()}).then(function(results){
+            if (results.error) balances.btc = 0;
+            else balances.btc = results["balance"] * 0.00000001;
+            walletCallback();
+            document.getElementById("BTC-total-in-coin").innerText = balances.btc;
+            document.getElementById("BTC-incoming-in-coin").innerText = results.unconfirmed_balance * 0.00000001;
+            document.getElementById("BTC-total-in-usd").innerText = balances.btc * allData.btc.price;
+            document.getElementById("BTC-incoming-in-usd").innerText = results.unconfirmed_balance * 0.00000001 * allData.btc.price;
+        })
     }
-    async function getLtcData() {
-        let results = await fetch("https://api.blockcypher.com/v1/ltc/main/addrs/" + data["ltc"].address + "/balance");
-        results = await results.json();
-        if (results.error) balances.ltc = 0;
-        else balances.ltc = results["balance"] * 0.00000001;
-        walletCallback();
-        document.getElementById("LTC-total-in-coin").innerText = balances.ltc;
-        document.getElementById("LTC-incoming-in-coin").innerText = results.unconfirmed_balance * 0.00000001;
-        document.getElementById("LTC-total-in-usd").innerText = balances.ltc * allData.ltc.price;
-        document.getElementById("LTC-incoming-in-usd").innerText = results.unconfirmed_balance * 0.00000001 * allData.btc.price;
+    function getLtcData() {
+        fetch("https://api.blockcypher.com/v1/ltc/main/addrs/" + data["ltc"].address + "/balance").then(function(res){return res.json()}).then(function(results){
+            if (results.error) balances.ltc = 0;
+            else balances.ltc = results["balance"] * 0.00000001;
+            walletCallback();
+            document.getElementById("LTC-total-in-coin").innerText = balances.ltc;
+            document.getElementById("LTC-incoming-in-coin").innerText = results.unconfirmed_balance * 0.00000001;
+            document.getElementById("LTC-total-in-usd").innerText = balances.ltc * allData.ltc.price;
+            document.getElementById("LTC-incoming-in-usd").innerText = results.unconfirmed_balance * 0.00000001 * allData.btc.price;
+        })
     }
-    async function getEthData() {
-        let results = await fetch("/api/v2/explorer/eth/auto/" + data["eth"].address);
-        results = await results.json();
-        for (let i = 0; i<10; i++){
-            if (results.status === "ok") break;
-            results = await fetch("/api/v2/explorer/eth/auto/" + data["eth"].address);
-            results = await results.json();
-        }
-        if (results.status === "failed") balances.eth = 0;
-        else balances.eth = results["data"]["wei"] * 0.000000000000000001;
-        walletCallback();
-        document.getElementById("ETH-total-in-coin").innerText = balances.eth;
-        document.getElementById("ETH-incoming-in-coin").innerText = "N/A"
-        document.getElementById("ETH-total-in-usd").innerText = balances.eth * allData.eth.price;
-        document.getElementById("ETH-incoming-in-usd").innerText = "N/A"
+    function getEthData() {
+        fetch("/api/v2/explorer/eth/auto/" + data["eth"].address).then(function(res){return res.json()}).then(function(results){
+            recursive(10);
+            function recursive(i){
+                if (i === 0) return next();
+                if (results.status === "ok") return next();
+                fetch("/api/v2/explorer/eth/auto/" + data["eth"].address).then(function(res){return res.json()}).then(function(resultsx){
+                    results = resultsx;
+                    i = i-1;
+                    recursive(i);
+                })
+            }
+            function next(){
+                if (results.status === "failed") balances.eth = 0;
+                else balances.eth = results["data"]["wei"] * 0.000000000000000001;
+                walletCallback();
+                document.getElementById("ETH-total-in-coin").innerText = balances.eth;
+                document.getElementById("ETH-incoming-in-coin").innerText = "N/A"
+                document.getElementById("ETH-total-in-usd").innerText = balances.eth * allData.eth.price;
+                document.getElementById("ETH-incoming-in-usd").innerText = "N/A"
+            }
+        })
     }
-    async function getXrpData() {
-        let results = await fetch("/api/v2/explorer/xrp/address/" + data["xrp"].address);
-        results = await results.json();
-        if (results.status === "failed") balances.xrp = 0;
-        else balances.xrp = Number(results["data"]["xrpBalance"]);
-        walletCallback();
-        document.getElementById("XRP-total-in-coin").innerText = balances.xrp;
-        document.getElementById("XRP-incoming-in-coin").innerText = "N/A"
-        document.getElementById("XRP-total-in-usd").innerText = balances.xrp * allData.xrp.price;
-        document.getElementById("XRP-incoming-in-usd").innerText = "N/A"
+    function getXrpData() {
+        fetch("/api/v2/explorer/xrp/address/" + data["xrp"].address).then(function(res){return res.json()}).then(function(results){
+            if (results.status === "failed") balances.xrp = 0;
+            else balances.xrp = Number(results["data"]["xrpBalance"]);
+            walletCallback();
+            document.getElementById("XRP-total-in-coin").innerText = balances.xrp;
+            document.getElementById("XRP-incoming-in-coin").innerText = "N/A"
+            document.getElementById("XRP-total-in-usd").innerText = balances.xrp * allData.xrp.price;
+            document.getElementById("XRP-incoming-in-usd").innerText = "N/A";
+        })
     }
-    async function getDogeData() {
+    function getDogeData() {
         document.getElementById("DOGE-total-in-coin").innerText = "N/A"
         document.getElementById("DOGE-incoming-in-coin").innerText = "N/A"
         document.getElementById("DOGE-total-in-usd").innerText = "N/A"
@@ -382,7 +395,7 @@
         first.innerText = "Coming Soon!";
         removeElement("#DOGE-coin-row a", 1)
     }
-    async function getEtcData() {
+    function getEtcData() {
         document.getElementById("ETC-total-in-coin").innerText = "N/A"
         document.getElementById("ETC-incoming-in-coin").innerText = "N/A"
         document.getElementById("ETC-total-in-usd").innerText = "N/A"
@@ -393,6 +406,7 @@
         first.innerText = "Coming Soon!";
         removeElement("#ETC-coin-row a", 1)
     }
+    
     function removeElement(query, childNum) {
         var element = document.querySelector(query);
         if (childNum) element = document.querySelectorAll(query)[childNum]
@@ -403,8 +417,9 @@
         if (walletCBvar !== Object.keys(balances).length) return;
         document.getElementById("topleftLoading").style.display = "none";
         var allUsd = 0;
-        Object.entries(allData).forEach(
-            ([key, value]) => {
+        Object.entries(allData).forEach(function(element){
+                let key = element[0]
+                let value = element[1];
                 let price = value.price;
                 let amount = balances[key];
                 allUsd += price * amount;
@@ -421,7 +436,7 @@
     function whenMobile(){
         window.screensize = "mobile";
         let elements = document.querySelectorAll(".coin-row");
-        elements.forEach(element => {
+        elements.forEach(function(element){
             let coin = element.id.slice(0, element.id.length-9);
             element.addEventListener("click", function(){
                 window.location.href = "/assets/deposit/"+coin
@@ -431,7 +446,7 @@
     function whenNotMobile(){
         window.screensize = "big";
         let elements = document.querySelectorAll(".coin-row");
-        elements.forEach(element => {
+        elements.forEach(function(element){
             var el = element
             elClone = el.cloneNode(true);
             el.parentNode.replaceChild(elClone, el);
