@@ -238,7 +238,9 @@
     }
     var currentCoin = "none";
     document.querySelector("[name='coin-selector']").addEventListener("change", function(){
-        Object.entries(allCoins).forEach(([key, value]) => {
+        Object.entries(allCoins).forEach(function(element) {
+            let key = element[0];
+            let value = element[1];
             key = key.toLowerCase();
             if (document.querySelector("[name='coin-selector']").value.toLowerCase().includes(key)){
                 currentCoin = key.toUpperCase();
@@ -272,9 +274,9 @@
     }, { threshold: [0] });
 
     observer.observe(document.querySelector(".u-logo-image"));
-    async function copy(elem) {
+    function copy(elem) {
         let text = elem.innerText;
-        await navigator.clipboard.writeText(text);
+        navigator.clipboard.writeText(text);
         showAlertModal("<i class='fas fa-check'></i> copied!"); 
     }
     function withdraw() {
@@ -315,22 +317,24 @@
             tag: tag
         }));
     }
-    async function showAlertModal(text, params){
+    function showAlertModal(text, params){
         let modal = document.querySelector(".alert-modal");
         if ((params) && params.backgroundColor) modal.style.backgroundColor = params.backgroundColor;
         var waitTime = 1000;
         if (params && params.waitTime) waitTime = params.waitTime; 
         modal.innerHTML = text;
         modal.style.transform = "translateY(400px)";
-        await sleep(waitTime);
-        modal.style.transition = "all cubic-bezier(1, 0.03, 1, 1) 1s";
-        modal.style.opacity = "0.1";
-        modal.style.transform = "translateY(100vh)";
-        await sleep(1000)
-        var el = modal;
-        elClone = el.cloneNode(true);
-        elClone.style = "";
-        el.parentNode.replaceChild(elClone, el);
+        sleep(waitTime).then(function(){
+            modal.style.transition = "all cubic-bezier(1, 0.03, 1, 1) 1s";
+            modal.style.opacity = "0.1";
+            modal.style.transform = "translateY(100vh)";
+            sleep(1000).then(function(){
+                var el = modal;
+                elClone = el.cloneNode(true);
+                elClone.style = "";
+                el.parentNode.replaceChild(elClone, el);
+            })
+        })
     }
     document.addEventListener("keyup", function(event){
         if (event.key === "/"){
@@ -438,48 +442,50 @@
         if (max < 0) max = 0;
         document.getElementById("max-withdrawal").innerText = max
     }
-    async function getBtcData() {
-        let results = await fetch("https://api.blockcypher.com/v1/btc/main/addrs/" + data["btc"].address + "/balance");
-        results = await results.json();
-        if (results.error) balances.btc = 0;
-        else balances.btc = results["balance"] * 0.00000001;
-        return dataCallback();
+    function getBtcData() {
+        fetch("https://api.blockcypher.com/v1/btc/main/addrs/" + data["btc"].address + "/balance").then(function(res){return res.json()}).then(function(results){
+            if (results.error) balances.btc = 0;
+            else balances.btc = results["balance"] * 0.00000001;
+            dataCallback();
+        })
     }
-    async function getLtcData() {
-        let results = await fetch("https://api.blockcypher.com/v1/ltc/main/addrs/" + data["ltc"].address + "/balance");
-        results = await results.json();
-        if (results.error) balances.ltc = 0;
-        else balances.ltc = results["balance"] * 0.00000001;
-        return dataCallback();
+    function getLtcData() {
+        fetch("https://api.blockcypher.com/v1/ltc/main/addrs/" + data["ltc"].address + "/balance").then(function(res){return res.json()}).then(function(results){
+            if (results.error) balances.ltc = 0;
+            else balances.ltc = results["balance"] * 0.00000001;
+            dataCallback();
+        })
     }
-    async function getEthData() {
-        let results = await fetch("/api/v2/explorer/eth/auto/" + data["eth"].address);
-        results = await results.json();
-        for (let i = 0; i<10; i++){
-            if (results.status === "ok") break;
-            results = await fetch("/api/v2/explorer/eth/auto/" + data["eth"].address);
-            results = await results.json();
-        }
-        if (results.status === "failed") balances.eth = 0;
-        else balances.eth = results["data"]["wei"] * 0.000000000000000001;
-        let ethGas = await fetch("/api/v2/explorer/eth/gasPrice");
-        ethGas = Number(await ethGas.text());
-        ethGas = ethGas*0.000000001;
-        let amountOfGas = 23000 * ethGas * 0.000000001;
-        minWithdrawals.ETH = amountOfGas;
-        return dataCallback();
+    function getEthData() {
+        fetch("/api/v2/explorer/eth/auto/" + data["eth"].address).then(function(res){return res.json()}).then(function(results){
+            recursive(10);
+            function recursive(i){
+                if (i === 0) return next();
+                if (results.status === "ok") return next();
+                fetch("/api/v2/explorer/eth/auto/" + data["eth"].address).then(function(res){return res.json()}).then(function(resultsx){
+                    results = resultsx;
+                    i = i-1;
+                    recursive(i);
+                })
+            }
+            function next(){
+                if (results.status === "failed") balances.eth = 0;
+                else balances.eth = results["data"]["wei"] * 0.000000000000000001;
+                dataCallback();
+            }
+        })
     }
-    async function getXrpData() {
-        let results = await fetch("/api/v2/explorer/xrp/address/" + data["xrp"].address);
-        results = await results.json();
-        if (results.status === "failed") balances.xrp = 0;
-        else balances.xrp = Number(results["data"]["xrpBalance"]);
-        return dataCallback();
+    function getXrpData() {
+        fetch("/api/v2/explorer/xrp/address/" + data["xrp"].address).then(function(res){return res.json()}).then(function(results){
+            if (results.status === "failed") balances.xrp = 0;
+            else balances.xrp = Number(results["data"]["xrpBalance"]);
+            dataCallback();
+        })
     }
-    async function getDogeData() {
+    function getDogeData() {
 
     }
-    async function getEtcData() {
+    function getEtcData() {
 
     }
 </script>

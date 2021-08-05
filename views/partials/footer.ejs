@@ -89,6 +89,7 @@
     links[i].style.cursor = "pointer";
     links[i].addEventListener("click", function (event) {
       let url = links[i].dataset.link;
+      if (typeof url === "object") return console.log("a;lskdfja;lskdfja;lskdfj");
       if (url.startsWith("./")) window.location.href = window.location.href + "/" + (url.slice(2));
       else window.location.href = url
     })
