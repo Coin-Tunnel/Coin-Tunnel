@@ -6,6 +6,15 @@ const algorithm = 'aes-256-ctr';
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+var CoinKey = require('coinkey')    //1.0.0
+var coinInfo = require('coininfo')  //0.1.0
+var subscribed = {};
+const RippleAPI = require('ripple-lib').RippleAPI;
+const api = new RippleAPI({
+  server: 'wss://s1.ripple.com'
+});
+
 const ltc_network = "LTC";
 var allCoins = {
   ETH: "Ethereum",
@@ -26,6 +35,7 @@ sleep(1000).then(thing => {
     var wallet = {};
     wallet.btc = {};
     let prices = global.livePrices;
+    var refresh = false;
 
     let btcPrice = Number(prices.btc.a)
     wallet.btc.price = btcPrice;
@@ -54,22 +64,13 @@ sleep(1000).then(thing => {
       wallet: wallet
     };
     everything.btc.price = btcPrice;
-    // start of ltc stuff (garbage)
+
     let ltcPrice = Number(prices.ltc.a);
     everything.ltc.price = ltcPrice;
-    if (!mongo.ltc) await mongoclient.db("cointunnel").collection("userData").updateOne({ name: req.session.buser }, {
-      $set: {
-        ltc: {
-          address: "none",
-          privatex: "none"
-        }
-      }
-    })
+
     if (!mongo.ltc || mongo.ltc.address === "none") {
-      everything.ltc.type = "None"
-      everything.ltc.address = "No cloud wallet setup! Create one first.";
-      everything.ltc.amount = 0;
-      everything.ltc.usd = "N/A"
+      createLtcWallet(req.session.buser);
+      refresh = true;
     } else {
       everything.ltc.type = "LTC (cloud)"
       everything.ltc.address = mongo.ltc.address;
@@ -79,20 +80,8 @@ sleep(1000).then(thing => {
     // start ethereum garbage
     let ethPrice = Number(prices.eth.a);
     if (!mongo.eth || mongo.eth.address === "none") {
-      everything.eth.type = "No wallet created yet!"
-      everything.eth.usd = "N/A";
-      everything.eth.address = "No cloud wallet setup! Create one first.";
-      everything.eth.amount = 0;
-      if (!mongo.eth) {
-        await mongoclient.db("cointunnel").collection("userData").updateOne({ name: req.session.buser }, {
-          $set: {
-            eth: {
-              address: "none",
-              privatex: "none"
-            }
-          }
-        })
-      }
+      createEthWallet(req.session.buser);
+      refresh = true;
     } else {
       everything.eth.address = mongo.eth.address;
       everything.eth.type = "ETH (cloud)"
@@ -104,10 +93,8 @@ sleep(1000).then(thing => {
     everything.xrp = {};
     let xrpPrice = Number(prices.xrp.a);
     if (!mongo.xrp || mongo.xrp.address === "none") {
-      everything.xrp.type = "No wallet created yet!"
-      everything.xrp.usd = "N/A";
-      everything.xrp.address = "No cloud wallet setup! Create one first.";
-      everything.xrp.amount = 0;
+      createXrpWallet(req.session.buser);
+      refresh = true;
     } else {
       everything.xrp.address = mongo.xrp.address;
       everything.xrp.type = "XRP (cloud)";
@@ -115,8 +102,13 @@ sleep(1000).then(thing => {
     everything.xrp.price = xrpPrice;
 
     everything = JSON.stringify(everything);
-
-    res.render("assets/main.ejs", { user: req.session.buser || null, db: mongo || null, publicx: publicx, privatex: privatex, type: type, everything: everything })
+    
+    if (refresh === true){
+      await sleep(1000);
+      console.log("redirecting...")
+      return res.redirect("/assets")
+    }
+    res.render("assets/main.ejs", { user: req.session.buser || null, db: mongo || null, everything: everything })
   })
   router.get("/deposit", guiLimiter, async (req, res) => {
     if (!req.session.buser) return res.redirect("/signin-b")
@@ -401,4 +393,51 @@ module.exports = function (var1) {
   iv = crypto.randomBytes(16);
   router.use(bodyParser.json({ extended: true }));
   return router;
+}
+
+async function createEthWallet(user) {
+  const { ethers } = require("ethers");
+  const randomMnemonic = ethers.Wallet.createRandom().mnemonic;
+  const wallet = ethers.Wallet.fromMnemonic(randomMnemonic.phrase);
+  let signingkey = wallet._signingKey();
+  let encryptedkey = await encrypt(signingkey.privateKey);
+  await mongoclient.db("cointunnel").collection("userData").updateOne({ name: user }, {
+    $set: {
+      eth: {
+        "address": wallet.address,
+        "privatex": encryptedkey
+      }
+    }
+  });
+  return null;
+}
+async function createLtcWallet(user){
+  var liteInfo = coinInfo('LTC').versions;
+  var ck = new CoinKey.createRandom(liteInfo);
+
+  let secret = await encrypt(ck.privateWif);
+  let address = ck.publicAddress;
+  await mongoclient.db('cointunnel').collection("userData").updateOne({ name: user }, {
+    $set: {
+      ltc: {
+        "address": address,
+        "privatex": secret
+      }
+    }
+  });
+  return null;
+}
+async function createXrpWallet(user){
+  const address = api.generateAddress();
+  let encrypted = await encrypt(address.secret);
+  let xrpaddress = address.address;
+  await mongoclient.db('cointunnel').collection("userData").updateOne({ name: user }, {
+    $set: {
+      xrp: {
+        "address": xrpaddress,
+        "privatex": encrypted
+      }
+    }
+  })
+  return null;
 }
