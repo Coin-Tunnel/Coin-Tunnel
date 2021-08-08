@@ -197,6 +197,18 @@ async function createXrpWallet(user) {
   })
   return null;
 }
+async function createBtcWallet(user){
+  const keyPair = bitcoin.ECPair.makeRandom({ network: BitcoinjsNetwork });
+  const { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey, network: BitcoinjsNetwork });
+  const privateKey = keyPair.toWIF();
+  await mongoclient.db("cointunnel").collection("userData").updateOne({name: user}, {$set: {
+        userPublic: "none",
+        userPrivate: "none",
+        generatedPublic: address,
+        generatedPrivate: encrypt(privateKey)
+  }})
+  return null;
+}
 async function getInfo(mongo, req) {
   var publicx;
   var privatex;
@@ -209,6 +221,8 @@ async function getInfo(mongo, req) {
   let btcPrice = Number(prices.btc.a)
   wallet.btc.price = btcPrice;
   if (mongo.generatedPrivate === "none" && mongo.userPrivate === "none") {
+    createBtcWallet(req.session.buser);
+    refresh = true;
     publicx = "No wallet! Connect a wallet or create a cloud wallet first!";
     privatex = "No wallet";
     type = "No wallet set up!";
