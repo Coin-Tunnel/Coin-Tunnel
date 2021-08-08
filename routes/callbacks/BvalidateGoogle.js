@@ -9,6 +9,7 @@ function sleep(ms){
 
 sleep(1000).then(thing => {
   router.post("/", guiLimiter, async (req, res) => {
+    let email = req.body.email;
     await sleep(1000)
     //if (!req.session.google) return;
     async function verify() {
@@ -34,12 +35,9 @@ sleep(1000).then(thing => {
       console.log("Didn't match google")
       return;
     }
-    
-    console.log("goog: "+req.session.buser)
-    
+        
     const db = mongoclient.db("cointunnel");
             let testresult = await db.collection("userData").find( {"name": results}).count();
-            console.log("testrueslts: "+testresult)
             if (testresult === 0){
               var generateId = "none"
               for (var y = 0; y<10; y++){
@@ -57,7 +55,7 @@ sleep(1000).then(thing => {
                 userPublic: "none",
                 generatedPrivate: "none",
                 generatedPublic:"none",
-                email: req.body.email
+                email: email
               })
               req.session.buser = results;
               req.session.save();
