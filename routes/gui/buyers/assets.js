@@ -30,7 +30,7 @@ sleep(1000).then(thing => {
     let mongo = await checkUser(mongoclient, req.session.buser);
     if (!mongo) { req.session = null; return res.redirect("/signin-b") }
 
-    let results = await getInfo(mongo);
+    let results = await getInfo(mongo, req);
     var everything = results[0];
     let refresh = results[1];
 
@@ -61,7 +61,7 @@ sleep(1000).then(thing => {
     let mongo = await checkUser(mongoclient, req.session.buser);
     if (!mongo) { req.session = null; return res.redirect("/signin-b") }
     
-    let results = await getInfo(mongo);
+    let results = await getInfo(mongo, req);
     var everything = results[0];
     let refresh = results[1];
 
@@ -91,7 +91,7 @@ sleep(1000).then(thing => {
     if (!allCoins[req.params.coin]) return res.render("404_error");
     let mongo = await checkUser(mongoclient, req.session.buser);
     if (!mongo) { req.session = null; return res.redirect("/signin-b") }
-    let results = await getInfo(mongo);
+    let results = await getInfo(mongo, req);
     var everything = results[0];
     let refresh = results[1];
 
@@ -197,7 +197,7 @@ async function createXrpWallet(user) {
   })
   return null;
 }
-async function getInfo(mongo) {
+async function getInfo(mongo, req) {
   var publicx;
   var privatex;
   var type;
