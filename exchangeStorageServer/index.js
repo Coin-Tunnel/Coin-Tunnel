@@ -1,4 +1,3 @@
-const fs = require("file-system");
 const WebSocketClient = require("websocket").client;
 const fetch = require("node-fetch");
 const secrets = require("../secret.json");

@@ -18,7 +18,6 @@
     },
     "homepage": "https://www.coin-tunnel.ml",
     "dependencies": {
-      "file-system": "2.2.2",
       "websocket": "^1.0.34",
       "node-fetch": "2.6.1"
     },
