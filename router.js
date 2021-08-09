@@ -739,6 +739,8 @@ function getUTXOsBETA(address) {
       app.use('/api/v2/explorer/eth', require('./routes/api/v2/ethexplorer')(functions));
       app.use('/api/v2/explorer/xrp', require('./routes/api/v2/xrpexplorer')(functions));
       
+      app.use('/api/trading/v1/ws', require('./routes/api/trading/v1/websocket')(functions));
+
       app.use('/signup-b', require('./routes/gui/buyers/signup-b')(functions));
       app.use('/signup-m', require('./routes/gui/merchants/signup-m')(functions));
       app.use('/signup-buyer-github-callback', require('./routes/callbacks/Bsignupgithub')(functions));
@@ -751,7 +753,7 @@ function getUTXOsBETA(address) {
       app.use('/regenerate', require('./routes/callbacks/regenerate')(functions));
       app.use('/checkUser', require('./routes/callbacks/checkUser')(functions));
       app.use('/createOnlineWallet', require('./routes/callbacks/createOnlineWallet')(functions))
-      
+
       app.use('/status', require('./routes/gui/merchants/status')(functions));
       app.use('/connect', require('./routes/gui/buyers/connect')(functions));
       app.use('/dashboard-m', require('./routes/gui/merchants/dashboard-m')(functions))
@@ -765,6 +767,7 @@ function getUTXOsBETA(address) {
       app.use('/signin-m', require('./routes/gui/merchants/signin-m')(functions));
       app.use('/welcome', require('./routes/gui/buyers/welcome')(functions));
       app.use('/assets', require('./routes/gui/buyers/assets')(functions))
+      app.use('/trading', require('./routes/gui/buyers/trading')(functions));
 
       app.use('/operations', require('./routes/operations/index')(functions));
       app.use('/discord-seller-callback-signin', require('./routes/callbacks/discord-seller-callback-signin')(functions))

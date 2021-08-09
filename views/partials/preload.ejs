@@ -113,6 +113,8 @@
     if (path === "/changeAddress") path = "nocss";
     if (path === "/connect") path = "nocss";
     if (path.includes("validate")) path = "nocss";
+    if (path.includes("trading")) path = "/assets-main";
+
     if (window.location.pathname.includes("/assets/deposit")) path = "/assets-deposit";
     if (window.location.pathname.includes("/assets/withdraw")) path = "/assets-deposit";
     if (window.location.pathname === "/dashboard-m") path = "/dashboard-m"

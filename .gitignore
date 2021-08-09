@@ -5,6 +5,9 @@ config.json
 static/cdn/*
 !static/cdn/.gitkeep
 
+exchangeStorageServer/data/*
+!exchangeStorageServer/config.json
+
 # Logs
 logs
 *.log

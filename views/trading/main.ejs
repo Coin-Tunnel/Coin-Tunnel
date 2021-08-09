@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<link data-react-helmet="true" rel="icon" href="/images/smallLogo.png">
+<html style="font-size: 16px;">
+
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <!--<link rel="stylesheet" href="/assets-main.css">-->
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Assets | Coin Tunnel</title>
+    <link rel="stylesheet" href="/index.css" media="screen">
+    <script class="u-script" type="text/javascript" src="/javascript/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/javascript/main.js" defer=""></script>
+    <link id="u-theme-google-font" rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700|Archivo+Black:400">
+
+    <%- include('../partials/preload.ejs') %>
+
+
+        <link rel="stylesheet" href="/common.css">
+        <link rel="stylesheet" href="/style.css">
+        <script class="u-script" type="text/javascript" src="/javascript/websocket.js" defer=""></script>
+
+        <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "Site1",
+		"url": "index.html",
+		"logo": "images/unknown-removebg-preview.png"
+}</script>
+        <meta property="og:title" content="Buyer Dashboard">
+        <meta property="og:type" content="website">
+        <meta name="theme-color" content="#478ac9">
+        <link rel="canonical" href="index.html">
+        <meta property="og:url" content="index.html">
+</head>
+
+<body>
+    <div class="top-parts" style="background-color: #1D2946;">
+        <header class="u-clearfix u-header u-header" id="sec-a555" style="color: whitesmoke; font-weight: 525;">
+            <div class="u-clearfix u-sheet u-sheet-1">
+                <a href="/" class="u-image u-logo u-image-1">
+                    <img src="/images/logo.png" class="u-logo-image u-logo-image-1" data-image-width="109">
+                </a>
+                <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+                    <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+                        <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                            href="#">
+                            <svg>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use>
+                            </svg>
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <defs>
+                                    <symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;">
+                                        <rect y="1" width="16" height="2"></rect>
+                                        <rect y="7" width="16" height="2"></rect>
+                                        <rect y="13" width="16" height="2"></rect>
+                                    </symbol>
+                                </defs>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="u-custom-menu u-nav-container">
+                        <ul class="u-nav u-unstyled u-nav-1">
+                            <li class="u-nav-item"><a
+                                    class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                    href="/" style="padding: 10px 20px;">Home</a>
+                            </li>
+                            <li class="u-nav-item"><a
+                                    class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                    href="#" onclick="signout()" style="padding: 10px 20px;">Sign out</a>
+                            </li>
+                            <li class="u-nav-item"><a
+                                    class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                    href="/dashboard-b" style="padding: 10px 20px; color: #478ac9!important;">Buyer
+                                    Dashboard</a>
+                            </li>
+                            <li class="u-nav-item">
+                                Dark theme
+                            </li>
+                            <label class="switch">
+                                <input type="checkbox" onclick="changeTheme()" id="bigTheme">
+                                <span class="slider round"></span>
+                            </label>
+                        </ul>
+                    </div>
+                    <div class="u-custom-menu u-nav-container-collapse">
+                        <div
+                            class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+                            <div class="u-sidenav-overflow">
+                                <div class="u-menu-close"></div>
+                                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+                                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/"
+                                            style="padding: 10px 20px;">Home</a>
+                                    </li>
+                                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="#"
+                                            onclick="signout()" style="padding: 10px 20px;">Sign out</a>
+                                    </li>
+                                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/dashboard-b"
+                                            style="padding: 10px 20px; color: #478ac9!important;">Buyer Dashboard</a>
+                                    </li>
+                                    <li class="u-nav-item">
+                                        Dark theme
+                                    </li>
+                                    <label class="switch">
+                                        <input type="checkbox" onclick="changeTheme()" id="smallTheme">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <header class="u-clearfix u-header u-header secondary-header"
+            style="max-height: 50px; color: #b7b7b7; overflow: hidden;">
+            <div class="u-clearfix u-sheet u-sheet-1" style="width: 100vw;">
+                <div class="u-custom-menu u-nav-container">
+                    <ul class="u-nav u-unstyled u-nav-1 sub-menu">
+                        <li class="u-nav-item">
+                            <a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base on-page"
+                                style="padding: 10px 20px; color: inherit !important;">
+                                <%-pair1%>/<%-pair2%> &nbsp;<i style="font-size: 0.75em;"
+                                            class="fas fa-chevron-down"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <% 
+    var allCoins = { 
+        ETH: "Ethereum", 
+        ETC: "Ethereum Classic", 
+        DOGE: "Dogecoin", 
+        BTC: "Bitcoin", 
+        XRP: "Ripple",
+        LTC: "Litecoin", } 
+    %>
+        <div class="content-container" style="display: block; margin-top: 10px; margin-left: 10px;">
+            asdf
+        </div>
+        <%- include('../partials/footer.ejs') %>
+</body>
+
+</html>
+
+<script>
+    " <%allCoins = JSON.stringify(allCoins);%> "
+    var allCoins = '<%- allCoins %>';
+    allCoins = JSON.parse(allCoins);
+
+    allData = JSON.parse(allData);
+
+</script>
+
+<style>
+
+</style>

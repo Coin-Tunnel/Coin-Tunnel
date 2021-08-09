@@ -1,0 +1,29 @@
+{
+    "name": "coin-tunnel-exchange-storage",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "node app.js"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Joshua-Zou/Coin-Tunnel.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/Joshua-Zou/Coin-Tunnel/issues"
+    },
+    "homepage": "https://www.coin-tunnel.ml",
+    "dependencies": {
+      "file-system": "2.2.2",
+      "websocket": "^1.0.34",
+      "node-fetch": "2.6.1"
+    },
+    "engines": {
+      "node": "14.x"
+    }
+  }
+  
