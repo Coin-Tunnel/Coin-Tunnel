@@ -30,16 +30,25 @@ sleep(1000).then(thing => {
             millisTill10 += 60000; // it's after, try again next minute.
         }
         setTimeout(recursive, millisTill10);
-        function recursive() {
-            let time = Date.now();
-            ws.send(JSON.stringify({
-                meta: {
-                    time: time,
-                    coin: "btc"
-                },
-                data: Number(global.livePrices.btc.a)
-            }))
-            setTimeout(recursive, 60000)
+        async function recursive() {
+            while (true) {
+                let time = Date.now();
+                var results = "good"
+                try {
+                    await ws.send(JSON.stringify({
+                        type: "newblock",
+                        meta: {
+                            time: time,
+                            coin: "btc"
+                        },
+                        data: Number(global.livePrices.btc.a)
+                    }))
+                } catch (err) {
+                    results = "bad"
+                }
+                if (results === "bad") {return; };
+                await sleep(60000)
+            }
         }
         ws.on('close', () => {
             console.log("connection closed")
