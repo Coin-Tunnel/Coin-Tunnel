@@ -32,13 +32,13 @@ sleep(1000).then(thing => {
         setTimeout(recursive, millisTill10);
         function recursive() {
             let time = Date.now();
-            ws.send({
+            ws.send(JSON.stringify({
                 meta: {
                     time: time,
                     coin: "btc"
                 },
                 data: Number(global.livePrices.btc.a)
-            })
+            }))
             setTimeout(recursive, 60000)
         }
         ws.on('close', () => {

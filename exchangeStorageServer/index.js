@@ -1,5 +1,5 @@
 const fs = require("file-system");
-const ws = require("websocket").client;
+const WebSocketClient = require("websocket").client;
 const fetch = require("node-fetch");
 const secrets = require("../secret.json");
 const rootDir = __dirname;
@@ -8,9 +8,8 @@ main();
 // HEIGHT IS TIME!!!
 var syncing = false;
 async function main() {
-    var client = new WebSocketClient('ws://www.coin-tunnel/api/trading/v1/ws', 'echo-protocol');
-
-    client.onopen = function () {
+    var client = new WebSocketClient('wss://www.coin-tunnel.ml/api/trading/v1/ws', 'echo-protocol');
+    client.onopen = async function () {
         console.log('WebSocket Client Connected');
 
         for (let i = 0; i < coins.length; i++) {
@@ -33,7 +32,7 @@ async function main() {
         client.send(JSON.stringify({ request: "height", coin: "btc" }));
     }
 
-    client.onmessage = function (e) {
+    client.onmessage = async function (e) {
         let data = JSON.parse(e.data);
         if (data.type === "response") {
             data.type;
