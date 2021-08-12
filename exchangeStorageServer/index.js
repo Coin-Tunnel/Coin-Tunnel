@@ -163,7 +163,7 @@ async function updateDocument(db, id, data) {
     });
     results = await results.json();
     if (results.error === "conflict") {
-        throw ("Document conflict error!")
+        throw (`Document conflict error! Occurred when atempting to update document ${id}`);
     }
     return results;
 }
