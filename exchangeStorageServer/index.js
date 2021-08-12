@@ -73,13 +73,13 @@ async function main() {
 
                     table = await getDocument(data.meta.coin.toLowerCase(), "table");
                     let writeHeight = Number(data.meta.time);
-                    let cell = table[(Math.ceil(writeHeight / 857142857) * 857142857).toString()];
+                    let cell = table[(Math.ceil(writeHeight / 6000000000) * 6000000000).toString()];
                     if (cell) {
                         await updateDocument(data.meta.coin.toLowerCase(), cell, { [data.meta.time]: data.data });
                     } else {
                         let newChunk = await createDocument(data.meta.coin.toLowerCase(), null, { [data.meta.time]: data.data })
                         await updateDocument(data.meta.coin.toLowerCase(), "table", {
-                            [(Math.ceil(writeHeight / 857142857) * 857142857).toString()]: newChunk._id
+                            [(Math.ceil(writeHeight / 6000000000) * 6000000000).toString()]: newChunk._id
                         })
                     }
                     // starting the second recursive request
@@ -91,7 +91,7 @@ async function main() {
                 await updateDocument(data.meta.coin.toLowerCase(), "meta", {
                     height: data.meta.time
                 })
-                //adding data (857142857 blocks per doc)
+                //adding data (6000000000 blocks per doc)
                 let table = await getDocument(data.meta.coin.toLowerCase(), "table");
                 if (table.error === "not_found") {
                     let datax = await createDocument(data.meta.coin.toLowerCase(), "table", {
@@ -102,27 +102,29 @@ async function main() {
                 table = await getDocument(data.meta.coin.toLowerCase(), "table");
                 console.log("TABLE", table)
                 let writeHeight = Number(data.meta.time);
-                let cell = table[(Math.ceil(writeHeight / 857142857) * 857142857).toString()];
+                let cell = table[(Math.ceil(writeHeight / 6000000000) * 6000000000).toString()];
                 if (cell) {
                     await updateDocument(data.meta.coin.toLowerCase(), cell, { [data.meta.time]: data.data });
                 } else {
                     let newChunk = await createDocument(data.meta.coin.toLowerCase(), null, { [data.meta.time]: data.data });
                     console.log("NEW CHUNK", newChunk)
                     let x = await updateDocument(data.meta.coin.toLowerCase(), "table", {
-                        [(Math.ceil(writeHeight / 857142857) * 857142857).toString()]: newChunk.id
+                        [(Math.ceil(writeHeight / 6000000000) * 6000000000).toString()]: newChunk.id
                     })
                 }
             } else if (data.type === "getData") {
                 let readHeight = Number(data.time);
                 let table = await getDocument(data.meta.coin.toLowerCase(), "table");
-                let cell = table[(Math.ceil(readHeight / 857142857) * 857142857).toString()];
+                let cell = table[(Math.ceil(readHeight / 6000000000) * 6000000000).toString()];
                 if (cell) {
                     let document = await getDocument(data.meta.coin.toLowerCase(), cell);
                     if (!document) connection.send(JSON.stringify({responseTo: "getData", coin: data.meta.coin.toLowerCase(), error: "specified block does not exist"}));
-                    let baseHeight = (Math.ceil(readHeight / 857142857) * 857142857);
-                    let nth = Math.round((readHeight - baseHeight)/60000);
-                    let block = Object.keys(document)[nth];
-                    if (!block) return connection.send(JSON.stringify({responseTo: "getData", coin: data.meta.coin.toLowerCase(), error: "specified block does not exist"}));
+                    var block = null;
+                    for (let i = 0; i<100; i++){
+                        if (document[data.time+i]){block = document[data.time]; break;}
+                    }
+                    console.log(block)
+                    if (block === null) return connection.send(JSON.stringify({responseTo: "getData", coin: data.meta.coin.toLowerCase(), error: "specified block does not exist"}));
                     console.log(block)
                     return connection.send(JSON.stringify({responseTo: "getData", time: data.time, coin: data.meta.coin.toLowerCase(), data: block}))
                 } else {

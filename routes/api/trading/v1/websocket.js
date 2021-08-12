@@ -10,9 +10,12 @@ var activeNodes = 0;
 
 sleep(1000).then(thing => {
     router.ws('/', async (ws, req) => {
-        ws.send(JSON.stringify({type: "getData", time: 1628526900000, meta: {coin: "btc"}}));
+      sleep(1000).then(function(){
+                ws.send(JSON.stringify({type: "getData", time: 1628738160000, meta: {coin: "btc"}}));
+      })
         activeNodes = activeNodes + 1;
         ws.on('message', async msg => {
+          
             let message = JSON.parse(msg);
             if (message.request === "height") {
                 // for the time being, just send block height 0
@@ -24,7 +27,7 @@ sleep(1000).then(thing => {
                 }
             } else if (message.responseTo === "getData"){
                 if (message.error) return;
-                console.log(`GOT IT! PRICE OF ${message.coin} AT ${message.time} WAS ${mesage.data}`)
+                console.log(`GOT IT! PRICE OF ${message.coin} AT ${message.time} WAS ${message.data}`)
             }
         })
         // sync at the 0'th second of the minute
