@@ -10,12 +10,12 @@ var activeNodes = 0;
 
 sleep(1000).then(thing => {
     router.ws('/', async (ws, req) => {
-      sleep(1000).then(function(){
-                ws.send(JSON.stringify({type: "getData", time: 1628738160000, meta: {coin: "btc"}}));
-      })
+        sleep(1000).then(function () {
+            ws.send(JSON.stringify({ type: "getData", time: 1628738160000, meta: { coin: "btc" } }));
+        })
         activeNodes = activeNodes + 1;
         ws.on('message', async msg => {
-          
+
             let message = JSON.parse(msg);
             if (message.request === "height") {
                 // for the time being, just send block height 0
@@ -25,7 +25,7 @@ sleep(1000).then(thing => {
                 if (message.nextBlock === true) {
                     // do things
                 }
-            } else if (message.responseTo === "getData"){
+            } else if (message.responseTo === "getData") {
                 if (message.error) return;
                 console.log(`GOT IT! PRICE OF ${message.coin} AT ${message.time} WAS ${message.data}`)
             }
@@ -38,24 +38,29 @@ sleep(1000).then(thing => {
         }
         setTimeout(recursive, millisTill10);
         async function recursive() {
-            while (true) {
-                let time = Date.now();
-                var results = "good"
-                try {
-                    await ws.send(JSON.stringify({
-                        type: "newblock",
-                        meta: {
-                            time: time,
-                            coin: "btc"
-                        },
-                        data: Number(global.livePrices.btc.a)
-                    }))
-                } catch (err) {
-                    results = "bad"
-                }
-                if (results === "bad") {return; };
-                await sleep(60000)
+            let time = Date.now();
+            console.log(time)
+            var results = "good"
+            try {
+                await ws.send(JSON.stringify({
+                    type: "newblock",
+                    meta: {
+                        time: time,
+                        coin: "btc"
+                    },
+                    data: Number(global.livePrices.btc.a)
+                }))
+            } catch (err) {
+                results = "bad"
             }
+            if (results === "bad") { return; };
+            var now1 = new Date();
+            var millisTill10x = new Date(now1.getFullYear(), now1.getMonth(), now1.getDate(), now1.getHours(), now1.getMinutes(), 0, 0) - now1;
+            if (millisTill10x < 0) {
+                millisTill10x += 60000; // it's after, try again next minute.
+            }
+            console.log(millisTill10x)
+            setTimeout(recursive, millisTill10x);
         }
         ws.on('close', () => {
             console.log("connection closed")
