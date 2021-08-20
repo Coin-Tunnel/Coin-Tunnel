@@ -11,7 +11,7 @@ async function main() {
     var client = new WebSocketClient();
     client.connect('wss://www.coin-tunnel.ml/api/trading/v1/ws', 'echo-protocol');
     client.on("connect", async function (connection) {
-        console.log('WebSocket Client Connected');
+        console.log('WebSocket Client Connected!');
 
         for (let i = 0; i < coins.length; i++) {
             await fetch(`http://admin:${secrets.secret}@127.0.0.1:5984/${coins[i].toLowerCase()}`, {
@@ -131,6 +131,10 @@ async function main() {
                     return connection.send(JSON.stringify({responseTo: "getData", coin: data.meta.coin.toLowerCase(), error: "specified block does not exist"}));
                 }
             }
+        })
+        connection.on("close", function(){
+            console.log('Websocket closed! Attempting to reconnect...');
+            return main();
         })
     })
 }
