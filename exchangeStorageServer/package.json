@@ -8,13 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Joshua-Zou/Coin-Tunnel.git"
+    "url": "git+https://github.com/Coin-Tunnel/Coin-Tunnel.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Joshua-Zou/Coin-Tunnel/issues"
+    "url": "https://github.com/Coin-Tunnel/Coin-Tunnel/issues"
   },
   "homepage": "https://www.coin-tunnel.ml",
   "dependencies": {
