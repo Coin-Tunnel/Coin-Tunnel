@@ -10,7 +10,7 @@ function sleep(ms){
 sleep(1000).then(thing => {
     router.get("/", apiLimiter, async (req, res) =>{
         let todo = {
-          "client_id":"884f2305aaed970e40ff",
+          "client_id":"d2de28a42e1d27bb8ff2",
           "client_secret":secrets.github_merchant,
           "code":req.query.code
         }
