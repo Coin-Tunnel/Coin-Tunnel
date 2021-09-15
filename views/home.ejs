@@ -14,6 +14,7 @@
     <title>Home</title>
     <script class="u-script" type="text/javascript" src="/javascript/jquery.js" defer=""></script>
     <link rel="stylesheet" href="index.css" media="screen">
+    <link rel="stylesheet" href="/Home.css">
     <link data-react-helmet="true" rel="icon" href="/images/smallLogo.png">
     <script class="u-script" type="text/javascript" src="/javascript/websocket.js" defer=""></script>
 
@@ -149,7 +150,7 @@
         <div class="welcomeTypeWriter">
             <span style="font-weight: medium; font-size: 2.5em;">Welcome to</span>
             <br>
-            <span style="font-size: 1.5em; margin-left: 50px;" id="text"></span>
+            <span style="font-size: 1.5em; margin-left: 50px; height: 1.5em" id="text"></span>
             <div id="border"></div>
         </div>
         <div class="secondSection">
@@ -253,7 +254,7 @@
         <div class="welcomeTypeWriter">
             <span style="font-weight: medium; font-size: 2.5em;">Accept crypto in:</span>
             <br>
-            <span style="font-size: 1.5em; margin-left: 50px;" id="text2"></span>
+            <span style="font-size: 1.5em; margin-left: 50px; height: 1.5em" id="text2"></span>
             <div id="border2"></div>
         </div>
         <div class="secondSection">
@@ -276,7 +277,7 @@
                     for things you sell (anything). To get started, you don’t even need a static IP address!
                 </span>
             </div>
-            <div class="floatleft handcard">
+            <div class="floatleft handcard floatAnimation">
                 <img src="/images/btc_tower_home.png" style="width: 70%">
             </div>
             <br>
@@ -372,8 +373,6 @@
         </div>
     </div>
     <%- include('partials/footer.ejs') %>
-
-        <link rel="stylesheet" href="/common.css">
         <link rel="stylesheet" href="/style.css">
 </body>
 
@@ -382,164 +381,6 @@
 
 </html>
 
-<style>
-    .manageDetails {
-        position: relative;
-        top: 5vw;
-        width: 30%;
-    }
-
-    @keyframes scaleX {
-        0% {
-            transform: scaleX(1);
-        }
-
-        50% {
-            transform: scaleX(3) translateX(-50%);
-        }
-
-        99% {
-            transform: scaleX(1);
-        }
-    }
-
-    .handcard {
-        top: -50px;
-        position: relative;
-        margin-left: 10%;
-        width: 30%;
-    }
-
-    .thirdSection .image {
-        position: relative;
-        top: -15vw;
-    }
-
-    @media (max-width: 1010px) {
-        .handcard {
-            top: 0 !important;
-        }
-
-        .manageDetails {
-            top: 0 !important;
-            width: 80vw;
-            padding-left: 10px;
-        }
-
-        .thirdSection .image {
-            position: relative;
-            top: 0 !important;
-        }
-    }
-
-    @media (max-width: 500px) {
-        .thirdSection .image {
-            margin-left: 0 !important;
-        }
-    }
-
-    .secondSection {
-        margin-top: 100px;
-        margin-left: 20vw;
-    }
-
-    #text {
-        font-family: 'Source Code Pro', monospace;
-        display: inline-block;
-        vertical-align: middle;
-        color: rgba(255, 255, 255, .70);
-        letter-spacing: 2px;
-    }
-
-    #text2 {
-        font-family: 'Source Code Pro', monospace;
-        display: inline-block;
-        vertical-align: middle;
-        color: rgba(255, 255, 255, .70);
-        letter-spacing: 2px;
-    }
-
-    @keyframes animated-cursor {
-        from {
-            border-bottom-color: rgba(0, 255, 0, .75);
-        }
-
-        to {
-            border-bottom-color: transparent;
-        }
-    }
-
-    #border {
-        border-bottom: solid 3px rgba(0, 255, 0, .75);
-        margin-top: 10px;
-        padding-top: 10px;
-        position: relative;
-        display: inline-block;
-        top: 10px;
-        right: -7px;
-        width: 20px;
-        animation: animated-cursor 600ms steps(30, end) infinite;
-    }
-
-    #border2 {
-        border-bottom: solid 3px rgba(0, 255, 0, .75);
-        margin-top: 10px;
-        padding-top: 10px;
-        position: relative;
-        display: inline-block;
-        top: 10px;
-        right: -7px;
-        width: 20px;
-        animation: animated-cursor 600ms steps(30, end) infinite;
-    }
-
-    .welcomeTypeWriter {
-        color: white;
-        margin-left: 10%;
-        margin-top: 20px;
-    }
-
-    .tabopen {
-        position: relative;
-    }
-
-    .tabopen:after {
-        content: "";
-        background: white;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        height: 2px;
-        width: 100%;
-        animation: 0.8s makeWider ease-in-out
-    }
-
-    @keyframes makeWider {
-        0% {
-            width: 0%;
-        }
-
-        100% {
-            width: 100%;
-        }
-    }
-
-    body {
-        background-color: #141414 !important;
-    }
-
-    .u-nav-link {
-        color: white !important;
-    }
-
-    header {
-        background-color: #272727 !important;
-    }
-
-    .secondary-header {
-        margin-top: 20px;
-    }
-</style>
 
 <script>
     homeLoader();
