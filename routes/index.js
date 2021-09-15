@@ -388,12 +388,7 @@ mongoclient.connect(async function (err, mongoclient) {
   });
   // homepage
   router.get("/", (req, res) => {
-    if (!req.query.s) return res.render("partials/checksize.ejs", { command: "checksize" });
-    else if (req.query.s === "n") return res.render("home");
-    else if (req.query.s === "s") {
-      res.render("index.ejs")
-    }
-    else return res.render("partials/checksize.ejs", { command: "checksize" });
+    res.render("home.ejs")
   })
   router.get("/testdashboard", guiLimiter, async (req, res) => {
     req.session.buser = "105986804462885717106"
