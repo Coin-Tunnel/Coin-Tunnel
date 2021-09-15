@@ -1,8 +1,6 @@
 const express = require('express');
 const app = express();
 var cors = require('cors')
-var compression = require('compression')
-app.use(compression());
 
 var secrets;
 if (process.env.secrets){
