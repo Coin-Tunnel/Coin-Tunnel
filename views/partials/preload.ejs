@@ -1,5 +1,13 @@
 <html>
 
+<script>
+  if (window.location.pathname.slice(-1) === "/"){
+    let p = window.location.port;
+    if (window.location.port !== "") p = ":"+window.location.port
+    window.location.href = ( window.location.protocol+ "//"+window.location.hostname+p+window.location.pathname.slice(0, -1))
+  }
+</script>
+
 <div class="modal-background" style="display: none;">
   <div class="w-container">
     <div class="modal-window">
@@ -125,7 +133,7 @@
     if (window.location.pathname === "/signin-b") path = "/signup-b";
     if (window.location.pathname === "/testdashboard" || window.location.pathname === "/dashboard-b") path = "/dashboard";
     if (window.location.pathname === "/welcome") path = "/newuser";
-    if (window.location.pathname === "/dashboard-b/ltc") path = "/dashboard";
+    if (window.location.pathname.includes("/merchants")) path = "/dashboard-m";
     //if (window.location.pathname === "/prices") path = "nocss";
     if (path === "nocss") {
       return CSSDone();
@@ -360,3 +368,26 @@
     color: #333;
   }
 </style>
+
+<script>
+  const nonAuthPages = {
+    "/": true,
+    "/signin-b": true,
+    "/signin-m": true,
+    "/signup-b": true,
+    "/signup-m": true,
+    "/prices": true
+  }
+  if (!nonAuthPages[window.location.pathname]) {
+    setInterval(async function () {
+      fetch("/api/v2/isLoggedIn").then(res => res.json()).then(data => {
+        console.log(data)
+        if (data.data === false) {
+          setTimeout(function(){
+            window.location.reload();
+          }, Math.floor(Math.random() * 1000))
+        }
+      })
+    }, 60000)
+  }
+</script>
