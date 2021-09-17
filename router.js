@@ -738,6 +738,7 @@ module.exports = (app) => {
     app.use('/api/v2/createNoUser', require('./routes/api/v2/createNoUser')(functions));
     app.use('/api/v2/explorer/eth', require('./routes/api/v2/ethexplorer')(functions));
     app.use('/api/v2/explorer/xrp', require('./routes/api/v2/xrpexplorer')(functions));
+    app.use('/api/v2', require('./routes/api/v2/index')(functions))
 
     app.use('/api/trading/v1/ws', require('./routes/api/trading/v1/websocket')(functions));
     app.use('/api/trading/v1/query', require('./routes/api/trading/v1/websocket')(functions));
@@ -769,6 +770,7 @@ module.exports = (app) => {
     app.use('/welcome', require('./routes/gui/buyers/welcome')(functions));
     app.use('/assets', require('./routes/gui/buyers/assets')(functions))
     app.use('/trading', require('./routes/gui/buyers/trading')(functions));
+    app.use('/merchants', require('./routes/gui/merchants/merchants')(functions))
 
     app.use('/operations', require('./routes/operations/index')(functions));
     app.use('/discord-seller-callback-signin', require('./routes/callbacks/discord-seller-callback-signin')(functions))

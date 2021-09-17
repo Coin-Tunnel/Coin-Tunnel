@@ -9,7 +9,7 @@ function sleep(ms){
 
 sleep(1000).then(thing => {
     router.get("/", guiLimiter, (req, res) => {
-        if (req.session.muser) return res.redirect("/dashboard-m");
+        if (req.session.muser) return res.redirect("/merchants");
         res.render("signin-m");
     })
 })

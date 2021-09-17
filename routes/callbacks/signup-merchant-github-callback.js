@@ -36,7 +36,7 @@ sleep(1000).then(thing => {
          headers: { 'Content-Type': 'application/json', "Authorization":"token "+github }
      })
      emails = await emails.json();
-     if (!emails[0]) return res.redirect("/dashboard-m")
+     if (!emails[0]) return res.redirect("/merchants")
      else console.log(emails[0].email)
      const db = mongoclient.db("cointunnel");
              let testresult = await db.collection("merchantData").find( {"name": user.id}).count();
@@ -62,7 +62,7 @@ sleep(1000).then(thing => {
                return res.redirect("/checkUserM")
              }
              else {
-               res.redirect("/dashboard-m")
+               res.redirect("/merchants")
              }
      })
 })

@@ -1,12 +1,5 @@
 <html>
 
-<script>
-  if (window.location.pathname.slice(-1) === "/"){
-    let p = window.location.port;
-    if (window.location.port !== "") p = ":"+window.location.port
-    window.location.href = ( window.location.protocol+ "//"+window.location.hostname+p+window.location.pathname.slice(0, -1))
-  }
-</script>
 
 <div class="modal-background" style="display: none;">
   <div class="w-container">
@@ -117,6 +110,9 @@
   function main() {
     var localStorage = window.localStorage;
     var path = window.location.pathname;
+    if (path.endsWith("/")){
+      path = path.slice(0, -1)
+    }
     if (path === "/") path = "nocss";
     if (path === "/changeAddress") path = "nocss";
     if (path === "/connect") path = "nocss";
@@ -133,8 +129,11 @@
     if (window.location.pathname === "/signin-b") path = "/signup-b";
     if (window.location.pathname === "/testdashboard" || window.location.pathname === "/dashboard-b") path = "/dashboard";
     if (window.location.pathname === "/welcome") path = "/newuser";
-    if (window.location.pathname.includes("/merchants")) path = "/dashboard-m";
-    //if (window.location.pathname === "/prices") path = "nocss";
+    if (path === "/merchants") path = "/merchants/wallets";
+    if (path === "/merchants/transactions") path = "/merchants/wallets";
+    if (path === "/merchants/keys") path = "/merchants/wallets";
+    if (path === "/merchants/settings") path = "/merchants/wallets";
+
     if (path === "nocss") {
       return CSSDone();
     }

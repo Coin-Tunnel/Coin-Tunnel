@@ -7,49 +7,12 @@ function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-sleep(1000).then(thing => {
-    router.get('/', apiLimiter, async (req, res) => {
-    
-        const accessCode = req.query.code;
-        if (!accessCode){
-          res.redirect("/signin-m")
-          req.session = null;
-        }
-        const data = new FormData();
-        data.append('client_id', clientId);
-        data.append('client_secret', clientSecret);
-        data.append('grant_type', 'authorization_code');
-        data.append('redirect_uri', "https://www.coin-tunnel.ml/discord-seller-callback-signin");
-        data.append('scope', scopes.join(' '));
-        data.append('code', accessCode);
-        let x = await fetch('https://discordapp.com/api/oauth2/token', {
-            method: 'POST',
-            body: data
-        })
-        let response = await x.json()
-        let y = await fetch('https://discordapp.com/api/users/@me', {
-                method: 'GET',
-                headers: {
-                    Authorization: `${response.token_type} ${response.access_token}`
-                },
-        })
-        let userResponse = await y.json()
-        console.log(userResponse)
-                userResponse.tag = `${userResponse.username}#${userResponse.discriminator}`;
-                req.session.muser = userResponse.id;
-                console.log(req.session.muser);
-    
-        const db = mongoclient.db("cointunnel");
-            let testresult = await db.collection("merchantData").find( {"name": req.session.muser}).count();
-    
-            if (testresult === 0){
-              delete req.session.muser
-              res.render("error", {error: "You don't have an account! Try signing up instead."})
-            }
-            else {
-              res.redirect("/merchants")
-            }
-    });
+
+sleep(1000).then(async thing => {
+    router.get("/isLoggedIn", (req, res) => {
+        if (!req.session.muser && !req.session.buser) return res.send({data: false})
+        return res.send({data: true})
+    })
 })
 
 

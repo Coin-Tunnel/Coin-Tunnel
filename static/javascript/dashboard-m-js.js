@@ -179,8 +179,19 @@ function verficationKey() {
     }));
 }
 
-function changeLtc() {
-    var currentcoin = localStorage.getItem("merchant-coin");
+function changeLtc(coin) {
+    var currentcoin;
+    var address
+
+    if (coin){
+        currentcoin = coin;
+        address = document.getElementById(coin.toLowerCase()+"_address_field").value;
+    }
+    else {
+        currentcoin = localStorage.getItem("merchant-coin");
+        address = document.getElementById("ltc_address_field").value;
+    }
+
     var cointable = {
         BTC: "Bitcoin",
         LTC: "Litecoin",
@@ -193,7 +204,6 @@ function changeLtc() {
         ETH: "eth",
         XRP: "xrp"
     };
-    var address = document.getElementById("ltc_address_field").value;
 
     if (address === "") {
         document.getElementById("error-text").innerHTML = "That was an invalid ".concat(cointable[currentcoin], " address");
@@ -215,10 +225,13 @@ function changeLtc() {
                 document.getElementById("error-ltc").checked = true;
             }
         };
+        var xrpSpecialTag;
+        if (!document.getElementById("xrp_tag")) xrpSpecialTag = undefined;
+        else xrpSpecialTag = document.getElementById("xrp_tag").value;
 
         xhr.send(JSON.stringify({
             address: address,
-            tag: document.getElementById("xrp_tag").value
+            tag: xrpSpecialTag
         }));
     }
 }

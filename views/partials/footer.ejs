@@ -1,4 +1,4 @@
-<section id="footerMain" style="padding-left: 20px; padding-bottom: 20px;  position: absolute; width: 100vw; top: 100%; color: black !important;">
+<section id="footerMain" style="padding-left: 20px; padding-bottom: 20px;  position: absolute; width: 100vw; top: 100%; color: black !important; z-index: 100;">
 <grid style="display: grid; grid-gap: 5px 0px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
   <div id="footerLeft" class="foot-box">
     <div id="footLogoBox" style="padding-left: 30px;">
@@ -104,4 +104,54 @@
       if (url.startsWith("./")) links[i].href = window.location.href + "/" + (url.slice(2));
     }
   }
+</script>
+
+<script>
+      CSS.paintWorklet.addModule('https://googlechromelabs.github.io/houdini-samples/paint-worklet/ripple/paintworklet.js');
+
+// the actual animation of the ripple effect
+function rippleEffect(element) {
+  let start, x, y;
+  element.addEventListener('click', function (evt) {
+    this.classList.add('animating');
+    [x, y] = [evt.offsetX, evt.offsetY];
+    start = performance.now();
+    const raf = (now) => {
+      const tick = Math.floor(now - start);
+      this.style.cssText = `--ripple-x: ${x}; --ripple-y: ${y}; --animation-tick: ${tick};`;
+      if (tick > 1000) {
+        this.classList.remove('animating');
+        this.style.cssText = `--animation-tick: 0`;
+        return;
+      }
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+  });
+}
+document.querySelectorAll('.ripple').forEach(element => {
+  rippleEffect(element)
+})
+</script>
+
+<style>
+  
+
+  .ripple.animating {
+    background-image: paint(ripple);
+  }
+
+</style>
+
+<script>
+  let stuff = document.querySelectorAll("[href]");
+  stuff.forEach(element => {
+    if (element.nodeName !== "A"){
+      if (element.getAttribute("target") === "_blank"){
+        element.addEventListener("click", function(){window.open(element.getAttribute("href"))})
+      }else{
+        element.addEventListener("click", function(){window.location.href=element.getAttribute("href")})
+      }
+    }
+  })
 </script>

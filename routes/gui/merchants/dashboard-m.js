@@ -9,84 +9,8 @@ function sleep(ms){
 
 sleep(1000).then(thing => {
     router.get("/", guiLimiter, async (req, res) => {
-        var keys = {};
-        var wallets = "No wallet connected";
-        if (!req.session.muser) return res.redirect("/signin-m");
-        let user = await mongoclient.db("cointunnel").collection("merchantData")
-          .findOne({name: req.session.muser});
-        if (!user) return res.render("error", {error: "An internal server error occured!"})
-        if (user.deposit === "none"){ 
-          user.deposit = "No deposit address set up!";
-          }
-        else{
-         var utxos = await axios.get(
-            `https://sochain.com/api/v2/get_address_balance/${sochain_network}/${user.deposit}`
-          ).catch(err => {
-            return "failed";
-          })
-        if (utxos !== "failed"){
-             wallets = "Confirmed balance: "+ utxos.data.data.confirmed_balance+ " BTC; On the way: "+utxos.data.data.unconfirmed_balance+" BTC"
-        }
-         
-        
-        }
-
-        if (user.key === "none"){
-          keys.prefix = "no key set up";
-          keys.uses = "no key set up";
-          keys.ip = ["no key set up"];
-        }
-        else{
-          keys = await mongoclient.db("cointunnel").collection("keys")
-          .findOne({userId: req.session.muser})
-        }
-        let openTransac = await mongoclient.db("cointunnel").collection("open-transactions").find({merchant: req.session.muser}).count()
-        let closedTransac = await mongoclient.db("cointunnel").collection("finished-transactions").find({merchant: req.session.muser}).count();
-        let errorTransac = await mongoclient.db("cointunnel").collection("err-transactions").find({"data.merchant": req.session.muser}).count()
-        let transactions = {};
-        transactions.open = openTransac;
-        transactions.closed = closedTransac;
-        transactions.all = errorTransac;
-
-       user = JSON.stringify(user);
-       let merchant = user;
-       let allSuccess = await mongoclient.db("cointunnel").collection("finished-transactions")
-             .find({merchant: req.session.muser})
-           let successful = await allSuccess.toArray();
-
-          let allFailed = await mongoclient.db("cointunnel").collection("err-transactions")
-              .find({"data.merchant": req.session.muser})
-          let failed = await allFailed.toArray();
-
-          let allFailedx = await mongoclient.db("cointunnel").collection("err-transactions")
-              .find({"merchant": req.session.muser})
-          let failedx = await allFailedx.toArray();
-
-          let allOpen = await mongoclient.db("cointunnel").collection("open-transactions")
-              .find({merchant: req.session.muser})
-            let open = await allOpen.toArray();
-      
-        for (var i = 0; i<failedx.length; i++){
-           if (failedx[i].previous_data) failedx[i].creation = Number(failedx[i].previous_data.creation)
-        }
-       let txlist = successful.concat(failed, open, failedx);
-       txlist = txlist.sort(function (a, b) {
-         if (a.data && b.data) {
-           return a.data.creation - b.data.creation;
-         }else if (a.data && !b.data){
-           return a.data.creation - b.creation;
-         }else if (!a.data && b.data){
-           return a.creation - b.data.creation;
-         }else if (a.status === "failed"){
-           return 1-3;
-         }else if (b.status === "failed"){
-           return 3-1;
-         }
-        return a.creation - b.creation;
-      });
-      txlist = txlist.reverse();
-        res.render("dashboard-m", {db: user, key: keys, wallet: wallets, transac: transactions, transactionList: txlist});
-      })
+        return res.redirect("/merchants")
+    })
 })
 
 

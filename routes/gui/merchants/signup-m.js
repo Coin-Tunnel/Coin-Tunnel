@@ -10,7 +10,7 @@ function sleep(ms){
 sleep(1000).then(thing => {
     router.get("/", guiLimiter, async (req, res) => {
         if (req.session.muser){
-          return res.redirect("/dashboard-m")
+          return res.redirect("/merchants")
         }
         res.render("signup-m")
       })
