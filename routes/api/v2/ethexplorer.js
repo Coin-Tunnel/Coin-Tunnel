@@ -22,9 +22,15 @@ sleep(1000).then(thing => {
         reconnect: {
             auto: true,
             delay: 5000, // ms
-            maxAttempts: 5,
+            maxAttempts: 10,
             onTimeout: false,
         },
+        clientConfig: {
+            keepalive: true,
+            keepaliveInterval: 60000,
+            maxReceivedFrameSize: 100000000,
+            maxReceivedMessageSize: 100000000,
+          }
     })
     web3.setProvider(eventProvider)
     const checkActive = () => {
@@ -159,11 +165,11 @@ sleep(1000).then(thing => {
             return res.status(400).send({ status: "failed", reason: "Invalid token address or wallet address!" })
         }
     })
-
-    async function restartWeb3() {
+    pingWeb3();
+    async function pingWeb3() {
         while (true) {
-            await sleep(2000);
-            checkActive();
+            await sleep(10000);
+            await web3.eth.getBlockNumber();
         }
     }
 })
