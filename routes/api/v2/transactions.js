@@ -1174,6 +1174,9 @@ sleep(1000).then(thing => {
       if (user.trx.address === "none") return res.send("You don't have an TRX wallet setup!");
       let secret = await decrypt(user.trx.privatex);
       let results = await sendTrx(list.options.withdrawto, user.trx.address, secret, list.options.amount);
+      if (results.code === "CONTRACT_VALIDATE_ERROR"){
+        return res.send(Buffer(results.message, 'hex').toString())
+      }
       return res.send("Success! TRX TXID: " + results.txid)
     }
   })
@@ -1590,6 +1593,7 @@ async function sendTrx(recieverAddress, sourcePublicAddress, sourcePrivateAddres
   const TronWeb = require("tronweb");
   const tronWeb = new TronWeb({
     fullHost: 'https://api.trongrid.io',
+    headers: { "TRON-PRO-API-KEY": secrets.tronApiKey },
 })
   const privateKey = sourcePrivateAddress;
   var fromAddress = sourcePublicAddress; //address _from
