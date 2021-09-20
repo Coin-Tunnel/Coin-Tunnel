@@ -92,15 +92,24 @@ global.livePrices = {
         registerListener: function (listener) {
             this.aListener = listener;
         }
+    },
+    trx: {
+        aInternal: 10,
+        aListener: function (val) { },
+        set a(val) {
+            this.aInternal = val;
+            this.aListener(val);
+        },
+        get a() {
+            return this.aInternal;
+        },
+        registerListener: function (listener) {
+            this.aListener = listener;
+        }
     }
 }
 var openWs = {
-    btc: 0,
-    ltc: 0,
-    xrp: 0,
-    eth: 0,
-    bnb: 0,
-    ada: 0
+    all: 0
 }
 
 sleep(1000).then(thing => {
@@ -268,6 +277,27 @@ sleep(1000).then(thing => {
             });
         }
     })
+    router.get("/prices/trx", async (req, res) => {
+        if (req.query.static !== "true"){
+            res.writeHead(200, {
+                'Content-Type': 'text/event-stream',
+                'Cache-Control': 'no-cache',
+                'Connection': 'keep-alive'
+            }); 
+        }
+        if (req.query.static && req.query.static === "true"){
+          return res.send(global.livePrices.trx.a.toString())   
+        } else if (req.query.slow && req.query.slow === "true"){
+            for (var x = 0; x<100; x++){
+                res.write("data: "+global.livePrices.trx.a + "\n\n");
+                await sleep(1000)
+            }
+        }else{
+            global.livePrices.trx.registerListener(function (val) {
+                res.write("data: " + val + '\n\n');
+            });
+        }
+    })
     router.get("/prices/all", async (req, res) => {
         res.writeHead(200, {
             'Content-Type': 'text/event-stream',
@@ -282,7 +312,8 @@ sleep(1000).then(thing => {
                     eth: global.livePrices.eth.a,
                     xrp: global.livePrices.xrp.a,
                     ada: global.livePrices.ada.a,
-                    bnb: global.livePrices.bnb.a
+                    bnb: global.livePrices.bnb.a,
+                    trx: global.livePrices.trx.a
                 }
                 data = JSON.stringify(data)
                 res.write("data: "+data + "\n\n");
@@ -296,7 +327,8 @@ sleep(1000).then(thing => {
                     eth: global.livePrices.eth.a,
                     xrp: global.livePrices.xrp.a,
                     ada: global.livePrices.ada.a,
-                    bnb: global.livePrices.bnb.a
+                    bnb: global.livePrices.bnb.a,
+                    trx: global.livePrices.trx.a
                 }
                 data = JSON.stringify(data)
                 res.write("data: "+data + "\n\n");
@@ -306,53 +338,16 @@ sleep(1000).then(thing => {
 })
 updatePrices();
 async function updatePrices() {
-    updateBtc();
-    updateEth();
-    updateLtc();
-    updateXrp();
-    updateBnb();
-    updateAda();
+    updateAll();
 }
-async function updateBtc() {
-    if (openWs.btc !== 0) return;
-    else openWs.btc = openWs.btc + 1;
-    var client = new W3CWebSocket('wss://stream.binance.com:9443/stream?streams=btcusdt@aggTrade');
+
+async function updateAll(){
+    if (openWs.all !== 0) return;
+    else openWs.all = openWs.all + 1;
+    var client = new W3CWebSocket('wss://stream.binance.com:9443/stream?streams=btcusdt@aggTrade/ethusdt@aggTrade/ltcusdt@aggTrade/xrpusdt@aggTrade/adausdt@aggTrade/bnbusdt@aggTrade/trxusdt@aggTrade');
 
     client.onopen = function () {
-        console.log('Bitcoin WebSocket Client Connected');
-    };
-    client.onmessage = function (message) {
-        var data = message.data;
-        var stream = JSON.parse(data).stream;
-        var btcPrice;
-        try {
-            btcPrice = Number(JSON.parse(data).data.p)
-        } catch (err) {
-            return;
-        }
-        global.livePrices.btc.a = btcPrice;
-    };
-    client.onclose = async function () {
-        console.log('echo-protocol Connection Closed. Attempting to reconnect in 10 seconds...');
-        openWs.btc = 0;
-        await sleep(10000);
-        return updateBtc();
-    };
-    client.onerror = async function (error) {
-        console.log("Connection Error: " + JSON.stringify(error).toString() + " Attempting to reconnect in 10 seconds...");
-        openWs.btc = 0;
-        await sleep(10000);
-        return updateBtc();
-    };
-    return;
-}
-async function updateEth() {
-    if (openWs.eth !== 0) return;
-    else openWs.eth = openWs.eth + 1;
-    var client = new W3CWebSocket('wss://stream.binance.com:9443/stream?streams=ethusdt@aggTrade');
-
-    client.onopen = function () {
-        console.log('Ethereum WebSocket Client Connected');
+        console.log('WebSocket Client Connected');
     };
     client.onmessage = function (message) {
         var data = message.data;
@@ -363,154 +358,23 @@ async function updateEth() {
         } catch (err) {
             return;
         }
-        global.livePrices.eth.a = price;
+        global.livePrices[stream.slice(0, -13)].a = price;
     };
     client.onclose = async function () {
         console.log('echo-protocol Connection Closed. Attempting to reconnect in 10 seconds...');
-        openWs.eth = 0;
-        await sleep(10000)
-        return updateEth();
-    };
-    client.onerror = async function (error) {
-        console.log("Connection Error: " + JSON.stringify(error).toString() + " Attempting to reconnect in 10 seconds...");
-        openWs.eth = 0;
-        await sleep(10000);
-        return updateEth();
-    };
-    return;
-}
-async function updateLtc() {
-    if (openWs.ltc !== 0) return;
-    else openWs.ltc = openWs.ltc + 1;
-    var client = new W3CWebSocket('wss://stream.binance.com:9443/stream?streams=ltcusdt@aggTrade');
-
-    client.onopen = function () {
-        console.log('Litecoin WebSocket Client Connected');
-    };
-    client.onmessage = function (message) {
-        var data = message.data;
-        var stream = JSON.parse(data).stream;
-        var price;
-        try {
-            price = Number(JSON.parse(data).data.p)
-        } catch (err) {
-            return;
-        }
-        global.livePrices.ltc.a = price;
-    };
-    client.onclose = async function () {
-        console.log('echo-protocol Connection Closed. Attempting to reconnect in 10 seconds...');
-        openWs.ltc = 0;
-        await sleep(10000)
-        return updateLtc();
-    };
-    client.onerror = async function (error) {
-        console.log("Connection Error: " + JSON.stringify(error).toString() + " Attempting to reconnect in 10 seconds...");
-        openWs.ltc = 0;
-        await sleep(10000);
-        return updateLtc();
-    };
-    return;
-}
-async function updateXrp() {
-    if (openWs.xrp !== 0) return;
-    else openWs.xrp = openWs.xrp + 1;
-    var client = new W3CWebSocket('wss://stream.binance.com:9443/stream?streams=xrpusdt@aggTrade');
-
-    client.onopen = function () {
-        console.log('Ripple WebSocket Client Connected');
-    };
-    client.onmessage = function (message) {
-        var data = message.data;
-        var stream = JSON.parse(data).stream;
-        var price;
-        try {
-            price = Number(JSON.parse(data).data.p)
-        } catch (err) {
-            return;
-        }
-        global.livePrices.xrp.a = price;
-    };
-    client.onclose = async function () {
-        console.log('echo-protocol Connection Closed. Attempting to reconnect in 10 seconds...');
-        openWs.xrp = 0;
-        await sleep(10000)
-        return updateXrp();
-    };
-    client.onerror = async function (error) {
-        console.log("Connection Error: " + JSON.stringify(error).toString() + " Attempting to reconnect in 10 seconds...");
-        openWs.xrp = 0;
-        await sleep(10000);
-        return updateXrp();
-    };
-    return;
-}
-async function updateAda() {
-    if (openWs.ada !== 0) return;
-    else openWs.ada = openWs.ada + 1;
-    var client = new W3CWebSocket('wss://stream.binance.com:9443/stream?streams=adausdt@aggTrade');
-
-    client.onopen = function () {
-        console.log('Cardano WebSocket Client Connected');
-    };
-    client.onmessage = function (message) {
-        var data = message.data;
-        var stream = JSON.parse(data).stream;
-        var price;
-        try {
-            price = Number(JSON.parse(data).data.p)
-        } catch (err) {
-            return;
-        }
-        global.livePrices.ada.a = price;
-    };
-    client.onclose = async function () {
-        console.log('echo-protocol Connection Closed. Attempting to reconnect in 10 seconds...');
-        openWs.ada = 0;
-        await sleep(10000)
-        return updateAda();
-    };
-    client.onerror = async function (error) {
-        console.log("Connection Error: " + JSON.stringify(error).toString() + " Attempting to reconnect in 10 seconds...");
-        openWs.ada = 0;
-        await sleep(10000);
-        return updateAda();
-    };
-    return;
-}
-async function updateBnb() {
-    if (openWs.bnb !== 0) return;
-    else openWs.bnb = openWs.bnb + 1;
-    var client = new W3CWebSocket('wss://stream.binance.com:9443/stream?streams=bnbusdt@aggTrade');
-
-    client.onopen = function () {
-        console.log('Bianance Coin WebSocket Client Connected');
-    };
-    client.onmessage = function (message) {
-        var data = message.data;
-        var stream = JSON.parse(data).stream;
-        var price;
-        try {
-            price = Number(JSON.parse(data).data.p)
-        } catch (err) {
-            return;
-        }
-        global.livePrices.bnb.a = price;
-    };
-    client.onclose = async function () {
-        console.log('echo-protocol Connection Closed. Attempting to reconnect in 10 seconds...');
-        openWs.bnb = 0;
+        openWs.all = 0;
         await sleep(10000)
         return updateBnb();
     };
     client.onerror = async function (error) {
         console.log("Connection Error: " + JSON.stringify(error).toString() + " Attempting to reconnect in 10 seconds...");
-        openWs.bnb = 0;
+        openWs.all = 0;
         await sleep(10000);
         return updateBnb();
     };
     return;
 }
+
 module.exports = function (var1) {
     mongoclient = var1.mongoclient;
     checkUser = var1.checkUser;

@@ -51,6 +51,7 @@
             BTC: "Bitcoin",
             XRP: "Ripple",
             LTC: "Litecoin",
+            TRX: "Tron"
         }
         var allData = JSON.parse(everything)
     %>
@@ -254,7 +255,8 @@
         BTC: 0.00012,
         XRP: 21,
         DOGE: 10,
-        ETC: 0.1
+        ETC: 0.1,
+        TRX: 1
     }
     
     document.getElementById("amount-input").placeholder = "Min withdraw: "+minWithdrawals[coin]+" "+coin
@@ -356,7 +358,8 @@
             LTC: "https://litecoin.com/en/",
             XRP: "https://ripple.com/",
             DOGE: "https://dogecoin.com/",
-            ETC: "https://ethereumclassic.org/"
+            ETC: "https://ethereumclassic.org/",
+            TRX: "https://tron.network/"
         }
         window.open(websites[coin])
     }
@@ -418,7 +421,8 @@
         btc: 0,
         eth: 0,
         ltc: 0,
-        xrp: 0
+        xrp: 0,
+        trx: 0
     }
     getMax();
     function getMax(){
@@ -428,7 +432,8 @@
             ETH: getEthData,
             XRP: getXrpData,
             DOGE: getDogeData,
-            ETC: getEtcData
+            ETC: getEtcData,
+            TRX: getTrxData
         }
         let runFunction = functions[coin];
         runFunction();
@@ -488,6 +493,18 @@
     function getEtcData() {
 
     }
+    function getTrxData() {
+        fetch("https://apilist.tronscan.org/api/account?address=" + data["trx"].address).then(function(res){return res.json()}).then(function(results){
+            if (results.error) balances.trx = 0;
+            else balances.trx = results.balance/1000000;
+            dataCallback();
+            document.getElementById("TRX-total-in-coin").innerText = balances.trx;
+            document.getElementById("TRX-incoming-in-coin").innerText = "N/A";
+            document.getElementById("TRX-total-in-usd").innerText = balances.trx * 1;
+            document.getElementById("TRX-incoming-in-usd").innerText = "N/A";
+        })
+    }
+    
 </script>
 <style>
     <% if (coin === "XRP"){ %>

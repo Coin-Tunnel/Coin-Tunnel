@@ -23,6 +23,7 @@ var allCoins = {
   BTC: "Bitcoin",
   XRP: "Ripple",
   LTC: "Litecoin",
+  TRX: "Tron"
 }
 sleep(1000).then(thing => {
   router.get("/", guiLimiter, async (req, res) => {
@@ -209,6 +210,25 @@ async function createBtcWallet(user){
   }})
   return null;
 }
+async function createTrxWallet(user) {
+
+  const { generateAccount } = require('tron-create-address')
+
+  const { address, privateKey } = generateAccount()
+  console.log(`Tron address is ${address}`)
+  console.log(`Tron private key is ${privateKey}`)
+
+  let encrypted = await encrypt(privateKey);
+  await mongoclient.db('cointunnel').collection("userData").updateOne({ name: user }, {
+    $set: {
+      trx: {
+        "address": address,
+        "privatex": encrypted
+      }
+    }
+  })
+  return null;
+}
 async function getInfo(mongo, req) {
   var publicx;
   var privatex;
@@ -283,6 +303,19 @@ async function getInfo(mongo, req) {
     everything.xrp.type = "XRP (cloud)";
   }
   everything.xrp.price = xrpPrice;
+
+   // start of TRX stuff
+   everything.trx = {};
+   let trxPrice = Number(prices.trx.a);
+   if (!mongo.trx || mongo.trx.address === "none") {
+     createTrxWallet(req.session.buser);
+     refresh = true;
+   } else {
+     everything.trx.address = mongo.trx.address;
+     everything.trx.type = "TRX (cloud)";
+   }
+   everything.trx.price = trxPrice;
+ 
 
   everything = JSON.stringify(everything);
   return [everything, refresh];

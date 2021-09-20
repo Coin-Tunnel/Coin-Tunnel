@@ -153,12 +153,12 @@
         BTC: "Bitcoin",
         XRP: "Ripple",
         LTC: "Litecoin",
+        TRX: "Tron"
     }
     var allCoinsArr = Object.keys(allCoins);
     allCoinsArr = allCoinsArr.sort(function(a, b) {
         return a === b ? 0 : a < b ? -1 : 1;
     });
-    console.log(allCoinsArr)
 %>
     <div class="content-container" style="display: block; max-width: 1200px; margin-left: auto; margin-right: auto;">
         <section class="total-assets">
@@ -293,7 +293,8 @@
         btc: 0,
         eth: 0,
         ltc: 0,
-        xrp: 0
+        xrp: 0,
+        trx: 0
     }
     allData = JSON.parse(allData);
     console.log(allData)
@@ -307,6 +308,7 @@
     getXrpData();
     getDogeData();
     getEtcData();
+    getTrxData();
 
     let input = document.getElementById("search-coin");
     input.addEventListener("input", updateList);
@@ -319,7 +321,6 @@
         Object.entries(allCoins).forEach(function(element){
                 let key = element[0];
                 let valuex = element[1];
-                console.log(key, valuex)
                 document.getElementById(key+"-coin-row").classList.add("invisible");
                 key = key.toLowerCase();
                 valuex = valuex.toLowerCase();
@@ -411,6 +412,17 @@
         first.style = "color: #B8B8B8 !important; cursor: context-menu"
         first.innerText = "Coming Soon!";
         removeElement("#ETC-coin-row a", 1)
+    }
+    function getTrxData() {
+        fetch("https://apilist.tronscan.org/api/account?address=" + data["trx"].address).then(function(res){return res.json()}).then(function(results){
+            if (results.error) balances.trx = 0;
+            else balances.trx = results.balance/1000000;
+            walletCallback();
+            document.getElementById("TRX-total-in-coin").innerText = balances.trx;
+            document.getElementById("TRX-incoming-in-coin").innerText = "N/A";
+            document.getElementById("TRX-total-in-usd").innerText = balances.trx * allData.trx.price;
+            document.getElementById("TRX-incoming-in-usd").innerText = "N/A";
+        })
     }
     
     function removeElement(query, childNum) {

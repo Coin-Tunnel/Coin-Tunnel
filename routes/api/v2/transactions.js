@@ -1168,6 +1168,13 @@ sleep(1000).then(thing => {
         timeStamp: Date.now()
       })
       return res.send("Success! You have succesfully paid! The seller has been alerted of your payment, and you should recieve your product shortly.")
+    } else if (list.type === "withdraw-trx") {
+      let user = await mongoclient.db("cointunnel").collection("userData").findOne({ name: list.user });
+      if (!user.trx) return res.send("You don't have an TRX wallet setup!");
+      if (user.trx.address === "none") return res.send("You don't have an TRX wallet setup!");
+      let secret = await decrypt(user.trx.privatex);
+      let results = await sendTrx(list.options.withdrawto, user.trx.address, secret, list.options.amount);
+      return res.send("Success! TRX TXID: " + results.txid)
     }
   })
   router.delete('/delete/:id', longLimiter, async (req, res) => {
@@ -1577,4 +1584,30 @@ async function sseHeartbeat() {
     })
     await sleep(1000)
   }
+}
+
+async function sendTrx(recieverAddress, sourcePublicAddress, sourcePrivateAddress, amountToSend, tagx, sweepin) {
+  const TronWeb = require("tronweb");
+  const tronWeb = new TronWeb({
+    fullHost: 'https://api.trongrid.io',
+})
+  const privateKey = sourcePrivateAddress;
+  var fromAddress = sourcePublicAddress; //address _from
+  var toAddress = recieverAddress; //address _to
+  var amount = amountToSend*1000000; //amount
+  //Creates an unsigned TRX transfer transaction
+  tradeobj = await tronWeb.transactionBuilder.sendTrx(
+    toAddress,
+    amount,
+    fromAddress
+  );
+  const signedtxn = await tronWeb.trx.sign(
+    tradeobj,
+    privateKey
+  );
+  const receipt = await tronWeb.trx.sendRawTransaction(
+    signedtxn
+  );
+  console.log('- Output:', receipt, '\n');
+  return receipt;
 }

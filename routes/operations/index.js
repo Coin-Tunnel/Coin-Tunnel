@@ -137,6 +137,14 @@ sleep(1000).then(thing => {
     let privatekey = decrypt(user.eth.privatex);
     return res.send(privatekey)
   })
+  router.post('/reveal-trx', longLimiter, async (req, res) => {
+    if (!req.session.buser) return res.send("login again! Your session has expired");
+    let user = await checkStuff(mongoclient, req.session.buser);
+    if (!user.trx) return res.send("No TRX wallet setup!");
+    if (user.trx.address === "none") return res.send("No TRX wallet setup!");
+    let privatekey = decrypt(user.eth.privatex);
+    return res.send(privatekey)
+  })
   router.post('/change-ltc-m', longLimiter, async (req, res) => {
     if (!req.session.muser) return res.send("Your current session has expired! No changes have been made. Sign in again to continue.");
     // validate stupid ltc address
@@ -396,6 +404,15 @@ sleep(1000).then(thing => {
       .string(user.xrp.address)
       ws.cell(y, 3)
       .string(decrypt(user.xrp.privatex))
+    }
+    if (user.trx && user.trx.address.toLowerCase() !== "none"){
+      y = y+1;
+      ws.cell(y, 1)
+      .string("TRX")
+      ws.cell(y, 2)
+      .string(user.trx.address)
+      ws.cell(y, 3)
+      .string(decrypt(user.trx.privatex))
     }
     let newId = makeid(50);
     wb.write(`${global.project_root}/static/cdn/${newId}/data.xlsx`);

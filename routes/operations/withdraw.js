@@ -309,6 +309,74 @@ sleep(1000).then(thing => {
          });
          return res.send("good boi")
   })
+  router.post("/trx", guiLimiter, async (req, res) => {
+    if (!req.session.buser) return res.send("You must be logged in!");
+    if (Number(req.body.amount).toString().toLowerCase() === "nan") return res.send("That wasn't a valid amount!")
+        console.log(req.body)
+        var secret;
+        var publicadr
+        let userinfo = await checkStuff(mongoclient, req.session.buser);
+        if (!userinfo.eth) return res.send("No ETH wallet connected!")
+        if (userinfo.eth.address === "none"){
+          return res.send("No wallet connected!");
+        }
+          secret = userinfo.trx.privatex;
+          publicadr = userinfo.trx.address;
+
+          let secretkeys = await decrypt(secret);
+        if (req.body.address.length !== 34) return res.send("That wasn't a valid TRX deposit address!")
+        let wallet = await fetch("https://apilist.tronscan.org/api/account?address="+publicadr);
+        wallet = await wallet.json();
+        var balance = Number(wallet.balance)/1000000;
+
+        if (balance<req.body.amount+1 || Number(req.body.amount) <  1) return res.send("You don't have enough funds to do this! Remember that the USDT network has network fees!")
+        all()
+        async function all(){
+                // good
+                let expiry = Date.now()+600000;
+                let randomid = await makeid(30);
+                let result = await mongoclient.db("cointunnel").collection("emails").insertOne({
+                  name: randomid,
+                  type: "withdraw-trx",
+                  expiration: expiry,
+                  user: req.session.buser,
+                  options: {
+                    withdrawto: req.body.address,
+                    amount: req.body.amount
+                  }
+                });
+                console.log("created mongodb listing")
+                var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+                 user: 'cointunnel.0x@gmail.com',
+                 pass: secrets.gmail_password
+             }
+         });
+         let template = await fetch(`${secrets.domain}/html/withdrawtemplate.html`);
+         template = await template.text();
+         template = template.replaceAll("UserNameTemplate", userinfo.email);
+         template = template.replaceAll("BuyerIdTemplate", userinfo.tunnelId);
+         template = template.replaceAll("PutContentHereTemplate", `<h1 style="text-align: center;">Hello ${userinfo.email}!</h1><p style="text-align: center;">There was a recent attempt to withdraw ${req.body.amount} TRX from your account!&nbsp;<br />If this was you, great! Click CONFIRM below!</p>`)
+         template = template.replaceAll("AmountTemplate", req.body.amount);
+         template = template.replaceAll("AddressTemplate", req.body.address);
+         template = template.replaceAll("ConfirmationCodeTemplate", "https://www.coin-tunnel.ml/validate/"+randomid)
+         const mailOptions = {
+           from: 'cointunnel.0x@gmail.com', // sender address
+           to: userinfo.email, // list of receivers
+           subject: 'Coin Tunnel Confirmation', // Subject line
+           html: template
+          };
+         transporter.sendMail(mailOptions, function (err, info) {
+            if(err)
+              console.log(err)
+            else
+              console.log(info);
+         });
+                return res.send("good boi")
+            
+          }
+  })
 })
 
 
