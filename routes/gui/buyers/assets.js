@@ -27,7 +27,7 @@ var allCoins = {
 }
 sleep(1000).then(thing => {
   router.get("/", guiLimiter, async (req, res) => {
-    if (!req.session.buser) return res.redirect("/signin-b")
+    if (!req.session.buser) return res.redirect("/signin-b?redirect="+encodeURIComponent(req.originalUrl))
     let mongo = await checkUser(mongoclient, req.session.buser);
     if (!mongo) { req.session = null; return res.redirect("/signin-b") }
 
@@ -42,7 +42,7 @@ sleep(1000).then(thing => {
     res.render("assets/main.ejs", { user: req.session.buser || null, db: mongo || null, everything: everything })
   })
   router.get("/deposit", guiLimiter, async (req, res) => {
-    if (!req.session.buser) return res.redirect("/signin-b")
+    if (!req.session.buser) return res.redirect("/signin-b?redirect="+encodeURIComponent(req.originalUrl))
     let everything = {
       btc: { address: "", price: "" },
       eth: { address: "", price: "" },
@@ -56,7 +56,7 @@ sleep(1000).then(thing => {
     res.render("assets/deposit.ejs", { user: req.session.buser || null, everything: everything, coin: "none" })
   })
   router.get("/deposit/:coin", guiLimiter, async (req, res) => {
-    if (!req.session.buser) return res.redirect("/signin-b");
+    if (!req.session.buser) return res.redirect("/signin-b?redirect="+encodeURIComponent(req.originalUrl))
     if (req.params.coin === "none") return res.redirect("/assets/deposit")
     if (!allCoins[req.params.coin]) return res.render("404_error");
     let mongo = await checkUser(mongoclient, req.session.buser);
@@ -73,7 +73,7 @@ sleep(1000).then(thing => {
     res.render("assets/deposit.ejs", { user: req.session.buser || null, db: mongo || null, everything: everything, coin: req.params.coin })
   })
   router.get("/withdraw", guiLimiter, async (req, res) => {
-    if (!req.session.buser) return res.redirect("/signin-b");
+    if (!req.session.buser) return res.redirect("/signin-b?redirect="+encodeURIComponent(req.originalUrl))
     let everything = {
       btc: { address: "", price: "" },
       eth: { address: "", price: "" },
@@ -87,7 +87,7 @@ sleep(1000).then(thing => {
     res.render("assets/withdraw.ejs", { user: req.session.buser || null, everything: everything, coin: "none" })
   })
   router.get("/withdraw/:coin", guiLimiter, async (req, res) => {
-    if (!req.session.buser) return res.redirect("/signin-b");
+    if (!req.session.buser) return res.redirect("/signin-b?redirect="+encodeURIComponent(req.originalUrl))
     if (req.params.coin === "none") return res.redirect("/assets/withdraw")
     if (!allCoins[req.params.coin]) return res.render("404_error");
     let mongo = await checkUser(mongoclient, req.session.buser);
