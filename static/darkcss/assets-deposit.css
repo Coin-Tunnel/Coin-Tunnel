@@ -51,3 +51,9 @@ input {
     background-color: #24292E !important;
     box-shadow: 2px 5px 9px 0px #484c4c !important;
 }
+::selection {
+    background: #a07c18; /* WebKit/Blink Browsers */
+  }
+  ::-moz-selection {
+    background: #a07c18; /* Gecko Browsers */
+  }

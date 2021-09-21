@@ -809,3 +809,9 @@
 .u-container-style {
   border-radius: 25px !important;
 }
+::selection {
+  background: #F4D589; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #F4D589; /* Gecko Browsers */
+}

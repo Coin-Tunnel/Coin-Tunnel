@@ -1643,3 +1643,9 @@
 .u-palette-2-light-2 {
   color: #db545a !important
 }
+::selection {
+  background: #a07c18; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #a07c18; /* Gecko Browsers */
+}

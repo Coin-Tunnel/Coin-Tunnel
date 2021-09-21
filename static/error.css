@@ -51,3 +51,9 @@
     width: 340px;
   }
 }
+::selection {
+  background: #F4D589; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #F4D589; /* Gecko Browsers */
+}

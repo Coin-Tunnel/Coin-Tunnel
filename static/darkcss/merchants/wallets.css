@@ -541,3 +541,9 @@ a {
   font-family: 'goodFont';
   font-size: 15px;
 }
+::selection {
+  background: #a07c18; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #a07c18; /* Gecko Browsers */
+}

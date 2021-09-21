@@ -675,3 +675,9 @@
       margin-right: 163px;
     }
   }
+  ::selection {
+    background: #a07c18; /* WebKit/Blink Browsers */
+  }
+  ::-moz-selection {
+    background: #a07c18; /* Gecko Browsers */
+  }

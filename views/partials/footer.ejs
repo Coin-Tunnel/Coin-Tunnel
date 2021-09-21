@@ -132,6 +132,14 @@ function rippleEffect(element) {
 document.querySelectorAll('.ripple').forEach(element => {
   rippleEffect(element)
 })
+document.querySelectorAll("a").forEach(element => {
+  if (element.classList.contains("ripple") || element.parentElement.classList.contains("ripple")){
+    element.href = "javascript:delay('"+element.getAttribute("href")+"')";
+  }
+})
+function delay (URL) {
+    setTimeout( function() { window.location = URL }, 500 );
+}
 </script>
 
 <style>
@@ -140,7 +148,6 @@ document.querySelectorAll('.ripple').forEach(element => {
   .ripple.animating {
     background-image: paint(ripple);
   }
-
 </style>
 
 <script>

@@ -158,3 +158,9 @@ body {
         transform: translateX(250%) skew(30deg);
     }
 }
+::selection {
+    background: #a07c18; /* WebKit/Blink Browsers */
+  }
+  ::-moz-selection {
+    background: #a07c18; /* Gecko Browsers */
+  }

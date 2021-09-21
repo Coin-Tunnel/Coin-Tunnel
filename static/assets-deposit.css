@@ -26,3 +26,9 @@ body{
 #tunnelId {
     background-color: #c9cacc !important;
 }
+::selection {
+    background: #F4D589; /* WebKit/Blink Browsers */
+  }
+  ::-moz-selection {
+    background: #F4D589; /* Gecko Browsers */
+  }
