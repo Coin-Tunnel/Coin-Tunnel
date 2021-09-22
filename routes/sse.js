@@ -152,147 +152,147 @@ sleep(1000).then(thing => {
         }
     })
     router.get("/prices/btc", async (req, res) => {
-        if (req.query.static !== "true"){
+        if (req.query.static !== "true") {
             res.writeHead(200, {
                 'Content-Type': 'text/event-stream',
                 'Cache-Control': 'no-cache',
                 'Connection': 'keep-alive'
-            }); 
+            });
         }
-        if (req.query.static && req.query.static === "true"){
-          return res.send(global.livePrices.btc.a.toString())   
-        } else if (req.query.slow && req.query.slow === "true"){
-            for (var x = 0; x<400; x++){
-                res.write("data: "+global.livePrices.btc.a.toString() + "\n\n");
+        if (req.query.static && req.query.static === "true") {
+            return res.send(global.livePrices.btc.a.toString())
+        } else if (req.query.slow && req.query.slow === "true") {
+            for (var x = 0; x < 400; x++) {
+                res.write("data: " + global.livePrices.btc.a.toString() + "\n\n");
                 await sleep(250)
             }
-        }else{
+        } else {
             global.livePrices.btc.registerListener(function (val) {
                 res.write("data: " + val + '\n\n');
             });
         }
     })
     router.get("/prices/eth", async (req, res) => {
-        if (req.query.static !== "true"){
+        if (req.query.static !== "true") {
             res.writeHead(200, {
                 'Content-Type': 'text/event-stream',
                 'Cache-Control': 'no-cache',
                 'Connection': 'keep-alive'
-            }); 
+            });
         }
-        if (req.query.static && req.query.static === "true"){
-          return res.send(global.livePrices.eth.a.toString())   
-        } else if (req.query.slow && req.query.slow === "true"){
-            for (var x = 0; x<100; x++){
-                res.write("data: "+global.livePrices.eth.a.toString() + "\n\n");
+        if (req.query.static && req.query.static === "true") {
+            return res.send(global.livePrices.eth.a.toString())
+        } else if (req.query.slow && req.query.slow === "true") {
+            for (var x = 0; x < 100; x++) {
+                res.write("data: " + global.livePrices.eth.a.toString() + "\n\n");
                 await sleep(1000)
             }
-        }else{
+        } else {
             global.livePrices.eth.registerListener(function (val) {
                 res.write("data: " + val + '\n\n');
             });
         }
     })
     router.get("/prices/ltc", async (req, res) => {
-        if (req.query.static !== "true"){
+        if (req.query.static !== "true") {
             res.writeHead(200, {
                 'Content-Type': 'text/event-stream',
                 'Cache-Control': 'no-cache',
                 'Connection': 'keep-alive'
-            }); 
+            });
         }
-        if (req.query.static && req.query.static === "true"){
-          return res.send(global.livePrices.ltc.a.toString())   
-        } else if (req.query.slow && req.query.slow === "true"){
-            for (var x = 0; x<100; x++){
-                res.write("data: "+global.livePrices.ltc.a.toString() + "\n\n");
+        if (req.query.static && req.query.static === "true") {
+            return res.send(global.livePrices.ltc.a.toString())
+        } else if (req.query.slow && req.query.slow === "true") {
+            for (var x = 0; x < 100; x++) {
+                res.write("data: " + global.livePrices.ltc.a.toString() + "\n\n");
                 await sleep(1000)
             }
-        }else{
+        } else {
             global.livePrices.ltc.registerListener(function (val) {
                 res.write("data: " + val + '\n\n');
             });
         }
     })
     router.get("/prices/xrp", async (req, res) => {
-        if (req.query.static !== "true"){
+        if (req.query.static !== "true") {
             res.writeHead(200, {
                 'Content-Type': 'text/event-stream',
                 'Cache-Control': 'no-cache',
                 'Connection': 'keep-alive'
-            }); 
+            });
         }
-        if (req.query.static && req.query.static === "true"){
-          return res.send(global.livePrices.xrp.a.toString())   
-        } else if (req.query.slow && req.query.slow === "true"){
-            for (var x = 0; x<100; x++){
-                res.write("data: "+global.livePrices.xrp.a.toString() + "\n\n");
+        if (req.query.static && req.query.static === "true") {
+            return res.send(global.livePrices.xrp.a.toString())
+        } else if (req.query.slow && req.query.slow === "true") {
+            for (var x = 0; x < 100; x++) {
+                res.write("data: " + global.livePrices.xrp.a.toString() + "\n\n");
                 await sleep(1000)
             }
-        }else{
+        } else {
             global.livePrices.xrp.registerListener(function (val) {
                 res.write("data: " + val + '\n\n');
             });
         }
     })
     router.get("/prices/ada", async (req, res) => {
-        if (req.query.static !== "true"){
+        if (req.query.static !== "true") {
             res.writeHead(200, {
                 'Content-Type': 'text/event-stream',
                 'Cache-Control': 'no-cache',
                 'Connection': 'keep-alive'
-            }); 
+            });
         }
-        if (req.query.static && req.query.static === "true"){
-          return res.send(global.livePrices.ada.a.toString())   
-        } else if (req.query.slow && req.query.slow === "true"){
-            for (var x = 0; x<100; x++){
-                res.write("data: "+global.livePrices.ada.a.toString() + "\n\n");
+        if (req.query.static && req.query.static === "true") {
+            return res.send(global.livePrices.ada.a.toString())
+        } else if (req.query.slow && req.query.slow === "true") {
+            for (var x = 0; x < 100; x++) {
+                res.write("data: " + global.livePrices.ada.a.toString() + "\n\n");
                 await sleep(1000)
             }
-        }else{
+        } else {
             global.livePrices.ada.registerListener(function (val) {
                 res.write("data: " + val + '\n\n');
             });
         }
     })
     router.get("/prices/bnb", async (req, res) => {
-        if (req.query.static !== "true"){
+        if (req.query.static !== "true") {
             res.writeHead(200, {
                 'Content-Type': 'text/event-stream',
                 'Cache-Control': 'no-cache',
                 'Connection': 'keep-alive'
-            }); 
+            });
         }
-        if (req.query.static && req.query.static === "true"){
-          return res.send(global.livePrices.bnb.a.toString())   
-        } else if (req.query.slow && req.query.slow === "true"){
-            for (var x = 0; x<100; x++){
-                res.write("data: "+global.livePrices.bnb.a + "\n\n");
+        if (req.query.static && req.query.static === "true") {
+            return res.send(global.livePrices.bnb.a.toString())
+        } else if (req.query.slow && req.query.slow === "true") {
+            for (var x = 0; x < 100; x++) {
+                res.write("data: " + global.livePrices.bnb.a + "\n\n");
                 await sleep(1000)
             }
-        }else{
+        } else {
             global.livePrices.bnb.registerListener(function (val) {
                 res.write("data: " + val + '\n\n');
             });
         }
     })
     router.get("/prices/trx", async (req, res) => {
-        if (req.query.static !== "true"){
+        if (req.query.static !== "true") {
             res.writeHead(200, {
                 'Content-Type': 'text/event-stream',
                 'Cache-Control': 'no-cache',
                 'Connection': 'keep-alive'
-            }); 
+            });
         }
-        if (req.query.static && req.query.static === "true"){
-          return res.send(global.livePrices.trx.a.toString())   
-        } else if (req.query.slow && req.query.slow === "true"){
-            for (var x = 0; x<100; x++){
-                res.write("data: "+global.livePrices.trx.a + "\n\n");
+        if (req.query.static && req.query.static === "true") {
+            return res.send(global.livePrices.trx.a.toString())
+        } else if (req.query.slow && req.query.slow === "true") {
+            for (var x = 0; x < 100; x++) {
+                res.write("data: " + global.livePrices.trx.a + "\n\n");
                 await sleep(1000)
             }
-        }else{
+        } else {
             global.livePrices.trx.registerListener(function (val) {
                 res.write("data: " + val + '\n\n');
             });
@@ -304,8 +304,8 @@ sleep(1000).then(thing => {
             'Cache-Control': 'no-cache',
             'Connection': 'keep-alive'
         });
-        if (req.query.slow && req.query.slow === "true"){
-            for (var x = 0; x<100; x++){
+        if (req.query.slow && req.query.slow === "true") {
+            for (var x = 0; x < 100; x++) {
                 let data = {
                     btc: global.livePrices.btc.a,
                     ltc: global.livePrices.ltc.a,
@@ -316,10 +316,10 @@ sleep(1000).then(thing => {
                     trx: global.livePrices.trx.a
                 }
                 data = JSON.stringify(data)
-                res.write("data: "+data + "\n\n");
+                res.write("data: " + data + "\n\n");
                 await sleep(1000)
             }
-        }else{
+        } else {
             global.livePrices.btc.registerListener(function (val) {
                 let data = {
                     btc: global.livePrices.btc.a,
@@ -331,7 +331,7 @@ sleep(1000).then(thing => {
                     trx: global.livePrices.trx.a
                 }
                 data = JSON.stringify(data)
-                res.write("data: "+data + "\n\n");
+                res.write("data: " + data + "\n\n");
             });
         }
     })
@@ -341,7 +341,7 @@ async function updatePrices() {
     updateAll();
 }
 
-async function updateAll(){
+async function updateAll() {
     if (openWs.all !== 0) return;
     else openWs.all = openWs.all + 1;
     var client = new W3CWebSocket('wss://stream.binance.com:9443/stream?streams=btcusdt@aggTrade/ethusdt@aggTrade/ltcusdt@aggTrade/xrpusdt@aggTrade/adausdt@aggTrade/bnbusdt@aggTrade/trxusdt@aggTrade');
