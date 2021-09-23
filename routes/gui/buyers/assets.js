@@ -23,7 +23,8 @@ var allCoins = {
   BTC: "Bitcoin",
   XRP: "Ripple",
   LTC: "Litecoin",
-  TRX: "Tron"
+  TRX: "Tron",
+  USDT: "Tether"
 }
 sleep(1000).then(thing => {
   router.get("/", guiLimiter, async (req, res) => {

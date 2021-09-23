@@ -153,7 +153,8 @@
         BTC: "Bitcoin",
         XRP: "Ripple",
         LTC: "Litecoin",
-        TRX: "Tron"
+        TRX: "Tron",
+        USDT: "Tether"
     }
     var allCoinsArr = Object.keys(allCoins);
     allCoinsArr = allCoinsArr.sort(function(a, b) {
@@ -416,13 +417,26 @@
     }
     function getTrxData() {
         fetch("https://apilist.tronscan.org/api/account?address=" + data["trx"].address).then(function(res){return res.json()}).then(function(results){
-            if (results.error) balances.trx = 0;
-            else balances.trx = results.balance/1000000;
+            if (results.error){ balances.trx = 0; balances.usdt = 0}
+            else {
+                balances.trx = results.balance/1000000;
+                if (results.trc20token_balances.find(e => e.tokenId === "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t")){
+                    balances.usdt = results.trc20token_balances.find(e => e.tokenId === "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t").balance/1000000;
+                }else{
+                    balances.usdt = 0;
+                }
+            }
             walletCallback();
             document.getElementById("TRX-total-in-coin").innerText = balances.trx;
             document.getElementById("TRX-incoming-in-coin").innerText = "N/A";
             document.getElementById("TRX-total-in-usd").innerText = balances.trx * allData.trx.price;
             document.getElementById("TRX-incoming-in-usd").innerText = "N/A";
+            walletCallback();
+            
+            document.getElementById("USDT-total-in-coin").innerText = balances.usdt;
+            document.getElementById("USDT-incoming-in-coin").innerText = "N/A";
+            document.getElementById("USDT-total-in-usd").innerText = balances.usdt;
+            document.getElementById("USDT-incoming-in-usd").innerText = "N/A";
         })
     }
     

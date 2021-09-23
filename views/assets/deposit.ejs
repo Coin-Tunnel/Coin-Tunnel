@@ -50,7 +50,8 @@
             BTC: "Bitcoin",
             XRP: "Ripple",
             LTC: "Litecoin",
-            TRX: "Tron"
+            TRX: "Tron",
+            USDT: "Tether"
         }
         var allData = JSON.parse(everything)
         var allCoinsArr = Object.keys(allCoins);
@@ -174,13 +175,13 @@
             <div style="padding-top: 8px; padding-left: 3px; margin-bottom: 20px;">
                 <span style="margin-left: 10px; color: grey;"><%-allCoins[coin]%> deposit address: 
                     <% if (coin === "USDT") { %>
-                        <span style="color: #EB3941;"> (ETH CHAIN ONLY!!!)</span>
+                        <span style="color: #EB3941;"> (TRX CHAIN ONLY!!!)</span>
                     <% } %>
                 </span>
                 <span style="float: right;"><i class="fas fa-qrcode" style="margin-right: 10px;"><div id="qrcode" style="position: absolute; transform: translate(-35px, -95px); width: 75px; height: 75px; background-color: white;"></div></i><i class="fas fa-copy" onclick="copy(document.getElementById('crypto-deposit-address'))" style="cursor: pointer;"></i></span>
                 <br>
                 <% if (coin === "USDT") { %>
-                    <span style="position: relative; top: 5px;" id="crypto-deposit-address"><%-allData["eth"].address%></span>
+                    <span style="position: relative; top: 5px;" id="crypto-deposit-address"><%-allData["trx"].address%></span>
                 <% } %>
                 <% if (coin !== "none" && allData[coin.toLowerCase()]) { %>
                     <% if (coin !== "USDT") { %>
@@ -245,7 +246,7 @@
 <script src="/javascript/deposit.js"></script>
 
 <script>
-    "<%var temp = coin; if (coin.toLowerCase() === 'usdt') temp = 'ETH'; if (allData[temp.toLowerCase()]){%>"
+    "<%var temp = coin; if (coin.toLowerCase() === 'usdt') temp = 'TRX'; if (allData[temp.toLowerCase()]){%>"
         "<%  %>"
         new QRCode(document.getElementById("qrcode"), "<%-allData[temp.toLowerCase()].address%>");
     "<%}%>"
@@ -335,7 +336,7 @@
         document.getElementById("topleftLoading").style.display = "block";
         let element = document.getElementById("crypto-secret-key");
         var xhr = new XMLHttpRequest();
-        if (coin.toLowerCase() === "usdt") coin = "ETH"
+        if (coin.toLowerCase() === "usdt") coin = "TRX"
         xhr.open('POST', '/operations/reveal-' + coin.toLowerCase());
         xhr.setRequestHeader('Content-Type', 'application/json');
 
@@ -417,7 +418,8 @@
             XRP: "https://ripple.com/",
             DOGE: "https://dogecoin.com/",
             ETC: "https://ethereumclassic.org/",
-            TRX: "https://tron.network/"
+            TRX: "https://tron.network/",
+            USDT: "https://tether.to/"
         }
         window.open(websites[coin])
     }

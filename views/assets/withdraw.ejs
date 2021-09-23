@@ -51,7 +51,8 @@
             BTC: "Bitcoin",
             XRP: "Ripple",
             LTC: "Litecoin",
-            TRX: "Tron"
+            TRX: "Tron",
+            USDT: "Tether"
         }
         var allData = JSON.parse(everything)
         var allCoinsArr = Object.keys(allCoins);
@@ -186,6 +187,8 @@
                 <br>
                 <input type="number" id="amount-input">
                 <span for="amount-input" style="color: red; margin-left: 10px; opacity: 0; transition: all 1s ease;">This field is required!</span>
+                <br>
+                <span for="amount-input" id="feeIndic">Fee: </span>
             </div>
             <button onclick="withdraw();" class="withdraw-btn" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span>Confirm</span></button>
         </div>
@@ -261,11 +264,12 @@
         XRP: 21,
         DOGE: 10,
         ETC: 0.1,
-        TRX: 4
+        TRX: 4,
+        USDT: 1
     }
     
     document.getElementById("amount-input").placeholder = "Min withdraw: "+minWithdrawals[coin]+" "+coin
-
+    document.getElementById("feeIndic").innerText = "Fee: "+minWithdrawals[coin]+" "+coin
     document.addEventListener("keydown", function(event){
         if (event.key === "Enter" && currentCoin !== "none"){
             window.location.href = "/assets/deposit/"+currentCoin;
@@ -364,7 +368,8 @@
             XRP: "https://ripple.com/",
             DOGE: "https://dogecoin.com/",
             ETC: "https://ethereumclassic.org/",
-            TRX: "https://tron.network/"
+            TRX: "https://tron.network/",
+            USDT: "https://tether.to"
         }
         window.open(websites[coin])
     }
@@ -427,7 +432,8 @@
         eth: 0,
         ltc: 0,
         xrp: 0,
-        trx: 0
+        trx: 0,
+        usdt: 0
     }
     getMax();
     function getMax(){
@@ -438,7 +444,8 @@
             XRP: getXrpData,
             DOGE: getDogeData,
             ETC: getEtcData,
-            TRX: getTrxData
+            TRX: getTrxData,
+            USDT: getUsdtData
         }
         let runFunction = functions[coin];
         runFunction();
@@ -509,7 +516,20 @@
             document.getElementById("TRX-incoming-in-usd").innerText = "N/A";
         })
     }
-    
+    function getUsdtData() {
+        fetch("https://apilist.tronscan.org/api/account?address=" + data["trx"].address).then(function(res){return res.json()}).then(function(results){
+            if (results.error){ balances.trx = 0; balances.usdt = 0}
+            else {
+                balances.trx = results.balance/1000000;
+                if (results.trc20token_balances.find(e => e.tokenId === "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t")){
+                    balances.usdt = results.trc20token_balances.find(e => e.tokenId === "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t").balance/1000000;
+                }else{
+                    balances.usdt = 0;
+                }
+            }
+            dataCallback();
+        })
+    }
 </script>
 <style>
     <% if (coin === "XRP"){ %>
@@ -542,7 +562,7 @@
         border-color: #0e73eb;
     }
     .deposit-field {
-        top: 80px !important;
+        /* top: 80px !important; */
     }
 
     input {

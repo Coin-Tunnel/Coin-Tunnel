@@ -391,7 +391,7 @@ mongoclient.connect(async function (err, mongoclient) {
     res.render("home.ejs")
   })
   router.get("/testdashboard", guiLimiter, async (req, res) => {
-    req.session.buser = "105986804462885717106"
+    req.session.buser = 77520157
     return res.redirect("/assets")
   })
   router.get("/merchantdashboard", guiLimiter, async (req, res) => {
