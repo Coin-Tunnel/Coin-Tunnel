@@ -142,7 +142,7 @@ sleep(1000).then(thing => {
     let user = await checkStuff(mongoclient, req.session.buser);
     if (!user.trx) return res.send("No TRX wallet setup!");
     if (user.trx.address === "none") return res.send("No TRX wallet setup!");
-    let privatekey = decrypt(user.eth.privatex);
+    let privatekey = decrypt(user.trx.privatex);
     return res.send(privatekey)
   })
   router.post('/change-ltc-m', longLimiter, async (req, res) => {
