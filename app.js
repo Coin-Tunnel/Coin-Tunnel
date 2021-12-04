@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 var cors = require('cors')
+const os = require("os");
+const cluster = require("cluster");
 
 var secrets;
 if (process.env.secrets){
@@ -9,7 +11,7 @@ if (process.env.secrets){
   secrets = require("./secret.json")
 }
 
-let port = process.env.PORT || 3000;
+let port = process.env.PORT || 3200;
 let secret = secrets.reqsession;
 app.set('port', port);
 
@@ -31,4 +33,29 @@ app.use(cors())
 
 require('./router')(app);
 
-app.listen(port, () => console.info(`Listening on port ${port}`));
+const clusterWorkerSize = os.cpus().length;
+const start = async () => {
+  try {
+      await app.listen(port);
+      console.log(`server listening on ${port} and worker ${process.pid}`);
+  } catch (err) {
+      fastify.log.error(err);
+      process.exit(1);
+  }
+}
+
+if (clusterWorkerSize > 1) {
+  if (cluster.isMaster) {
+      for (let i=0; i < clusterWorkerSize; i++) {
+          cluster.fork();
+      }
+
+      cluster.on("exit", function(worker) {
+          console.log("Worker", worker.id, " has exited.")
+      })
+  } else {
+      start();
+  }
+} else {
+  start();
+}
